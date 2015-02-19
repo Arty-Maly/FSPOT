@@ -1,11 +1,21 @@
 Mvp::Application.routes.draw do
+  resources :users
+  
   get "upload/index"
-  get "main_page/index"
+  
+  get '/' => 'home#index'
+  get "/log-in" => "sessions#new"
+  post "/log-in" => "sessions#create", as: :log_in
+  get "/log-out" => "sessions#destroy", as: :log_out
+
+  get "/main" => "main_page#index", as: :main
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'main_page#index'
+  #root 'main_page#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
