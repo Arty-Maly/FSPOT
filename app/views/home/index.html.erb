@@ -2,40 +2,38 @@
   Welcome to my App
 </H1>
 
-<BODY>
-  <% if(flash.present?) %>
-    <% flash.each do |msg| %>
-      <DIV class="<%=msg[0]%>">
-	<%=msg[1]%>
-      </DIV>
-    <%end%>
+<% if(flash.present?) %>
+  <% flash.each do |msg| %>
+    <DIV class="<%=msg[0]%>">
+      <%=msg[1]%>
+    </DIV>
   <%end%>
+<%end%>
 
-  <% if(session[:user_id] == nil) %>
-    <NAV>
-      <UL>
-	<LI>
-	  <A href="/log-in">
-	    Log In
-	  </A>
-	</LI>
+<% if(session[:user_id] == nil) %>
+  <NAV>
+    <UL>
+      <LI>
+	<A href="/log-in">
+	  Log In
+	</A>
+      </LI>
 
-	<LI>
-	  <A href="/users/new">
-	    Sign Up
-	  </A>
-	</LI>
-      </UL>
-    </NAV>
-  <% else %>
-    <NAV>
-      <UL>
-	<LI>
-	  <A href="/log-out">
-	    Log Out
-	  </A>
-	</LI>
-      </UL>
-    </NAV>
-  <% end %>
-</BODY>
+      <LI>
+	<A href="/users/new">
+	  Sign Up
+	</A>
+      </LI>
+    </UL>
+  </NAV>
+<% else %>
+  <NAV>
+    <UL>
+      <LI>
+	<A href="/log-out">
+	  Log Out
+	</A>
+      </LI>
+    </UL>
+  </NAV>
+<% end %>
