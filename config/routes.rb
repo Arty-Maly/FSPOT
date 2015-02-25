@@ -1,7 +1,7 @@
 Mvp::Application.routes.draw do
   resources :users
   
-  get "upload/index"
+  get "upload/index", as: :upload
   
   get '/' => 'home#index'
   get "/log-in" => "sessions#new"
