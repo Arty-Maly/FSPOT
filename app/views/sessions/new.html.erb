@@ -1,8 +1,31 @@
-<h1>Log In</h1>
-<%=form_tag log_in_path do%>
-<%=label_tag :email %>
-<%=text_field_tag :email %>
-<%=label_tag :password %>
-<%=password_field_tag :password %>
-<%=submit_tag "Log in" %>
+<H1>
+  Log In
+</H1>
+
+<% if flash.present? %>
+  <% flash.each do |msg| %>
+    <DIV class="<%=msg[0]%>">
+      <%=msg[1]%>
+        <BR />
+	<BR />
+    </DIV>
+  <%end%>
 <%end%>
+
+<%= form_tag log_in_path do%>
+  <%= label_tag :email %>
+  <%= text_field_tag :email %>
+  <%= label_tag :password %>
+  <%= password_field_tag :password %>
+  <%= submit_tag "Log in" %>
+<%end%>
+
+<NAV>
+  <UL>
+    <LI>
+      <A href="/users/new">
+	Sign Up
+      </A>
+    </LI>
+  </UL>
+</NAV>

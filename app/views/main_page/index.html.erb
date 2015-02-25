@@ -1,125 +1,165 @@
 <!DOCTYPE html>
-<html>
-	<head>
+<HTML>
+  <HEAD>
+    <%= stylesheet_link_tag "main_page", media: "all" %>
+    <LINK rel = "stylesheet" href = "http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css">
+    <SCRIPT src = "http://code.jquery.com/jquery-1.8.3.min.js"></SCRIPT>
+    <SCRIPT src = "http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></SCRIPT>
 
-		<%= stylesheet_link_tag "main_page", media: "all" %>
-		<link rel = "stylesheet" href = "http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css">
-		<script src = "http://code.jquery.com/jquery-1.8.3.min.js"></script>
-		<script src = "http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+    <%= javascript_include_tag "jquery-1.7.1.min" %>
+    <%= javascript_include_tag "jquery.event.drag-1.5.min.min" %>
+    <%= javascript_include_tag "jquery.touchSlider" %>
 
-		<%= javascript_include_tag "jquery-1.7.1.min" %>
-		<%= javascript_include_tag "jquery.event.drag-1.5.min.min" %>
-		<%= javascript_include_tag "jquery.touchSlider" %>
+    <SCRIPT>
+     $(document).ready(function(){
 
-		<script>
-		$(document).ready(function(){
+       $(".main_visual").hover(function(){
+	 $("#btn_prev,#btn_next").fadeIn()			
+       },function(){
+	   $("#btn_prev,#btn_next").fadeOut()
+	 });
+       
+       //$dragBln = false;
+       
+       $(".main_image").touchSlider({
+	 flexible : true,
+	 speed : 200,
+	 btn_prev : $("#btn_prev"),
+	 btn_next : $("#btn_next"),
+       });
 
-			$(".main_visual").hover(function(){
-				$("#btn_prev,#btn_next").fadeIn()			
-			},function(){
-				$("#btn_prev,#btn_next").fadeOut()
-			});
-			
-			//$dragBln = false;
-			
-			$(".main_image").touchSlider({
-				flexible : true,
-				speed : 200,
-				btn_prev : $("#btn_prev"),
-				btn_next : $("#btn_next"),
-			});
+       /**
+       $(".main_image").bind("mousedown", function() {
+       $dragBln = false;
+       });
+       
+       $(".main_image").bind("dragstart", function() {
+       $dragBln = true;
+       });
+       
+       $(".main_image a").click(function(){
+       if($dragBln) {
+       return false;
+       }
+       });
+       
+       timer = setInterval(function(){
+       $("#btn_next").click();
+       }, 15000);
+       
+       $(".main_visual").hover(function(){
+       clearInterval(timer);
+       },function(){
+       timer = setInterval(function(){
+       $("#btn_next").click();
+       },15000);
+       });
+	**/			
+     });
+    </SCRIPT>
 
-			/**
-			$(".main_image").bind("mousedown", function() {
-				$dragBln = false;
-			});
-			
-			$(".main_image").bind("dragstart", function() {
-				$dragBln = true;
-			});
-			
-			$(".main_image a").click(function(){
-				if($dragBln) {
-					return false;
-				}
-			});
-			
-			timer = setInterval(function(){
-				$("#btn_next").click();
-			}, 15000);
-			
-			$(".main_visual").hover(function(){
-				clearInterval(timer);
-			},function(){
-				timer = setInterval(function(){
-					$("#btn_next").click();
-				},15000);
-			});
-			**/			
-		});
-		</script>
+  </HEAD>
 
-	</head>
-
-	<body>
-<div>
-<p>This is the main page. <A href="../upload/index">Upload.</A>
-<br>
-<br></p>
-
-
-<p><%= link_to "Log Out", log_out_path %> </p>
-</div>
-
-		<div id = "main_page" data-role = "page">
-
-		  	<div id = "header" data-role = "header">
-		  		<h1>WELCOME TO FSTOP</h1>
-		  	</div>
+  <BODY>
+    <DIV>
+      <P>This is the main page. <A href="../upload/index">Upload.</A>
+	<BR>
+	<BR>
+      </P>
 
 
-			<div data-role = "content">
+      <P>
+	<%= link_to "Log Out", log_out_path %>
+      </P>
+    </DIV>
 
-				<div class="ui-grid-a">
+    <DIV id = "main_page" data-role = "page">
+      <DIV id = "header" data-role = "header">
+	<H1>
+	  WELCOME TO FSTOP
+	</H1>
+      </DIV>
 
-				 	<div class="ui-block-a">
-				 		<a href="#" data-role="button" data-corners="true" data-icon="info">friends</a><br> 
-				    </div>
-				    
-				 	<div class="ui-block-b">
-				    	<a href="#" data-role="button" data-corners="true" data-icon="search">search</a><br>
-				    </div>
-				    
-				</div>
+      <DIV data-role = "content">
+	<DIV class="ui-grid-a">
+	  <DIV class="ui-block-a">
+	    <A href="#" data-role="button" data-corners="true" data-icon="info">
+	      friends
+	    </A>
+	      <BR>
+	  </DIV>
+	  
+	  <DIV class="ui-block-b">
+	    <A href="#" data-role="button" data-corners="true" data-icon="search">
+	      search
+	    </A>
+	      <BR>
+	  </DIV>  
+	</DIV>
 
-				<div class="main_visual">
-					<div class="main_image">
-						<ul>
-							<li><span class="img_1"></span></li>
-							<li><span class="img_2"></span></li>
-							<li><span class="img_3"></span></li>
-							<li><span class="img_4"></span></li>
-							<li><span class="img_5"></span></li>
-							<li><span class="img_6"></span></li>
-							<li><span class="img_7"></span></li>
-							<li><span class="img_8"></span></li>
-							<li><span class="img_9"></span></li>
-						</ul>
-						<a href="javascript:;" id="btn_prev"></a>
-						<a href="javascript:;" id="btn_next"></a>
-					</div>
-				</div>
+	<DIV class="main_visual">
+	  <DIV class="main_image">
+	    <UL>
+	      <LI>
+		<SPAN class="img_1">
+		</SPAN>
+	      </LI>
 
-				<div class = "snap">
-					<a href="/upload/index" data-role="button">upload photo</a>
-				</div>
-				
-			
+	      <LI>
+		<SPAN class="img_2">
+		</SPAN>
+	      </LI>
 
-			</div>
+	      <LI>
+		<SPAN class="img_3">
+		</SPAN>
+	      </LI>
 
-		</div>
+	      <LI>
+		<SPAN class="img_4">
+		</SPAN>
+	      </LI>
 
-	</body>
+	      <LI>
+		<SPAN class="img_5">
+		</SPAN>
+	      </LI>
 
-</html>
+	      <LI>
+		<SPAN class="img_6">
+		</SPAN>
+	      </LI>
+
+	      <LI>
+		<SPAN class="img_7">
+		</SPAN>
+	      </LI>
+
+	      <LI>
+		<SPAN class="img_8">
+		</SPAN>
+	      </LI>
+
+	      <LI>
+		<SPAN class="img_9">
+		</SPAN>
+	      </LI>
+	    </UL>
+
+	    <A href="javascript:;" id="btn_prev">
+	    </A>
+
+	    <A href="javascript:;" id="btn_next">
+	    </A>
+	  </DIV>
+	</DIV>
+
+	<DIV class = "snap">
+	  <A href="/upload/index" data-role="button">
+	    upload photo
+	  </A>
+	</DIV>
+      </DIV>
+    </DIV>
+  </BODY>
+</HTML>
