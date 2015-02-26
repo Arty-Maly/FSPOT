@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
-  def index
-  end
-  
   def new
+    if(session[:user_id] != nil)
+      redirect_to "/"
+    end
+
     @user = User.new
   end
 
