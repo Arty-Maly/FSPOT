@@ -1,39 +1,124 @@
-<H1>
-  Welcome to my App
-</H1>
 
 <% if(flash.present?) %>
   <% flash.each do |msg| %>
-    <DIV class="<%=msg[0]%>">
+    <div class="<%=msg[0]%>">
       <%=msg[1]%>
-    </DIV>
-  <%end%>
-<%end%>
+    </div>
+  <% end %>
+<% end %>
+
+
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+  <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+          <a class="navbar-brand" href="/main">Start FSPOT</a>
+      </div>
+  </div>
+  <!-- /.container -->
+</nav>
+
+<!-- Page Header -->
+<header class="intro-header" style="background-image: url('/assets/about-bg.jpg')">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+              <div class="page-heading">
+                  <h1>Welcome to FSPOT</h1>
+                  <hr class="small">
+                  <span class="subheading">find the best food ever</span>
+              </div>
+          </div>
+      </div>
+  </div>
+</header>
+
+<!-- Main Content -->
 
 <% if(session[:user_id] == nil) %>
-  <NAV>
-    <UL>
-      <LI>
-	<A href="/log-in">
-	  Log In
-	</A>
-      </LI>
+<div class="container">
+    <div class="login">
+        <form class="form-signin">
+          <label for="inputEmail" class="sr-only">Email address</label>
+          <input class="form-control"><br>
+          <label for="inputPassword" class="sr-only">Password</label>
+          <input class="form-control">
+          <div class="checkbox">
+              <label>
+                  <input type="checkbox" value="remember-me"> Remember me
+              </label>
+          </div>
+          <a href="/main" type="button" class="btn btn-lg btn-primary btn-block">Log In</a>
+          <a href="/users/new" type="button" class="btn btn-lg btn-primary btn-block">Sign Up</a>
+        </form>
+    </div>
+</div>
 
-      <LI>
-	<A href="/users/new">
-	  Sign Up
-	</A>
-      </LI>
-    </UL>
-  </NAV>
+
 <% else %>
-  <NAV>
-    <UL>
-      <LI>
-	<A href="/log-out">
-	  Log Out
-	</A>
-      </LI>
-    </UL>
-  </NAV>
+      <a href="/log-out" type="button" class="btn btn-default btn-lg">Log Out</a>
 <% end %>
+
+
+
+<hr>
+<!-- Footer -->
+<footer>
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+              <ul class="list-inline text-center">
+                  <li>
+                      <a href="#">
+                          <span class="fa-stack fa-lg">
+                              <i class="fa fa-circle fa-stack-2x"></i>
+                              <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                          </span>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="#">
+                          <span class="fa-stack fa-lg">
+                              <i class="fa fa-circle fa-stack-2x"></i>
+                              <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                          </span>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="#">
+                          <span class="fa-stack fa-lg">
+                              <i class="fa fa-circle fa-stack-2x"></i>
+                              <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                          </span>
+                      </a>
+                  </li>
+              </ul>
+              <p class="copyright text-muted">Copyright &copy; FSPOT 2015</p>
+          </div>
+      </div>
+  </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,135 +1,14 @@
 // Place all the styles related to the MainPage controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
-#header{
-	height: 125px;
-}
-#header h1{
+.container .jumbotron h1 {
 	text-align: center;
-	margin-top: 30px;
-	font-size: 30px;
-}
-.ui-grid-a .ui-btn { 
-	height: 50px; 
-	font-size: 48px !important;
-}
-.main_visual{
-	height: 1000px;
-	border-top: 1px;
-	overflow: hidden;
-	position: relative;
-}
-.main_image{
-	height: 1000px;
-	overflow: hidden;
-	position: relative;
-}
-.main_image ul{
-	width: 800px;
-	height: 1000px;
-	overflow: hidden;
-	position: absolute;
-	top: 0;
-	left: 0px;
-}
-.main_image li{
-	float: left;
-	width: 100%;
-	height: 1000px;
-}
-.main_image li span{
-	display: block;
-	width: 100%;
-	height: 1000px
-}
-.main_image li a{
-	display: block;
-	width: 100%;
-	height: 1000px
+	color: #23241F;
 }
 
-.main_image li .img_1{
-	background-image:url('img_main_1.jpg');
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: cover; 
-}
-.main_image li .img_2{
-	background-image:url('img_main_2.jpg');
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size:cover; 
-}
-.main_image li .img_3{
-	background-image:url('img_main_3.jpg');
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size:cover; 
-}
-.main_image li .img_4{
-	background-image:url('img_main_4.jpg');
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: cover; 
-}
-.main_image li .img_5{
-	background-image:url('img_main_5.jpg');
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size:cover; 
-}
-.main_image li .img_6{
-	background-image:url('img_main_6.jpg');
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size:cover; 
-}
-.main_image li .img_7{
-	background-image:url('img_main_7.jpg');
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: cover; 
-}
-.main_image li .img_8{
-	background-image:url('img_main_8.jpg');
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size:cover; 
-}
-.main_image li .img_9{
-	background-image:url('img_main_9.jpg');
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size:cover; 
-}
-#btn_prev,#btn_next{
-	z-index: 11111;
-	position: absolute;
-	display: block;
-	width: 73px!important;
-	height: 74px!important;
-	top: 50%;
-	margin-top: -37px;
-	display:none;
-}
-#btn_prev{
-	background-image:url(hover_left.png);
-	background-repeat: no-repeat;  
-	position: absolute;
-	left: 5px;
-}
-#btn_next{
-	background-image:url(hover_right.png);
-	background-repeat: no-repeat;
-	position: absolute;
-	right: 5px;
-}
-.snap {
-	padding-top: 50px;
-	height: 150px;
-} 
-.snap .ui-btn { 
-	height: 75px; 
-	font-size: 48px;
+.lazy img {
+	margin-right: auto;
+	margin-left: auto;
+	width: 100%;
+	height: 100%;	
 }

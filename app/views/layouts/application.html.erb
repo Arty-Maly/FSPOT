@@ -1,11 +1,24 @@
 <!DOCTYPE html>
 <html>
-<meta name="apple-mobile-web-app-capable" content="yes" />
 <head>
-  <title>Mvp</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <title>Mvp</title>  
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+
+  <%= stylesheet_link_tag 	 "slick/slick.css" %>
+  <%= stylesheet_link_tag 	 "slick/slick-theme.css" %>
+  <%= stylesheet_link_tag    "bootstrap/clean-blog.min.css" %>
+ 
+
+  <%= javascript_include_tag "slick.js" %>
+  <%= javascript_include_tag "js/jquery.js" %>
+  <%= javascript_include_tag "clean-blog.min.js" %>
+  <!-- Custom Fonts -->
+  <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
 </head>
 <body>
 
