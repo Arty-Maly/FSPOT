@@ -6,4 +6,9 @@ class MainPageControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "should not get index" do
+    logout
+    get :index
+    assert_response :redirect
+  end
 end
