@@ -8,6 +8,9 @@ Mvp::Application.routes.draw do
   post "/log-in" => "sessions#create", as: :log_in
   get "/log-out" => "sessions#destroy", as: :log_out
 
+  get "/sign-up" => "users#new"
+  post "/sign-up" => "users#create", as: :sign_up
+
   get "/main" => "main_page#index", as: :main
 
 

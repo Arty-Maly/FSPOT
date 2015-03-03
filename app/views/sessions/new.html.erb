@@ -2,15 +2,15 @@
   Log In
 </H1>
 
-<% if flash.present? %>
+<% if(flash.present?) %>
   <% flash.each do |msg| %>
     <DIV class="<%=msg[0]%>">
-      <%=msg[1]%>
+      <%= msg[1] %>
         <BR />
 	<BR />
     </DIV>
-  <%end%>
-<%end%>
+  <% end %>
+<% end %>
 
 <%= form_tag log_in_path do%>
   <%= label_tag :email %>
@@ -18,14 +18,12 @@
   <%= label_tag :password %>
   <%= password_field_tag :password %>
   <%= submit_tag "Log in" %>
-<%end%>
+<% end %>
 
 <NAV>
   <UL>
     <LI>
-      <A href="/users/new">
-	Sign Up
-      </A>
+      <%= link_to "Sign Up", sign_up_path %>
     </LI>
   </UL>
 </NAV>

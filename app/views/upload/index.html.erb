@@ -1,83 +1,94 @@
-<head>    
-    <meta name="viewport" content="width=320; user-scalable=no" />
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <title>Upload Pic</title>
+<HEAD>    
+  <META name="viewport" content="width=320; user-scalable=no" />
+  <META http-equiv="Content-type" content="text/html; charset=utf-8">
+
+  <TITLE>
+    Upload Pic
+  </TITLE>
     
-    <script type="text/javascript" charset="utf-8" src="jquery-2.0.0.min.js"></script>
-    <script type="text/javascript" charset="utf-8" src="quantize.js"></script>
-    <script type="text/javascript" charset="utf-8" src="color-thief.js"></script>
+  <SCRIPT type="text/javascript" charset="utf-8" src="jquery-2.0.0.min.js">
+  </SCRIPT>
+
+  <SCRIPT type="text/javascript" charset="utf-8" src="quantize.js">
+  </SCRIPT>
+
+  <SCRIPT type="text/javascript" charset="utf-8" src="color-thief.js">
+  </SCRIPT>
         
-    <style>
+  <STYLE>
     #yourimage {
-        width:100%; 
+      width: 100%; 
     }
-        
+    
     #swatches {
-        width: 100%;
-        height: 50px;   
+      width: 100%;
+      height: 50px;   
     }
 
     .swatch {
-        width:18%;
-        height: 50px;
-        border-style:solid;
-        border-width:thin;  
-        float: left;
-        margin-right: 3px;  
+      width:18%;
+      height: 50px;
+      border-style:solid;
+      border-width:thin;  
+      float: left;
+      margin-right: 3px;  
     }
-    </style>
-</head>
+  </STYLE>
+</HEAD>
  
-    <body>
-        <h1>Upload your Photo</h1>
+<BODY>
+  <H1>
+    Upload your Photo
+  </H1>
 
-        <p><%= link_to "Back To Main Page", main_path %><br></p>
-        <p><%= link_to "Log Out", log_out_path %> </p>
+  <P>
+      <%= link_to "Back To Main Page", main_path %>
+    <BR>
+  </P>
+
+  <P>
+    <%= link_to "Log Out", log_out_path %>
+  </P>
  
-        <input type="file" capture="camera" accept="image/*" id="takePictureField"/>
-        
-        <img id="yourimage"/>
+  <INPUT type="file" capture="camera" accept="image/*" id="takePictureField"/>
+  <IMG id="yourimage"/>
  
-        <!-- <div id="swatches">
-            <div id="swatch0" class="swatch"></div>
-            <div id="swatch1" class="swatch"></div>
-            <div id="swatch2" class="swatch"></div>
-            <div id="swatch3" class="swatch"></div>
-            <div id="swatch4" class="swatch"></div>
-        </div> -->
+  <!-- <DIV id="swatches">
+  <DIV id="swatch0" class="swatch"></DIV>
+  <DIV id="swatch1" class="swatch"></DIV>
+  <DIV id="swatch2" class="swatch"></DIV>
+  <DIV id="swatch3" class="swatch"></DIV>
+  <DIV id="swatch4" class="swatch"></DIV>
+  </DIV> -->
         
-    <script>
-    var desiredWidth;
+  <SCRIPT>
+   var desiredWidth;
 
-    $(document).ready(function() {
-        console.log('onReady');
-        $("#takePictureField").on("change",gotPic);
-        // $("#yourimage").load(getSwatches);
-        desiredWidth = window.innerWidth;
-        
-        if(!("url" in window) && ("webkitURL" in window)) {
-            window.URL = window.webkitURL;   
-        }
-        
-    });
+   $(document).ready(function() {
+     console.log('onReady');
+     $("#takePictureField").on("change",gotPic);
+     // $("#yourimage").load(getSwatches);
+     desiredWidth = window.innerWidth;
+     
+     if(!("url" in window) && ("webkitURL" in window)) {
+       window.URL = window.webkitURL;   
+     }
+   });
 
-    // function getSwatches(){
-    //  var colorArr = createPalette($("#yourimage"), 5);
-    //  for (var i = 0; i < Math.min(5, colorArr.length); i++) {
-    //      $("#swatch"+i).css("background-color","rgb("+colorArr[i][0]+","+colorArr[i][1]+","+colorArr[i][2]+")");
-    //      console.log($("#swatch"+i).css("background-color"));
-    //  }
-    // }    
-    
-    //Credit: https://www.youtube.com/watch?v=EPYnGFEcis4&feature=youtube_gdata_player
-    function gotPic(event) {
-        if(event.target.files.length == 1 && 
-           event.target.files[0].type.indexOf("image/") == 0) {
-            $("#yourimage").attr("src",URL.createObjectURL(event.target.files[0]));
-        }
-    }
-    
-    
-        
-    </script>    
-</body>
+   // function getSwatches(){
+   //  var colorArr = createPalette($("#yourimage"), 5);
+   //  for (var i = 0; i < MATH.min(5, colorArr.length); i++) {
+   //      $("#swatch"+i).css("background-color","rgb("+colorArr[i][0]+","+colorArr[i][1]+","+colorArr[i][2]+")");
+   //      console.log($("#swatch"+i).css("background-color"));
+   //  }
+   // }    
+   
+   //Credit: https://www.youtube.com/watch?v=EPYnGFEcis4&feature=youtube_gdata_player
+   function gotPic(event) {
+     if(event.target.files.length == 1 && 
+        event.target.files[0].type.indexOf("image/") == 0) {
+       $("#yourimage").attr("src",URL.createObjectURL(event.target.files[0]));
+     }
+   }
+  </SCRIPT>    
+</BODY>
