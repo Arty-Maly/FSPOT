@@ -9,92 +9,116 @@
 <% end %>
 
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-  <div class="container-fluid">
+<NAV class="navbar navbar-default navbar-custom navbar-fixed-top">
+  <DIV class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header page-scroll">
-      <a class="navbar-brand" href="/main">Start FSPOT</a>
-    </div>
-  </div>
+    <DIV class="navbar-header page-scroll">
+      <A class="navbar-brand" href="/main">
+	Start FSPOT
+      </A>
+    </DIV>
+  </DIV>
   <!-- /.container -->
-</nav>
+</NAV>
 
 <!-- Page Header -->
-<header class="intro-header" style="background-image: url('/assets/about-bg.jpg')">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="page-heading">
-          <h1>Welcome to FSPOT</h1>
-          <hr class="small">
-          <span class="subheading">find the best food ever</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</header>
+<HEADER class="intro-header" style="background-image: url('/assets/about-bg.jpg')">
+  <DIV class="container">
+    <DIV class="row">
+      <DIV class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <DIV class="page-heading">
+          <H1>
+	    Welcome to FSPOT
+	  </H1>
+
+          <HR class="small">
+
+          <SPAN class="subheading">
+	    find the best food ever
+	  </SPAN>
+        </DIV>
+      </DIV>
+    </DIV>
+  </DIV>
+</HEADER>
 
 <!-- Main Content -->
 
 <% if(session[:user_id] == nil) %>
-  <div class="container">
-    <div class="login">
+  <DIV class="container">
+    <DIV class="login">
       <%= form_tag log_in_path do %>
 	  <% label_tag :email %>
 	  <%= text_field_tag :email, nil, class: 'form-control' %>
 	<BR />
           <% label_tag :password %>
 	  <%= password_field_tag :password, nil, class: 'form-control'  %>
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" value="remember-me"> Remember me
-            </label>
-          </div>
+
+          <DIV class="checkbox">
+            <LABEL>
+              <INPUT type="checkbox" value="remember-me"> Remember me
+            </LABEL>
+          </DIV>
+
 	  <%= submit_tag "Log in", class: "btn btn-lg btn-primary btn-block" %>
-          <a href="/users/new" type="button" class="btn btn-lg btn-primary btn-block">Sign Up</a>
+          <A href="/users/new" type="button" class="btn btn-lg btn-primary btn-block">
+	    Sign Up
+	  </A>
       <% end %>
-    </div>
-  </div>
+    </DIV>
+  </DIV>
 <% else %>
-  <a href="/log-out" type="button" class="btn btn-default btn-lg">Log Out</a>
+  <A href="/log-out" type="button" class="btn btn-default btn-lg">Log Out</A>
 <% end %>
 
-
-
-<hr>
+<HR>
 <!-- Footer -->
-<footer>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <ul class="list-inline text-center">
-          <li>
-            <a href="#">
-              <span class="fa-stack fa-lg">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <span class="fa-stack fa-lg">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <span class="fa-stack fa-lg">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-              </span>
-            </a>
-          </li>
-        </ul>
-        <p class="copyright text-muted">Copyright &copy; FSPOT 2015</p>
-      </div>
-    </div>
-  </div>
-</footer>
+<FOOTER>
+  <DIV class="container">
+    <DIV class="row">
+      <DIV class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <UL class="list-inline text-center">
+          <LI>
+            <A href="#">
+              <SPAN class="fa-stack fa-lg">
+                <I class="fa fa-circle fa-stack-2x">
+		</I>
+
+                <I class="fa fa-twitter fa-stack-1x fa-inverse">
+		</I>
+              </SPAN>
+            </A>
+          </LI>
+
+          <LI>
+            <A href="#">
+              <SPAN class="fa-stack fa-lg">
+                <I class="fa fa-circle fa-stack-2x">
+		</I>
+
+                <I class="fa fa-facebook fa-stack-1x fa-inverse">
+		</I>
+              </SPAN>
+            </A>
+          </LI>
+
+          <LI>
+            <A href="#">
+              <SPAN class="fa-stack fa-lg">
+                <I class="fa fa-circle fa-stack-2x">
+		</I>
+
+                <I class="fa fa-github fa-stack-1x fa-inverse">
+		</I>
+              </SPAN>
+            </A>
+          </LI>
+        </UL>
+
+        <P class="copyright text-muted">
+	  Copyright &copy; FSPOT 2015
+	</P>
+      </DIV>
+    </DIV>
+  </DIV>
+</FOOTER>
