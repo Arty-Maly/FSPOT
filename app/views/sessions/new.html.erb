@@ -1,25 +1,22 @@
+<!-- Navigation -->
 <% if(flash.present?) %>
-  <% flash.each do |msg| %>
-    <DIV class="<%=msg[0]%>">
-      <%= msg[1] %>
-      <BR />
-      <BR />
+  <NAV class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <DIV class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <DIV class="navbar-header page-scroll">
+	<SPAN class="navbar-brand">
+	  <% flash.each do |msg| %>
+	    <DIV class="<%=msg[0]%>">
+	      <%= msg[1] %>
+	    </DIV>
+	  <% end %>
+	</SPAN>
+      </DIV>
     </DIV>
-  <% end %>
+    <!-- /.container -->
+  </NAV>
 <% end %>
 
-<!-- Navigation -->
-<NAV class="navbar navbar-default navbar-custom navbar-fixed-top">
-  <DIV class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <DIV class="navbar-header page-scroll">
-      <A class="navbar-brand" href="/main">
-	Start FSPOT
-      </A>
-    </DIV>
-  </DIV>
-  <!-- /.container -->
-</NAV>
 
 <!-- Page Header -->
 <HEADER class="intro-header" style="background-image: url('/assets/about-bg.jpg')">
