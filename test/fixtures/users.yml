@@ -1,9 +1,10 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
+<% user = User.new %>
 one:
-  email: MyString
-  password_hash: MyString
-  password_salt: MyString
+  email: bob
+  password_hash: <%= user.encrypt_password %>
+  password_salt: <%= user.password_salt %>
 
 two:
   email: MyString
