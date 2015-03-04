@@ -1,29 +1,117 @@
-<H1>
-  Log In
-</H1>
-
 <% if(flash.present?) %>
-  <% flash.each do |msg| %>
-    <DIV class="<%=msg[0]%>">
-      <%= msg[1] %>
-        <BR />
-	<BR />
+  <NAV class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <DIV class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <DIV class="navbar-header page-scroll">
+	<SPAN class="navbar-brand">
+	  <% flash.each do |msg| %>
+	    <DIV class="<%= msg[0] %>">
+	      <%= msg[1] %>
+	    </DIV>
+	  <% end %>
+	</SPAN>
+      </DIV>
     </DIV>
-  <% end %>
+    <!-- /.container -->
+  </NAV>
 <% end %>
 
-<%= form_tag log_in_path do%>
-  <%= label_tag :email %>
-  <%= text_field_tag :email %>
-  <%= label_tag :password %>
-  <%= password_field_tag :password %>
-  <%= submit_tag "Log in" %>
+<HEADER class="intro-header" style="background-image: url('/assets/about-bg.jpg')">
+  <DIV class="container">
+    <DIV class="row">
+      <DIV class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <DIV class="page-heading">
+          <H1>
+	    Welcome to FSPOT
+	  </H1>
+
+          <HR class="small">
+
+          <SPAN class="subheading">
+	    find the best food ever
+	  </SPAN>
+        </DIV>
+      </DIV>
+    </DIV>
+  </DIV>
+</HEADER>
+
+<!-- Main Content -->
+<% if(logged_in?) %>
+  <%= link_to "Log Out", log_out_path, class: "btn btn-default btn-lg" %>
+<% else %>
+  <DIV class="container">
+    <DIV class="login">
+      <%= form_tag log_in_path do%>
+	  <% label_tag :email %>
+	  <%= text_field_tag :email, nil, class: "form-control" %>
+	<BR />
+	  <% label_tag :password %>
+	  <%= password_field_tag :password, nil, class: "form-control" %>
+
+	  <DIV class="checkbox">
+            <LABEL>
+              <INPUT type="checkbox" value="remember-me"> Remember me
+            </LABEL>
+          </DIV>
+
+	  <%= submit_tag "Log in", class: "btn btn-lg btn-primary btn-block" %>
+	  <A href="/users/new" type="button" class="btn btn-lg btn-primary btn-block">
+	    Sign Up
+	  </A>
+      <% end %>
+    </DIV>
+  </DIV>
 <% end %>
 
-<NAV>
-  <UL>
-    <LI>
-      <%= link_to "Sign Up", sign_up_path %>
-    </LI>
-  </UL>
-</NAV>
+<HR>
+<!-- Footer -->
+<FOOTER>
+  <DIV class="container">
+    <DIV class="row">
+      <DIV class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <UL class="list-inline text-center">
+          <LI>
+            <A href="#">
+              <SPAN class="fa-stack fa-lg">
+                <I class="fa fa-circle fa-stack-2x">
+		</I>
+
+                <I class="fa fa-twitter fa-stack-1x fa-inverse">
+		</I>
+              </SPAN>
+            </A>
+          </LI>
+
+          <LI>
+            <A href="#">
+              <SPAN class="fa-stack fa-lg">
+                <I class="fa fa-circle fa-stack-2x">
+		</I>
+
+                <I class="fa fa-facebook fa-stack-1x fa-inverse">
+		</I>
+              </SPAN>
+            </A>
+          </LI>
+
+          <LI>
+            <A href="#">
+              <SPAN class="fa-stack fa-lg">
+                <I class="fa fa-circle fa-stack-2x">
+		</I>
+
+                <I class="fa fa-github fa-stack-1x fa-inverse">
+		</I>
+              </SPAN>
+            </A>
+          </LI>
+        </UL>
+
+        <P class="copyright text-muted">
+	  Copyright &copy; FSPOT 2015
+	</P>
+      </DIV>
+    </DIV>
+  </DIV>
+</FOOTER>

@@ -3,9 +3,9 @@ Mvp::Application.routes.draw do
   
   get "upload/index", as: :upload
   
-  get '/' => 'home#index'
-  get "/log-in" => "sessions#new"
-  post "/log-in" => "sessions#create", as: :log_in
+  # get '/' => 'home#index'
+  get "/" => "sessions#new", as: :root
+  post "/" => "sessions#create", as: :log_in
   get "/log-out" => "sessions#destroy", as: :log_out
 
   get "/sign-up" => "users#new"

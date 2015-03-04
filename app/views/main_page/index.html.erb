@@ -1,17 +1,17 @@
 <div class="container">
-	<div class="jumbotron">
-	    <h1>FSPOT</h1>
-	</div>
+  <div class="jumbotron">
+    <h1>FSPOT</h1>
+  </div>
 
-	<div class="lazy">
-		<% for url_path in get_urls_by_user() do %>
-	        <div>
-	            <img data-lazy =<%= image_url url_path %> />
-	        </div> 
-	    <% end %>
-	</div>
+  <div class="lazy">
+    <% for url_path in get_urls_by_user() do %>
+      <div>
+	<img data-lazy =<%= image_url url_path %> />
+      </div> 
+    <% end %>
+  </div>
 
-	<a href="/upload/index" type="button" class="btn btn-default btn-lg">Upload</a>
+  <a href="/upload/index" type="button" class="btn btn-default btn-lg">Upload</a>
 
 </div>
 
