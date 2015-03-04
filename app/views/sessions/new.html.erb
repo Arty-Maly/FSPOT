@@ -6,7 +6,7 @@
       <DIV class="navbar-header page-scroll">
 	<SPAN class="navbar-brand">
 	  <% flash.each do |msg| %>
-	    <DIV class="<%=msg[0]%>">
+	    <DIV class="<%= msg[0] %>">
 	      <%= msg[1] %>
 	    </DIV>
 	  <% end %>
@@ -16,7 +16,6 @@
     <!-- /.container -->
   </NAV>
 <% end %>
-
 
 <!-- Page Header -->
 <HEADER class="intro-header" style="background-image: url('/assets/about-bg.jpg')">
@@ -40,32 +39,31 @@
 </HEADER>
 
 <!-- Main Content -->
-
-<% if(session[:user_id] == nil) %>
+<% if(logged_in?) %>
+  <%= link_to "Log Out", log_out_path, class: "btn btn-default btn-lg" %>
+<% else %>
   <DIV class="container">
     <DIV class="login">
-      <%= form_tag log_in_path do %>
+      <%= form_tag log_in_path do%>
 	  <% label_tag :email %>
-	  <%= text_field_tag :email, nil, class: 'form-control' %>
+	  <%= text_field_tag :email, nil, class: "form-control" %>
 	<BR />
-          <% label_tag :password %>
-	  <%= password_field_tag :password, nil, class: 'form-control'  %>
+	  <% label_tag :password %>
+	  <%= password_field_tag :password, nil, class: "form-control" %>
 
-          <DIV class="checkbox">
+	  <DIV class="checkbox">
             <LABEL>
               <INPUT type="checkbox" value="remember-me"> Remember me
             </LABEL>
           </DIV>
 
 	  <%= submit_tag "Log in", class: "btn btn-lg btn-primary btn-block" %>
-          <A href="/users/new" type="button" class="btn btn-lg btn-primary btn-block">
+	  <A href="/users/new" type="button" class="btn btn-lg btn-primary btn-block">
 	    Sign Up
 	  </A>
       <% end %>
     </DIV>
   </DIV>
-<% else %>
-  <A href="/log-out" type="button" class="btn btn-default btn-lg">Log Out</A>
 <% end %>
 
 <HR>
