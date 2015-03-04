@@ -4,13 +4,13 @@ class SessionsController < ApplicationController
 
   def create
     #try to authenticate the user - if they authenticate successfully, an instance of the User model is returned
-    @user_reg = User.authenticate(params[:email], params[:password])
+    @user = User.authenticate(params[:email], params[:password])
     #if an instance is returned and @user is not nil...
-    if(@user_reg)
+    if(@user)
       #let the user know they've been logged in with a flash message
       flash[:notice] = "You've been logged in."
       #THIS IS THE MOST IMPORTANT PART. Actually log the user in by storing their ID in the session hash with the [:user_id] key!
-      session[:user_id] = @user_reg.id
+      session[:user_id] = @user.id
       #then redirect them to the homepage
       redirect_to main_path
     else
