@@ -1,3 +1,4 @@
+<!-- Navigation -->
 <% if(flash.present?) %>
   <NAV class="navbar navbar-default navbar-custom navbar-fixed-top">
     <DIV class="container-fluid">
@@ -16,6 +17,7 @@
   </NAV>
 <% end %>
 
+<!-- Page Header -->
 <HEADER class="intro-header" style="background-image: url('/assets/about-bg.jpg')">
   <DIV class="container">
     <DIV class="row">
@@ -62,6 +64,10 @@
       <% end %>
     </DIV>
   </DIV>
+<% else %>
+  <A href="/log-out" type="button" class="btn btn-default btn-lg">
+    Log Out
+  </A>
 <% end %>
 
 <HR>
