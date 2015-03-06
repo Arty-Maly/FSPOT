@@ -1,5 +1,4 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
-
 <% user = User.new %>
 one:
   email: bob
