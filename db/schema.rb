@@ -17,9 +17,12 @@ ActiveRecord::Schema.define(version: 20150305194451) do
     t.string   "name"
     t.text     "description"
     t.string   "picture"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "uploads", ["user_id"], name: "index_uploads_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "email"
