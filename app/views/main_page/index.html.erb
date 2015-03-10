@@ -1,17 +1,29 @@
+<!-- header -->
+<%= render 'main_page/header' %>
+
+<!-- search -->
 <div class="container">
-  <div class="jumbotron">
-    <h1>FSPOT</h1>
-  </div>
-
-  <div class="lazy">
-    <% for url_path in get_urls_by_user() do %>
-      <div>
-	<img data-lazy =<%= image_url url_path %> />
-      </div> 
-    <% end %>
-  </div>
-
-  <a href="/upload/index" type="button" class="btn btn-default btn-lg">Upload</a>
-
+	<%= form_tag '/main', :method => 'get' do %>
+	<%= text_field_tag :search %>
+	<%= submit_tag "search", :name => nil, class: "btn btn-default btn-lg" %>
+	<% end %>
 </div>
 
+
+<!-- slider -->
+<div class="container">
+  <div class="lazy">
+	<% @uploads.each do |upload| %>
+	<div>
+		<img data-lazy =<%= image_url upload.picture_url %>>
+	</div>
+    <% end %>
+</div>
+
+<!--upload-->
+<div>
+  <a href="/upload/index" type="button" class="btn btn-default btn-lg">Upload</a>
+</div>
+
+<!-- Footer -->
+<%= render 'main_page/footer' %>

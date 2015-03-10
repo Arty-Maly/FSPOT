@@ -1,13 +1,21 @@
-<H1>
-  Sign Up
-</H1>
+<!-- header -->
+<%= render 'main_page/header' %>
 
-<%= form_for User.new do |f| %>
-  <%= f.label :email %>
-  <%= f.text_field :email %>
-  <%= f.label :password %>
-  <%= f.password_field :password %>
-  <%= f.label :password_confirmation %>
-  <%= f.password_field :password_confirmation %>
-  <%= f.submit "Sign Up" %>
-<% end %>
+<!-- Main Content -->
+  <DIV class="container">
+      <%= form_for User.new do |f| %>
+        <%= f.label :email %>
+		<%= f.text_field :email, class: "form-control"  %>
+		<%= f.label :password %>
+		<%= f.password_field :password, class: "form-control"  %>
+		<%= f.label :password_confirmation %>
+		<%= f.password_field :password_confirmation, class: "form-control"  %>
+		<br>
+		<%= submit_tag "Sign Up", class: "btn btn-lg btn-primary btn-block" %>
+      <% end %>
+  </DIV>
+
+<!-- Footer -->
+<%= render 'main_page/footer' %>
+
+

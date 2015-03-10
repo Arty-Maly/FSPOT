@@ -5,6 +5,8 @@ class CreateUploads < ActiveRecord::Migration
       t.text :description
       t.string :picture
 
+      t.references :user, index: true
+
       t.timestamps
     end
   end

@@ -18,25 +18,7 @@
 <% end %>
 
 <!-- Page Header -->
-<HEADER class="intro-header" style="background-image: url('/assets/about-bg.jpg')">
-  <DIV class="container">
-    <DIV class="row">
-      <DIV class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <DIV class="page-heading">
-          <H1>
-	    Welcome to FSPOT
-	  </H1>
-
-          <HR class="small">
-
-          <SPAN class="subheading">
-	    find the best food ever
-	  </SPAN>
-        </DIV>
-      </DIV>
-    </DIV>
-  </DIV>
-</HEADER>
+<%= render 'main_page/header' %>
 
 <!-- Main Content -->
 <% if(logged_in?) %>
@@ -68,52 +50,4 @@
 
 <HR>
 <!-- Footer -->
-<FOOTER>
-  <DIV class="container">
-    <DIV class="row">
-      <DIV class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <UL class="list-inline text-center">
-          <LI>
-            <A href="#">
-              <SPAN class="fa-stack fa-lg">
-                <I class="fa fa-circle fa-stack-2x">
-		</I>
-
-                <I class="fa fa-twitter fa-stack-1x fa-inverse">
-		</I>
-              </SPAN>
-            </A>
-          </LI>
-
-          <LI>
-            <A href="#">
-              <SPAN class="fa-stack fa-lg">
-                <I class="fa fa-circle fa-stack-2x">
-		</I>
-
-                <I class="fa fa-facebook fa-stack-1x fa-inverse">
-		</I>
-              </SPAN>
-            </A>
-          </LI>
-
-          <LI>
-            <A href="#">
-              <SPAN class="fa-stack fa-lg">
-                <I class="fa fa-circle fa-stack-2x">
-		</I>
-
-                <I class="fa fa-github fa-stack-1x fa-inverse">
-		</I>
-              </SPAN>
-            </A>
-          </LI>
-        </UL>
-
-        <P class="copyright text-muted">
-	  Copyright &copy; FSPOT 2015
-	</P>
-      </DIV>
-    </DIV>
-  </DIV>
-</FOOTER>
+<%= render 'main_page/footer' %>
