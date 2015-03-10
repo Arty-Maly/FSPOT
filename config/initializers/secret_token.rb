@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Mvp::Application.config.secret_key_base = 'f489a4f651b03ff2d58ae73dc97cc0bbf23639cd994f926acdd15ed3739b18d34d946b7e9b60ed384b060353b3fa46b41e718fa35d5c896dc2d52bf0b81a16f1'
+Mvp::Application.config.secret_key_base = '<token>'
