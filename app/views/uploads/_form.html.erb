@@ -1,3 +1,23 @@
+
+<script>
+function readURL(input) {
+if (input.files && input.files[0]) {
+var reader = new FileReader();
+
+reader.onload = function (e) {
+$('#img_prev')
+.attr('src', e.target.result)
+.width(500)
+.height(500);
+};
+
+reader.readAsDataURL(input.files[0]);
+}
+}
+</script>
+
+
+
 <%= form_for(@upload) do |f| %>
   <% if @upload.errors.any? %>
     <div id="error_explanation">
@@ -19,11 +39,16 @@
     <%= f.label :description %><br>
     <%= f.text_area :description %>
   </div>
-  <div class="field">
+  <div class="upload">
+
     <%= f.label :picture %><br>
-    <%= f.file_field :picture %>
+    <%= f.file_field :picture, accept: 'image/jpeg', :onchange => "readURL(this);" %>
+    <img id="img_prev" src="#" alt="your image" />
+
   </div>
   <div class="actions">
     <%= f.submit %>
+
   </div>
+
 <% end %>

@@ -12,6 +12,9 @@
 #video{
 	display: none;
 }
+img[src="#"] {
+  display:none;
+}
 #canvas{
 	margin-left: 640px;  
 	width: 640px;

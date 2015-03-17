@@ -1,5 +1,5 @@
-<!-- Navigation -->
-<% if(flash.present?) %>
+
+<!-- Navigation --><% if(flash.present?) %>
   <NAV class="navbar navbar-default navbar-custom navbar-fixed-top">
     <DIV class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -28,10 +28,10 @@
     <DIV class="login">
       <%= form_tag log_in_path do %>
 	  <% label_tag :email %>
-	  <%= text_field_tag :email, nil, class: "form-control" %>
+	  <%= text_field_tag :email, nil, class: "form-control", placeholder: "email" %>
 	<BR />
 	  <% label_tag :password %>
-	  <%= password_field_tag :password, nil, class: "form-control" %>
+	  <%= password_field_tag :password, nil, class: "form-control", placeholder: "password" %>
 
 	  <DIV class="checkbox">
             <LABEL>
@@ -49,5 +49,4 @@
 <% end %>
 
 <HR>
-<!-- Footer -->
-<%= render 'main_page/footer' %>
+

@@ -1,29 +1,84 @@
-<!-- header -->
-<%= render 'main_page/header' %>
-
-<!-- search -->
-<div class="container">
-	<%= form_tag '/main', :method => 'get' do %>
-	<%= text_field_tag :search %>
-	<%= submit_tag "search", :name => nil, class: "btn btn-default btn-lg" %>
-	<% end %>
-</div>
-
-
-<!-- slider -->
-<div class="container">
-  <div class="lazy">
-	<% @uploads.each do |upload| %>
-	<div>
-		<img data-lazy =<%= image_url upload.picture_url %>>
+<!-- search navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-2 col-lg-2">
+				<button type="button" class="btn btn-default" >
+				  <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+				</button>
+			</div>
+			<div class="col-xs-8 col-lg-8">
+				<%= form_tag '/main', :method => 'get' do %>			   		 	
+				<%= text_field_tag :search, nil, class: "form-control" %>
+			    <% submit_tag "search", :name => nil %>	
+				<% end %>
+		    </div>
+		    <div class="col-xs-2 col-lg-2">
+		    	<button type="button" class="btn btn-default" >
+				  <span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span> 
+				</button>
+		    </div>
+		</div>
 	</div>
-    <% end %>
 </div>
+
+<!-- slider with name, description and img -->
+<div class="container" id="slider">
+	<div class="lazy">
+		<% @uploads.each do |upload| %>
+		<div>
+			<H1><%= upload.name %></H1>
+			<HR class="small">
+			<%= upload.description %>
+			<div class="container">
+				<img id="img" data-lazy =<%= image_url upload.picture_url %>>
+			</div>
+		</div>
+    <% end %>
+    </div>
+</div>
+
+<!-- navbar favourite,dislike -->
+<div class="container" id="nav-button">
+	<div class="row">
+		<div class="col-xs-3 col-lg-3">
+		</div>
+		<div class="col-xs-6 col-lg-6">
+			<button type="button" class="btn btn-default" >
+			  <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+			</button>
+			<button type="button" class="btn btn-default" >
+			  <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+			</button>
+			<button type="button" class="btn btn-default" >
+			  <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> 
+			</button>
+	    </div>
+	    <div class="col-xs-3 col-lg-3">
+	    </div>
+	</div>
+</div>
+
 
 <!--upload-->
-<div>
-  <a href="/upload/index" type="button" class="btn btn-default btn-lg">Upload</a>
+<div class="navbar navbar-default navbar-fixed-bottom", role="navigation">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-6 col-lg-6">
+				<p>Geolocation here</p>
+			</div>
+			<div class="col-xs-6 col-lg-6">
+				<div class="upload">
+				  <a href="/upload/index" type="button" class="btn btn-default btn-lg pull-right">
+				  	<span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
+				  </a>
+				</div>	
+			</div>	
+		</div>
+	</div>
 </div>
 
-<!-- Footer -->
-<%= render 'main_page/footer' %>
+
+
+
+
