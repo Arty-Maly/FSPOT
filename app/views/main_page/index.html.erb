@@ -28,6 +28,7 @@
 		<% @uploads.each do |upload| %>
 		<div>
 			<H1><%= upload.name %></H1>
+			Uploaded By: @<%=User.find(upload.user_id).email %>
 			<HR class="small">
 			<%= upload.description %>
 			<div class="container">
