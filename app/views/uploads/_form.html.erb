@@ -44,6 +44,7 @@ reader.readAsDataURL(input.files[0]);
     <%= f.label :picture %><br>
     <%= f.file_field :picture, accept: 'image/jpeg', :onchange => "readURL(this);" %>
     <img id="img_prev" src="#" alt="your image" />
+     <%= f.hidden_field :user_id, :value => session[:user_id] %>
 
   </div>
   <div class="actions">
