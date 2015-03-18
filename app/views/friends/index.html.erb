@@ -1,0 +1,15 @@
+<%= form_tag '/friends', :method => 'get' do %>			   		 	
+<%= text_field_tag :search, nil %>
+<%= submit_tag "search", :name => nil, :action => 'index' %>	
+<% end %>
+
+<p>Following friends</p>
+<% @users.each do |user| %>
+<%= form_tag '/friends', :method => 'POST' do %>	
+
+<%= user.email %>
+<%= hidden_field_tag :user, :value => user.id %>
+<%= submit_tag "follow" %>
+</br>
+<% end %>
+<% end %>

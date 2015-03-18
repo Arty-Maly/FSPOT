@@ -15,6 +15,12 @@ Mvp::Application.routes.draw do
 
   get "/main" => "main_page#index", as: :main
 
+  get "/friends" => "friends#index"
+
+  post "/friends" => "friends#follow"
+
+  get "/maps" => "maps#index"
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
