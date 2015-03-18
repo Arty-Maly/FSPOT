@@ -11,9 +11,9 @@ class FriendsController < ApplicationController
 	end
 
 	def follow
-		puts "============================================="
-		puts params[:user]
-		redirect_to "/friends"
+		User.find(session[:user_id]).follow(User.find(params[:user]))
+		User.find(params[:user]).follow(User.find(session[:user_id]))
+		
 	end
 
 
