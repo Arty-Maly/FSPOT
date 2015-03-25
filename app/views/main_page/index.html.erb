@@ -1,4 +1,22 @@
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+<script>
 
+     function findLocation() {
+        navigator.geolocation.getCurrentPosition(show);
+
+     }
+
+     function show(position){
+     	var geoLat = document.getElementById("geolat");
+		var geoLng = document.getElementById("geolng");
+		var lat = position.coords.latitude;
+		var lng = position.coords.longitude;
+		geoLat.innerHTML = "Latitude:" + lat;
+		geoLng.innerHTML = "Longitude" + lng;	
+     }
+
+	google.maps.event.addDomListener(window, 'load', findLocation);
+</script>
 <!-- search navbar -->
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
 	<div class="container">
@@ -78,7 +96,9 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-6 col-lg-6">
-				<p>Geolocation here</p>
+				<p>Brandeis University</p>
+				<p id="geolat"></p>
+				<p id="geolng"></p>
 			</div>
 			<div class="col-xs-6 col-lg-6">
 				<div class="upload">
