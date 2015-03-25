@@ -1,22 +1,20 @@
 <script src="https://maps.googleapis.com/maps/api/js"></script>
 <script>
-  $( document ).ready(function() {
 
-     navigator.geolocation.getCurrentPosition(showMap);
+     function findLocation() {
+        navigator.geolocation.getCurrentPosition(showMap);
+     }
 
-     function showMap(position) {
-      
+     function showMap(position) { 
       var mapCanvas = document.getElementById('map-canvas');
-
-      var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
+      //var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      var latlng = new google.maps.LatLng(42.3654347, -71.258595);
       var mapOptions = {
         center: latlng,
         zoom: 14,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       }
       var map = new google.maps.Map(mapCanvas, mapOptions)
-
       var marker = new google.maps.Marker({
         position: latlng,
         title: "your position"
@@ -24,51 +22,83 @@
       marker.setMap(map);
     }
 
-    function codeAddress(){
-      var address = document.getElementById('address').value;
+    function findAddress(){
+      var address = document.getElementById('address').value;  
+      var latlng = new google.maps.LatLng(42.36, -71.25);
+      var mapOptions = {
+        zoom: 14,
+        center: latlng
+      }
+      map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+      geocoder = new google.maps.Geocoder();  
       geocoder.geocode({'address':address},function(results, status){
-        if (status == google.maps.GeocoderStatus.OK) {
           map.setCenter(results[0].geometry.location);
           var marker = new google.maps.Marker({
             map: map,
             position: results[0].geometry.location
           });
-        } else {
-          alert('Geocode was not successful for the following reason: ' + status);
-        }
       });
     }
 
-});
+    google.maps.event.addDomListener(window, 'load', showMap);
 </script>
+
 
 <!-- search navbar -->
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-	<div class="container">
-		<div class="row">
-			<div class="col-xs-3 col-lg-3">
-				<a href="#" type="button" class="btn btn-default">
-				  	<span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
-				</a>
-			</div>
-			<div class="col-xs-6 col-lg-6">
-				<%= form_tag '/maps/index', :method => 'get' do %>			   		 	
-				<%= text_field_tag :search_location, nil, class: "form-control", id: "address" %>
-			  <% submit_tag "search", :name => nil, :onclick => "return codeAddress();"  %>	
-				<% end %>
-		    </div>
-		    <div class="col-xs-3 col-lg-3">
-			    <a href="/main" type="button" class="btn btn-default">
-				  	<span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>
-				</a>
-		    </div>
-		</div>
-	</div>
-</div>
-  	
-<div class="container" id="map-canvas">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-2 col-lg-2">
+        <a href="#" type="button" class="btn btn-default">
+            <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+        </a>
+      </div>
 
+      <div class="col-xs-8 col-lg-8">
+        <form class="form-search form-horizontal" action="/maps" method='get'>
+          <input type="text" class="form-control" id="address" placeholder="Location" >
+          <input type="button" value="Search" class="btn btn-primary btn-sm" onclick="findAddress()">
+        </form>
+      </div>
+
+      <div class="col-xs-2 col-lg-2">
+        <a href="/main" type="button" class="btn btn-default">
+            <span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>
+        </a>
+      </div>
+    </div>
+  </div>
 </div>
+    
+<!-- map -->    
+<div class="container" id="showData">
+  <div class="row">
+    <div class="col-xs-6 col-lg-6" id="yelp-data">
+        <% for i in (0...@nRow) %>
+          <div class="row">
+            <% for j in (0...@nCol) %>
+                <div class="col-xs-3 col-lg-3">
+                  <img src=<%= @searchArray[i * @nCol + j]['image_url'] %> />
+                  <h7><%= @searchArray[i * @nCol + j]['name'] %></h7>
+                  <p>Rating:<%= @searchArray[i * @nCol + j]['rating'] %></p>
+                  <p><%= @searchArray[i * @nCol + j]['location'] %></p>
+                </div>  
+          <% end %>
+           </div>
+        <% end %>
+    </div>
+
+    <div class="col-xs-6 col-lg-6" id="map-canvas">
+
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
 
 
 
