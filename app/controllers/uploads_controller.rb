@@ -24,7 +24,6 @@ class UploadsController < ApplicationController
   # POST /uploads
   # POST /uploads.json
   def create
-    
     @upload = Upload.new(upload_params)
 
     respond_to do |format|
