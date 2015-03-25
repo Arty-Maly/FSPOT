@@ -11,6 +11,8 @@ end
 group :production, :test do
   gem 'pg'
   gem "activerecord-postgresql-adapter"
+  gem 'rails_serve_static_assets'
+  gem 'rails_stdout_logging'
 end
 
 # Use SCSS for stylesheets
