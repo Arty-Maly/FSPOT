@@ -36,6 +36,10 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'bcrypt'
 gem 'carrierwave'
+# In order to store our credentials for Amazon S3
+gem 'figaro'
+# In order for carrierwave to communicate with Amazon S3
+gem 'fog'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

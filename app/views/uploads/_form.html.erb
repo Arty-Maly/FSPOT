@@ -1,55 +1,60 @@
+<SCRIPT>
+  function readURL(input) {
+    if(input.files && input.files[0]) {
+      var reader = new FileReader();
 
-<script>
-function readURL(input) {
-if (input.files && input.files[0]) {
-var reader = new FileReader();
+      reader.onload = function (e) {
+        $('#img_prev')
+	  .attr('src', e.target.result)
+	  .width(500)
+	  .height(500);
+      };
 
-reader.onload = function (e) {
-$('#img_prev')
-.attr('src', e.target.result)
-.width(500)
-.height(500);
-};
-
-reader.readAsDataURL(input.files[0]);
-}
-}
-</script>
-
-
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+</SCRIPT>
 
 <%= form_for(@upload) do |f| %>
   <% if @upload.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@upload.errors.count, "error") %> prohibited this upload from being saved:</h2>
+    <DIV id="error_explanation">
+      <H2>
+	<%= pluralize(@upload.errors.count, "error") %> prohibited this upload from being saved:
+      </H2>
 
-      <ul>
-      <% @upload.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
+      <UL>
+	<% @upload.errors.full_messages.each do |msg| %>
+          <LI>
+	    <%= msg %>
+	  </LI>
+	<% end %>
+      </UL>
+    </DIV>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
-  </div>
-  <div class="upload">
+  <DIV class="field">
+      <%= f.label :name %>
+    <BR />
+      <%= f.text_field :name %>
+  </DIV>
 
-    <%= f.label :picture %><br>
-    <%= f.file_field :picture, accept: 'image/jpeg', :onchange => "readURL(this);" %>
-    <img id="img_prev" src="#" alt="your image" />
-     <%= f.hidden_field :user_id, :value => session[:user_id] %>
+  <DIV class="field">
+      <%= f.label :description %>
+    <BR />
+      <%= f.text_area :description %>
+  </DIV>
 
-  </div>
-  <div class="actions">
+  <DIV class="upload">
+      <%= f.label :picture %>
+    <BR />
+      <%= f.file_field :picture, accept: 'image/jpeg', :onchange => "readURL(this);" %>
+
+      <IMG id="img_prev" src="#" alt="your image" />
+
+      <%= f.hidden_field :user_id, :value => session[:user_id] %>
+  </DIV>
+
+  <DIV class="actions">
     <%= f.submit %>
-
-  </div>
-
+  </DIV>
 <% end %>
