@@ -1,75 +1,64 @@
-
 <% if(flash.present?) %>
   <% flash.each do |msg| %>
-    <div class="<%=msg[0]%>">
-      <%=msg[1]%>
-    </div>
+    <DIV class="<%= msg[0] %>">
+      <%= msg[1] %>
+    </DIV>
   <% end %>
 <% end %>
 
 
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-  <div class="container-fluid">
+<NAV class="navbar navbar-default navbar-custom navbar-fixed-top">
+  <DIV class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header page-scroll">
-      <a class="navbar-brand" href="/main">Start FSPOT</a>
-    </div>
-  </div>
+    <DIV class="navbar-header page-scroll">
+      <%= link_to "Start FSPOT", main_path, class: "navbar-brand" %>
+      <!-- <A class="navbar-brand" href="/main">Start FSPOT</A> -->
+    </DIV>
+  </DIV>
   <!-- /.container -->
-</nav>
+</NAV>
 
 <!-- Page Header -->
 <%= render 'main_page/header' %>
 
 <!-- Main Content -->
 <% if(session[:user_id] == nil) %>
-  <div class="container">
-    <div class="login">
-      <form class="form-signin">
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input class="form-control"><br>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input class="form-control">
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
-        </div>
-        <a href="/main" type="button" class="btn btn-lg btn-primary btn-block">Log In</a>
-        <a href="/users/new" type="button" class="btn btn-lg btn-primary btn-block">Sign Up</a>
-      </form>
-    </div>
-  </div>
+  <DIV class="container">
+    <DIV class="login">
+      <FORM class="form-signin">
+          <LABEL for="inputEmail" class="sr-only">
+	    Email address
+	  </LABEL>
+
+          <INPUT class="form-control">
+	<BR />
+          <LABEL for="inputPassword" class="sr-only">
+	    Password
+	  </LABEL>
+
+          <INPUT class="form-control">
+
+          <DIV class="checkbox">
+            <LABEL>
+              <INPUT type="checkbox" value="remember-me"> Remember me
+            </LABEL>
+          </DIV>
+
+	  <%= link_to "Log In", main_path, class: "btn btn-lg btn-primary btn-block" %>
+	  <!-- <A href="/main" type="button" class="btn btn-lg btn-primary btn-block">Log In</A> -->
+	  <%= link_to "Sign Up", sign_up_path, class: "btn btn-lg btn-primary btn-block" %>
+	  <!-- <A href="/users/new" type="button" class="btn btn-lg btn-primary btn-block">Sign Up</A> -->
+      </FORM>
+    </DIV>
+  </DIV>
 <% else %>
-  <a href="/log-out" type="button" class="btn btn-default btn-lg">Log Out</a>
+  <%= link_to "Log Out", log_out_path, class: "btn btn-default btn-lg" %>
+  <!-- <A href="/log-out" type="button" class="btn btn-default btn-lg">Log Out</A> -->
 <% end %>
 
 
 
-<hr>
+<HR>
 <!-- Footer -->
 <%= render 'main_page/footer' %>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
