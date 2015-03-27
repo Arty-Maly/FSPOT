@@ -71,4 +71,8 @@ class UploadsController < ApplicationController
     def upload_params
       params.require(:upload).permit(:name, :description, :picture, :user_id)
     end
+
+    def name_exists?(file_name)
+      Upload.where(picture: file_name).empty?
+    end
 end
