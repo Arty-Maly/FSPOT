@@ -21,6 +21,8 @@ Mvp::Application.routes.draw do
 
   get "/maps" => "maps#index"
 
+  get "/uploads/new" => "uploads#new"
+
   
 
 

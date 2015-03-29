@@ -1,102 +1,173 @@
+<script src="https://maps.googleapis.com/maps/api/js"></script>
 <script>
-    navigator.geolocation.getCurrentPosition(show);
+    navigator.geolocation.getCurrentPosition(geocodedAddress);
 
-    function show(position){
-        var geoLat = document.getElementById("geolat");
-    		var geoLng = document.getElementById("geolng");
-    		var lat = position.coords.latitude;
-    		var lng = position.coords.longitude;
-    		geoLat.innerHTML = "Latitude:" + lat;
-    		geoLng.innerHTML = "Longitude" + lng;	
+    function geocodedAddress(position){
+  		var geo = document.getElementById("geo");
+  		var lat = position.coords.latitude;
+  		var lng = position.coords.longitude;
+
+
+  		var geocoder = new google.maps.Geocoder();
+  		var latlng = new google.maps.LatLng(lat, lng);
+
+  		geocoder.geocode({'latLng': latlng}, function(results, status) {
+		    if (status == google.maps.GeocoderStatus.OK) {
+		      if (results[1]) {
+		      	geo.innerHTML = (results[1].formatted_address);
+		      } else {
+		        alert('No results found');
+		      }
+		    } else {
+		      alert('Geocoder failed due to: ' + status);
+		    }
+		  });
      }
 </script>
 
-<!-- search navbar -->
-<div class="navbar navbar-default navbar-fixed-top" role="navigation">
-	<div class="container">
-		<div class="row">
-			<div class="col-xs-3 col-lg-3">
-				<a href="/friends" type="button" class="btn btn-default btn-sm pull-left">
-				  	<span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
-				</a>
-			</div>
+<script type="text/javascript">
+      $(function() {
+         $('nav#menu').mmenu();
+      });
+</script>
 
-
-			<div class="col-xs-6 col-lg-6" >
-				<div class="panel panel-default">
-					<form action ="/main" method='get'>
-						<input type="text" name="search" class="form-control" data-toggle="collapse" href="#collapseOne">
-					</form>
-					<div id="collapseOne" class="panel-collapse collapse ">
-	      				<div class="panel-body">
-	      					<div class="button-group">						
-								<button class="btn btn-default btn-sm " >By Category</button>
-								<button class="btn btn-default btn-sm " >By Place</button>
-							</div>			
-	      				</div>
-	      			</div>
-				</div>
-		    </div>
-
-		    <div class="col-xs-3 col-lg-3">
-		    	  <a href="/maps" type="button" class="btn btn-default btn-sm pull-right">
-				  	<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
-				  </a>
-		    </div>
-
-		</div>
-	</div>
+<!-- header -->
+<div class="right">
+  <a href="/maps"></a> 
+</div>
+<div id="page">
+   <div id="header_nav">
+      <a href="#menu"></a>
+   </div>
+    <nav id="menu">
+      <ul>
+         <li class="Selected"><a href="#"></a></li>
+         <li><a href="/friends">Following Friends</a></li>
+         <li><a href="#"></a></li>
+         <li><a href="#">Entertainment</a></li>
+         <li><a href="#">Mobility</a></li>
+      </ul>
+   </nav>
 </div>
 
-<!-- slider with name, description and img -->
-<div class="container" id="slider">
-	<div class="lazy">
-		<% @uploads.each do |upload| %>
-		<div>
-			<H1><%= upload.name %></H1>
-			Uploaded By: @<%=User.find(upload.user_id).email %>
-			<HR class="small">
-			<%= upload.description %>
-			<div class="container">
-				<img id="img" data-lazy =<%= image_url upload.picture_url %>>
-			</div>
-		</div>
-    <% end %>
+<!-- search-->
+<div class="banner">
+     <div class="container_wrap">
+      <h1>F-SPOT</h1>
+          <div class="dropdown-buttons">   
+            <div class="dropdown-button">                   
+               <select class="dropdown" tabindex="9" data-settings='{"wrapperClass":"flat"}'>
+               <option value="0">Food Catogory</option>  
+               <option value="1">Pizza</option>
+               <option value="2">Burger</option>
+               <option value="3">Salad</option>
+               <option value="4">Chinese Food</option>
+               <option value="5">Cake</option>
+               </select>
+            </div>
+             <div class="dropdown-button">
+              <select class="dropdown" tabindex="9" data-settings='{"wrapperClass":"flat"}'>
+               <option value="0">Place</option> 
+               <option value="1">Boston</option>
+              </select>
+            </div>
+         </div>
+
+       <form action="/main" method="get">
+         <input type="text" name="search" >
+          <div class="contact_btn">
+               <label class="btn1 btn-2 btn-2g"><input name="submit" type="submit" id="submit" value="Search"></label>
+          </div>
+      </form>              
+     </div>
+</div>
+
+<!-- slider with food's name, image-->
+<div class="content_middle">
+  <div class="container">
+    <div class="content_middle_box">
+        <div class="col-lg-3">
+          <div class="lazy">
+            <% @uploads.each do |upload| %>
+            <div class="inner_wrap">
+              <h1><%= upload.name %></h1>
+              <h4>Uploaded By: @<%=User.find(upload.user_id).email %></h4><br>
+              <h4 class="green"><%= upload.description %></h4>
+              <img data-lazy =<%= image_url upload.picture_url %>><br>
+            </div>
+            <% end %>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- like the food or dislike -->
+<div class="content_middle">
+  <div class="container">
+    <div class="content_middle_box">
+        <div class="col-lg-3">
+          <div class="button-group" style="margin-left:25%;">
+            <button type="button" class="btn btn-default btn-lg " >
+              <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="btn btn-default btn-lg " >
+              <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="btn btn-default btn-lg " >
+              <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 </div>
 
-<!-- navbar favourite,dislike -->
-<div class="container" id="like">
-	<div class="row">
-		<center>
-			<div class="button-group">
-				<button type="button" class="btn btn-default btn-lg " >
-				  <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
-				</button>
-				<button type="button" class="btn btn-default btn-lg " >
-				  <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
-				</button>
-				<button type="button" class="btn btn-default btn-lg " >
-				  <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-				</button>
-			</div>
-		</center>
-	</div>
+
+<!-- add comments-->
+<div class="banner" >
+     <div class="container_wrap">
+       <form action="" method="get">
+         <input type="text" name="search" placeholder="add comments">
+          <div class="contact_btn">
+               <label class="btn1 btn-2 btn-2g"><input name="submit" type="submit" id="submit" value="submit"></label>
+          </div>
+      </form>              
+     </div>
+</div>
+
+
+<!-- show comments-->
+<div class="container">
+  <div class="col-lg-3">
+      <div class="inner_wrap1">
+          <ul class="item_module">
+            <li class="module_left"><img src="/assets/m1.jpg" class="img-responsive" alt=""/></li>
+            <li class="module_right">
+              <img src="/assets/m_star.png" class="img-responsive" alt=""/>
+              <h5>Jane</h5>
+              <p>"I like it"</p>
+
+            </li>
+            <div class="clear"> </div>
+           </ul>
+      </div>
+  </div>
 </div>
 
 
 <!--upload-->
-<div class="navbar navbar-default navbar-fixed-bottom", role="navigation">
+<div class="navbar navbar-default", role="navigation">
 	<div class="container">
 		<div class="row">
-			<div class="col-xs-6 col-lg-6">
-				<p>Brandeis University</p>
-				<p id="geolat"></p>
-				<p id="geolng"></p>
+			<div class="col-lg-6">
+				<p id="geo"></p>
 			</div>
-			<div class="col-xs-6 col-lg-6">
+			<div class="col-lg-6">
 				<div class="upload">
-				  <a href="/upload/index" type="button" class="btn btn-default btn-lg pull-right">
+				  <a href="/uploads/new" type="button" class="btn btn-default btn-lg pull-right">
 				  	<span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
 				  </a>
 				</div>	

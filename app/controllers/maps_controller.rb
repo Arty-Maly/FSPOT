@@ -9,9 +9,8 @@ class MapsController < ApplicationController
 		else
 			searchLocation = "Waltham"		
 		end
-		puts "-----------------------"
-		puts searchLocation
 
+		#find the data through yelp api
 		#maximum of @nRow * @nCol <= 20
 		@nRow = 6
 		@nCol = 3 
