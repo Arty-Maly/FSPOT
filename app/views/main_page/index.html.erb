@@ -90,7 +90,7 @@
       </form>              
      </div>
 </div>
-
+<!-- need to see if @user_id = upload.user_id-->
 <!-- slider with food's name, image-->
 <div class="content_middle">
   <div class="container">
@@ -100,7 +100,7 @@
             <% @uploads.each do |upload| %>
             <div class="inner_wrap">
               <h1><%= upload.name %></h1>
-            
+                  <% @upload_id =  upload.id %>
               <h4>Uploaded By: @<%=User.find(upload.user_id).email %></h4><br>
               <h4 class="green"><%= upload.description %></h4>
               <img data-lazy =<%= image_url upload.picture_url %>><br>
@@ -145,7 +145,7 @@
               <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
                <label class="btn1 btn-2 btn-2g"><input name="submit" type="submit" id="submit" value="submit"></label>
           </div>
-          <input type="hidden" name="upload_id" value=1>
+          <input type="hidden" name="upload_id" value= <%=@upload_id%> >
       </form>              
      </div>
 </div>
