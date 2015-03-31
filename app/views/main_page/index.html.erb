@@ -1,12 +1,20 @@
 <script src="https://maps.googleapis.com/maps/api/js"></script>
 <script>
     navigator.geolocation.getCurrentPosition(geocodedAddress);
-
     function geocodedAddress(position){
   		var geo = document.getElementById("geo");
   		var lat = position.coords.latitude;
   		var lng = position.coords.longitude;
 
+      $.ajax({
+          url: "<%= location_path %>", 
+          data: {
+            lat: lat,
+            lng: lng
+          }
+      }).done(function(data) {
+        // alert(data.response);
+      });
 
   		var geocoder = new google.maps.Geocoder();
   		var latlng = new google.maps.LatLng(lat, lng);
@@ -23,6 +31,8 @@
 		    }
 		  });
      }
+
+
 </script>
 
 <script type="text/javascript">
@@ -43,9 +53,8 @@
       <ul>
          <li class="Selected"><a href="#"></a></li>
          <li><a href="/friends">Following Friends</a></li>
-         <li><a href="#"></a></li>
+         <li><a href="#">Personal Page</a></li>
          <li><a href="#">Entertainment</a></li>
-         <li><a href="#">Mobility</a></li>
       </ul>
    </nav>
 </div>
@@ -54,27 +63,27 @@
 <div class="banner">
      <div class="container_wrap">
       <h1>F-SPOT</h1>
+       <form action="/main" method="get">
           <div class="dropdown-buttons">   
             <div class="dropdown-button">                   
-               <select class="dropdown" tabindex="9" data-settings='{"wrapperClass":"flat"}'>
+               <select name="foodCatogory" class="dropdown" tabindex="9" data-settings='{"wrapperClass":"flat"}'>
                <option value="0">Food Catogory</option>  
-               <option value="1">Pizza</option>
-               <option value="2">Burger</option>
-               <option value="3">Salad</option>
-               <option value="4">Chinese Food</option>
-               <option value="5">Cake</option>
+               <option value="pizze">Pizza</option>
+               <option value="burger">Burger</option>
+               <option value="salad">Salad</option>
+               <option value="chinese food">Chinese Food</option>
+               <option value="cake">Cake</option>
                </select>
             </div>
              <div class="dropdown-button">
-              <select class="dropdown" tabindex="9" data-settings='{"wrapperClass":"flat"}'>
+              <select name="place" class="dropdown" tabindex="9" data-settings='{"wrapperClass":"flat"}'>
                <option value="0">Place</option> 
                <option value="1">Boston</option>
+               <option value="2">New York</option>
               </select>
             </div>
          </div>
-
-       <form action="/main" method="get">
-         <input type="text" name="search" >
+         <input type="text" name="search" placeholder="food, place, entertainment..">
           <div class="contact_btn">
                <label class="btn1 btn-2 btn-2g"><input name="submit" type="submit" id="submit" value="Search"></label>
           </div>
@@ -91,6 +100,7 @@
             <% @uploads.each do |upload| %>
             <div class="inner_wrap">
               <h1><%= upload.name %></h1>
+              <p><%= upload.location %></p>
               <h4>Uploaded By: @<%=User.find(upload.user_id).email %></h4><br>
               <h4 class="green"><%= upload.description %></h4>
               <img data-lazy =<%= image_url upload.picture_url %>><br>

@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       #let the user know they've been logged in with a flash message
       flash[:notice] = "You've been logged in."
       #THIS IS THE MOST IMPORTANT PART. Actually log the user in by storing their ID in the session hash with the [:user_id] key!
-      session[:user_id] = @user.id
+      session[:user_id] = @user.id      
       #then redirect them to the homepage
       redirect_to main_path
     else
@@ -18,6 +18,21 @@ class SessionsController < ApplicationController
       flash[:alert] = "There was a problem logging you in."
       redirect_to root_path
     end
+  end
+
+  def location_handler
+    lat = params[:lat]
+    lng = params[:lng]
+
+    session[:location] = {lat: lat, lng: lng}
+    # puts "-------------"
+    # puts "lat: #{lat} lng: #{lng}"
+    respond_to do |format| 
+      format.json { 
+        render json: {response: "got your location"}
+      }
+    end
+
   end
 
   def destroy
