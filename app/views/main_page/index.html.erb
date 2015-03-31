@@ -100,7 +100,7 @@
             <% @uploads.each do |upload| %>
             <div class="inner_wrap">
               <h1><%= upload.name %></h1>
-              <p><%= upload.location %></p>
+            
               <h4>Uploaded By: @<%=User.find(upload.user_id).email %></h4><br>
               <h4 class="green"><%= upload.description %></h4>
               <img data-lazy =<%= image_url upload.picture_url %>><br>
@@ -139,11 +139,13 @@
 <!-- add comments-->
 <div class="banner" >
      <div class="container_wrap">
-       <form action="" method="get">
-         <input type="text" name="search" placeholder="add comments">
+       <form action="comment" method="post">
+         <input type="text" name="description" placeholder="add comments">
           <div class="contact_btn">
+              <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
                <label class="btn1 btn-2 btn-2g"><input name="submit" type="submit" id="submit" value="submit"></label>
           </div>
+          <input type="hidden" name="upload_id" value=1>
       </form>              
      </div>
 </div>
