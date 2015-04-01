@@ -12,10 +12,8 @@ class CommentController < ApplicationController
 		comment_params = Hash.new 
 		comment_params[:upload_id] = params[:upload_id]
 		comment_params[:description] = params[:description]
-		
-		
+		comment_params[:user_id] = params[:user_id]		
 
-		comment_params[:user_id] = upload.user_id
 
 		#comment params need to change to whatever we pass in the text box
 		comment = upload.comments.create(comment_params)

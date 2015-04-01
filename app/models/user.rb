@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
   has_many :followers, through: :passive_relationships, source: :follower
 
   has_many :comments, dependent: :destroy
+
+  has_many :likes, dependent: :destroy
   
   attr_accessor :password
   validates_confirmation_of :password

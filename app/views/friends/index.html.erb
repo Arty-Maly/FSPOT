@@ -19,6 +19,7 @@
 
 
 <% @users.each do |user| %>
+  <%= session[:user_id] %> 
   <% unless(session[:user_id] == user.id || !Relationship.where(follower_id: user.id).empty?) %>
     <%= form_tag '/friends', :method => 'POST' do %>
         <%= hidden_field_tag :user, user.id %>

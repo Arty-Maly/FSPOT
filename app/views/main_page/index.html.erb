@@ -101,7 +101,7 @@
       </form>              
      </div>
 </div>
-<!-- need to see if @user_id = upload.user_id-->
+<!-- need to see if @user_id = upload.user_id is a good idea -->
 <!-- slider with food's name, image-->
 <div class="content_middle">
   <div class="container">
@@ -115,25 +115,24 @@
               <h4>Uploaded By: @<%=User.find(upload.user_id).email %></h4><br>
               <h4 class="green"><%= upload.description %></h4>
               <img data-lazy =<%= image_url upload.picture_url %>><br>
-            </div>
-            <% end %>
-            </div>
-        </div>
-    </div>
-  </div>
-</div>
-
-
-
-<!-- like the food or dislike -->
+            <!-- like the food or dislike -->
 <div class="content_middle">
   <div class="container">
     <div class="content_middle_box">
         <div class="col-lg-3">
+          
           <div class="button-group" style="margin-left:25%;">
-            <button type="button" class="btn btn-default btn-lg " >
-              <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+            <form action="like" method="post">
+            <button type="submit" class="btn btn-default btn-lg">
+               <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+              <input type="hidden" name="upload_id" value= <%=@upload_id%> >
+              <input type="hidden" name="user_id" value= <%=session[:user_id]%> >
+              
+              <span class="glyphicon glyphicon-ok-sign" aria-hidden="true">
+
+              </span>
             </button>
+            </form>
             <button type="button" class="btn btn-default btn-lg " >
               <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
             </button>
@@ -148,18 +147,33 @@
 
 
 <!-- add comments-->
-<div class="banner" >
-     <div class="container_wrap">
-       <form action="comment" method="post">
-         <input type="text" name="description" placeholder="add comments">
-          <div class="contact_btn">
-              <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+
+            <div class="banner" >
+            <div class="container_wrap">
+            <form action="comment" method="post">
+            <input type="text" name="description" placeholder="add comments">
+            <div class="contact_btn">
+            <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
                <label class="btn1 btn-2 btn-2g"><input name="submit" type="submit" id="submit" value="submit"></label>
           </div>
           <input type="hidden" name="upload_id" value= <%=@upload_id%> >
-      </form>              
+          <input type="hidden" name="user_id" value= <%=session[:user_id]%> >
+          </form>              
      </div>
 </div>
+            </div>
+            <% end %>
+
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
 
 
 <!-- show comments-->

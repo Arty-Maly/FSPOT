@@ -1,4 +1,6 @@
 Mvp::Application.routes.draw do
+  resources :likes
+
   resources :uploads
 
   resources :users
@@ -36,6 +38,8 @@ Mvp::Application.routes.draw do
   get "/name_upload_location" => "uploads#name_location_handler", as: :name_location
 
   get "/add_lcoation" => "uploads#add_uploads_location_handler", as: :add_location 
+
+  post "/like" => "likes#create"
 
   
   # The priority is based upon order of creation: first created -> highest priority.
