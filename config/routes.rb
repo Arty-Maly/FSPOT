@@ -15,6 +15,8 @@ Mvp::Application.routes.draw do
 
   get "/main" => "main_page#index", as: :main
 
+  get "/map_search" => "main_page#search_handler", as: :search
+
   get "/friends" => "friends#index"
 
   post "/friends" => "friends#follow"
@@ -36,8 +38,6 @@ Mvp::Application.routes.draw do
   get "/add_lcoation" => "uploads#add_uploads_location_handler", as: :add_location 
 
   
-
-
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

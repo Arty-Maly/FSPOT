@@ -6,6 +6,8 @@ one:
   password_salt: <%= user.password_salt %>
 
 two:
-  email: MyString
-  password_hash: MyString
-  password_salt: MyString
+  email: jane
+  password_hash: <%= user.encrypt_password %>
+  password_salt: <%= user.password_salt %>
+
+

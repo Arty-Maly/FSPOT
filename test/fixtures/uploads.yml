@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  name: MyString
-  description: MyText
-  picture: MyString
+  name: burger
+  description: good
+  picture: https://childadolescentweightmanagement.files.wordpress.com/2012/07/juicy-chicken-burger-pic-19-hamburger-ideas4.jpg
 
 two:
   name: MyString
