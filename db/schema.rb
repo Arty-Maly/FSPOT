@@ -11,7 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150401192612) do
+
+ActiveRecord::Schema.define(version: 20150401190256) do
+
 
   create_table "comments", force: true do |t|
     t.integer  "user_id"
@@ -48,6 +50,7 @@ ActiveRecord::Schema.define(version: 20150401192612) do
     t.datetime "updated_at"
     t.string   "location"
     t.integer  "rating"
+    t.string   "restaurant"
   end
 
   add_index "uploads", ["user_id"], name: "index_uploads_on_user_id"
