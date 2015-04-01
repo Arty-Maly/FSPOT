@@ -61,6 +61,44 @@ class UploadsController < ApplicationController
     end
   end
 
+  def name_location_handler
+
+    address = session[:address][:addr].split(",").first
+
+    itemType = params[:itemType]
+    limit = 20
+    searchArray = Array.new
+    searchArray = ["<ul>"]
+    ret = {}
+
+    if itemType
+      parameters = {term: itemType, limit: limit }
+      searchResult = Yelp.client.search(address, parameters)
+    else
+      parameters = {term: 'food', limit: limit }
+      searchResult = Yelp.client.search(address, parameters)
+    end
+
+    searchResult.businesses.each do |b|
+        searchArray.push("<li>" + b.name.to_s + "</li>")
+    end
+
+    searchArray.push("</ul>")
+
+    ret["result"] = searchArray
+
+  
+    respond_to do |format|
+      format.json {
+        render json: ret
+      }
+    end
+
+  end
+
+  def add_uploads_location_handler 
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_upload

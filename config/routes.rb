@@ -22,11 +22,18 @@ Mvp::Application.routes.draw do
   get "/maps" => "maps#index"
 
   get "/uploads/new" => "uploads#new"
+
   get "/upload_location" => "sessions#location_handler", as: :location
+
+  get "/upload_address" => "sessions#address_handler", as: :address
 
   get "/map_search" => "maps#maps_search_handler", as: :map_search
 
   post "/comment" => "comment#create"
+
+  get "/name_upload_location" => "uploads#name_location_handler", as: :name_location
+
+  get "/add_lcoation" => "uploads#add_uploads_location_handler", as: :add_location 
 
   
 

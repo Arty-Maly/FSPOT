@@ -6,8 +6,8 @@
       reader.onload = function (e) {
         $('#img_prev')
 	  .attr('src', e.target.result)
-	  .width(500)
-	  .height(500);
+	  .width(200)
+	  .height(200);
       };
 
       reader.readAsDataURL(input.files[0]);
@@ -16,7 +16,7 @@
 </SCRIPT>
 
 
-
+<div id="pictureInfo">
 <%= form_for(@upload) do |f| %>
   <% if @upload.errors.any? %>
     <DIV id="error_explanation">
@@ -38,15 +38,18 @@
       <div class="col-lg-3">
           <div class="inner_wrap1">
               <DIV class="field">
-                  <%= f.label :name %>
+                  <h3><%= f.label :name %></h3>
                 <BR />
-                  <%= f.text_field :name %>
+                  <%= f.text_field :name,  class: "form-control" %>
               </DIV>
+
               <DIV class="field">
-                <%= f.label :description %>
+                <h3><%= f.label :description %></h3>
               <BR />
-                <%= f.text_area :description %>
-            </DIV>
+                <%= f.text_area :description, class: "form-control" %>
+              </DIV>
+
+
             <DIV class="upload">
                 <%= f.label :picture %>
               <BR />
@@ -55,7 +58,17 @@
                 <IMG id="img_prev" src="#" alt="your image" />
 
                 <%= f.hidden_field :user_id, :value => session[:user_id] %>
+                <br>                
             </DIV>
+
+            <div id="findLocaiton">
+              <div class="container" >
+              <div class="row">
+                <img src="/assets/search1.png" ><%= link_to 'Add your location', add_location_path %></img>
+              </div>
+            </div>
+            </div>
+
           </br>
 
             <DIV class="actions">
@@ -66,3 +79,21 @@
   </div>
 
 <% end %>
+</div>
+
+<script>
+ $( "#findLocaiton" ).click(function() {
+        var itemType = $('#upload_name').val(); 
+        $.ajax({   
+            url : "<%= name_location_path %>",  
+            data : {
+              itemType: itemType
+            },  
+            success:function(data){                
+            },  
+            error: function() {  
+            }  
+        });  
+    });
+</script>
+

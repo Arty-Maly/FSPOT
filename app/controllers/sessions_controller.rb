@@ -29,10 +29,21 @@ class SessionsController < ApplicationController
     # puts "lat: #{lat} lng: #{lng}"
     respond_to do |format| 
       format.json { 
-        render json: {response: "got your location"}
+        render json: {response: "got your latlng"}
       }
     end
 
+  end
+
+  def address_handler
+    addr = params[:addr]
+    session[:address] = {addr: addr}
+
+    respond_to do |format| 
+      format.json { 
+        render json: {response: "got your address"}
+      }
+    end
   end
 
   def destroy

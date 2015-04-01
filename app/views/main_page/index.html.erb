@@ -6,7 +6,7 @@
   		var lat = position.coords.latitude;
   		var lng = position.coords.longitude;
 
-      $.ajax({
+     $.ajax({
           url: "<%= location_path %>", 
           data: {
             lat: lat,
@@ -22,7 +22,16 @@
   		geocoder.geocode({'latLng': latlng}, function(results, status) {
 		    if (status == google.maps.GeocoderStatus.OK) {
 		      if (results[1]) {
+            addr = results[1].formatted_address;
 		      	geo.innerHTML = (results[1].formatted_address);
+            $.ajax({
+                url: "<%= address_path %>", 
+                data: {
+                  addr: addr
+                }
+            }).done(function(data) {
+              // alert(data.response);
+            });
 		      } else {
 		        alert('No results found');
 		      }
@@ -31,6 +40,8 @@
 		    }
 		  });
      }
+
+
 
 
 </script>
@@ -182,7 +193,7 @@
 				  <a href="/uploads/new" type="button" class="btn btn-default btn-lg pull-right">
 				  	<span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
 				  </a>
-				</div>	
+				</div>
 			</div>	
 		</div>
 	</div>
