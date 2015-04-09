@@ -1,0 +1,86 @@
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+<script>
+function codeAddress() {
+  var addr = $('#address').val();
+  geocoder.geocode( { 'address': addr}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      map.setCenter(results[0].geometry.location);
+      var marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location
+      });
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
+
+  $.get(
+    "<%= map_search_path %>",
+    {
+      addr: addr
+    },
+    showSearchResult
+  )
+}
+function showDefault(data){
+    show(data);
+
+}
+
+function showSearchResult(data) {
+    show(data);
+}
+
+function show(data) {
+  for( i = 0; i < data.result.length; i++){
+      $("#name" + i).html(data.result[i].name);
+      $("#addr" + i).html(data.result[i].address);
+      $("#img" + i).attr('src', data.result[i].image_url);
+  }
+
+}
+
+</script>
+
+<div class="banner">
+ <div class="container_wrap">
+  <form id ="searchAddress" action="javascript:void(0);" method="get" >
+   <input type="text" id="address" name="search" placeholder="Search for locations nearby">
+   <div class="contact_btn">
+    <input type="submit"  value="Search" class="btn btn-danger" onclick="codeAddress()" >
+    </div>
+  </form>              
+</div>
+</div>
+
+<!-- map -->    
+<div class="container">
+  <div  id="map-canvas" >
+  </div>
+</div>
+
+<!-- list of restaurants -->
+<% (0...10).each do |i| %>
+  <div class="container" class="result">
+      <div class="col-lg-3">
+          <div class="inner_wrap1">
+              <ul class="item_module">
+                <li class="module_left"><img class="foodImage" id="<%= "img#{i}" %>" class="img-responsive" alt=""/></li>
+                <li class="module_right">
+                  <h5 id="<%= "name#{i}" %>"></h5>
+                  <p id="<%= "addr#{i}" %>"></p>
+                </li>
+               </ul>
+          </div>
+      </div>
+</div>
+<% end %>
+
+
+
+
+
+
+
+
+
