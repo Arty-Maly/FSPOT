@@ -13,7 +13,48 @@
       reader.readAsDataURL(input.files[0]);
     }
   }
+
+  var addr = "<%= session[:address][:addr] %>";
+
+  $.get(
+    "<%= map_search_path %>",
+    {
+      addr: addr
+    },
+    showSearchResult
+  )
+
+  function showSearchResult(data) {
+
+    select = document.getElementById('restaurant');
+
+    for (var i = 0; i < data.result.length; i++){
+        var opt = document.createElement('option');
+        opt.value = data.result[i].name;
+        opt.innerHTML = data.result[i].name;
+        select.appendChild(opt);
+    }
+
+    $( "#restaurant" ).change(function() {
+
+      var restaurants = $('#restaurant').val();
+
+
+      for (var i = 0; i < data.result.length; i++) {
+        if(restaurants == data.result[i].name) {
+          $('#upload_location').val(data.result[i].address);
+          $('#upload_geo_location').val([data.result[i].lat, data.result[i].lng]);
+
+        }
+      }
+
+    }); 
+  }
+
+
+
 </SCRIPT>
+
 
 
 <div id="pictureInfo">
@@ -46,54 +87,61 @@
               <DIV class="field">
                 <h3><%= f.label :description %></h3>
               <BR />
-                <%= f.text_area :description, class: "form-control" %>
+                <%= f.text_field :description, class: "form-control" %>
               </DIV>
 
+              <DIV class="field">
+                <%= f.hidden_field :location %>
+              </DIV>
 
-            <DIV class="upload">
-                <%= f.label :picture %>
+              <DIV class="field">
+                <%= f.hidden_field :geo_location %>
+              </DIV>
+
+              <DIV class="field">
+                <h3><%= f.label :rating %></h3>
               <BR />
-                <%= f.file_field :picture, accept: 'image/jpeg', :onchange => "readURL(this);" %>
+                <span class="starRating">
+                    <input id="rating5" type="radio" name="rating" value="5">
+                    <label for="rating5">5</label>
+                    <input id="rating4" type="radio" name="rating" value="4">
+                    <label for="rating4">4</label>
+                    <input id="rating3" type="radio" name="rating" value="3">
+                    <label for="rating3">3</label>
+                    <input id="rating2" type="radio" name="rating" value="2">
+                    <label for="rating2">2</label>
+                    <input id="rating1" type="radio" name="rating" value="1">
+                    <label for="rating1">1</label>
+                </span>
+              </DIV> 
 
-                <IMG id="img_prev" src="#" alt="your image" />
 
-                <%= f.hidden_field :user_id, :value => session[:user_id] %>
-                <br>                
-            </DIV>
-
-            <div id="findLocaiton">
-              <div class="container" >
-              <div class="row">
-                <img src="/assets/search1.png" ><%= link_to 'Add your location', add_location_path %></img>
+              <div class="form-group">
+                 <h3>Restaurants</h3>
+                 <select id="restaurant" name="restaurant_name" class="form-control" >
+                 </select>
               </div>
-            </div>
+
+              <DIV class="upload">
+                  <%= f.label :picture %>
+                <BR />
+                  <%= f.file_field :picture, accept: 'image/jpeg', :onchange => "readURL(this);" %>
+
+                  <IMG id="img_prev" src="#" alt="your image" />
+
+                  <%= f.hidden_field :user_id, :value => session[:user_id] %>
+                  <br>                
+              </DIV>
+
+              <DIV class="actions">
+                <%= f.submit :class => "btn btn-info"  %>
+              </DIV>
             </div>
 
-          </br>
-
-            <DIV class="actions">
-              <%= f.submit :class => "btn btn-info" %>
-            </DIV>
-          </div>
       </div>
   </div>
 
 <% end %>
 </div>
 
-<script>
- $( "#findLocaiton" ).click(function() {
-        var itemType = $('#upload_name').val(); 
-        $.ajax({   
-            url : "<%= name_location_path %>",  
-            data : {
-              itemType: itemType
-            },  
-            success:function(data){                
-            },  
-            error: function() {  
-            }  
-        });  
-    });
-</script>
 

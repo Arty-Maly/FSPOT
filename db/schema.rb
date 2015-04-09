@@ -11,9 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
 ActiveRecord::Schema.define(version: 20150401190256) do
-
 
   create_table "comments", force: true do |t|
     t.integer  "user_id"
@@ -41,6 +39,14 @@ ActiveRecord::Schema.define(version: 20150401190256) do
   add_index "relationships", ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true
   add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id"
 
+  create_table "restaurants", force: true do |t|
+    t.string   "restaurant_name"
+    t.string   "location"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "geo_loaction"
+  end
+
   create_table "uploads", force: true do |t|
     t.string   "name"
     t.text     "description"
@@ -50,9 +56,11 @@ ActiveRecord::Schema.define(version: 20150401190256) do
     t.datetime "updated_at"
     t.string   "location"
     t.integer  "rating"
-    t.string   "restaurant"
+    t.integer  "restaurant_id"
+    t.string   "geo_location"
   end
 
+  add_index "uploads", ["restaurant_id"], name: "index_uploads_on_restaurant_id"
   add_index "uploads", ["user_id"], name: "index_uploads_on_user_id"
 
   create_table "users", force: true do |t|

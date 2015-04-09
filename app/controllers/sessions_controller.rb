@@ -25,8 +25,6 @@ class SessionsController < ApplicationController
     lng = params[:lng]
 
     session[:location] = {lat: lat, lng: lng}
-    # puts "-------------"
-    # puts "lat: #{lat} lng: #{lng}"
     respond_to do |format| 
       format.json { 
         render json: {response: "got your latlng"}

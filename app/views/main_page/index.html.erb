@@ -1,6 +1,7 @@
 <script src="https://maps.googleapis.com/maps/api/js"></script>
 <script>
     navigator.geolocation.getCurrentPosition(geocodedAddress);
+
     function geocodedAddress(position){
   		var geo = document.getElementById("geo");
   		var lat = position.coords.latitude;
@@ -41,6 +42,24 @@
 		  });
      }
 
+    function sendQuery() {
+
+      var category = $('#foodCategory').val();
+      var place = $("#place").val();
+      var food = $("#search").val();
+
+      $.ajax({
+          url: "<%= query_search_path %>", 
+          data: {
+            category: category,
+            place: place,
+            food: food
+          }
+      }).done(function(data) {
+        // alert(data.response);
+      });
+
+    }
 
 
 
@@ -54,7 +73,8 @@
 
 <!-- header -->
 <div class="right">
-  <a href="/maps"></a> 
+  <!-- <a href="/maps"></a>  -->
+  <%= link_to "", geo_path %>
 </div>
 <div id="page">
    <div id="header_nav">
@@ -74,11 +94,10 @@
 <div class="banner">
      <div class="container_wrap">
       <h1>F-SPOT</h1>
-       <form action="/main" method="get">
+       <form action="javascript:void(0);" method="get">
           <div class="dropdown-buttons">   
             <div class="dropdown-button">                   
-               <select name="foodCatogory" class="dropdown" tabindex="9" data-settings='{"wrapperClass":"flat"}'>
-               <option value="0">Food Catogory</option>  
+               <select id="foodCategory" class="dropdown" tabindex="9" data-settings='{"wrapperClass":"flat"}'>
                <option value="pizze">Pizza</option>
                <option value="burger">Burger</option>
                <option value="salad">Salad</option>
@@ -87,16 +106,16 @@
                </select>
             </div>
              <div class="dropdown-button">
-              <select name="place" class="dropdown" tabindex="9" data-settings='{"wrapperClass":"flat"}'>
+              <select id="place" class="dropdown" tabindex="9" data-settings='{"wrapperClass":"flat"}'>
                <option value="0">Place</option> 
                <option value="1">Boston</option>
                <option value="2">New York</option>
               </select>
             </div>
          </div>
-         <input type="text" name="search" placeholder="food, place, entertainment..">
+         <input type="text" id="search" placeholder="food, place, entertainment..">
           <div class="contact_btn">
-               <label class="btn1 btn-2 btn-2g"><input name="submit" type="submit" id="submit" value="Search"></label>
+               <label class="btn1 btn-2 btn-2g"><input name="submit" type="submit" id="submit" value="Search" onclick="sendQuery()"></label>
           </div>
       </form>              
      </div>

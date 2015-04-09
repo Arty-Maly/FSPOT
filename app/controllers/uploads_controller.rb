@@ -24,7 +24,16 @@ class UploadsController < ApplicationController
   # POST /uploads
   # POST /uploads.json
   def create
+
+    if Restaurant.where(restaurant_name: params[:restaurant_name]).blank?
+      @restaurant = Restaurant.new(:restaurant_name => params[:restaurant_name], :location => params[:upload][:location], :geo_loaction => params[:geo_location])
+      @restaurant.save
+    end
+
     @upload = Upload.new(upload_params)
+    @upload.rating = params[:rating]
+    @upload.restaurant_id = Restaurant.where(restaurant_name: params[:restaurant_name]).first.id
+
 
     respond_to do |format|
       if @upload.save
@@ -61,43 +70,6 @@ class UploadsController < ApplicationController
     end
   end
 
-  def name_location_handler
-
-    address = session[:address][:addr].split(",").first
-
-    itemType = params[:itemType]
-    limit = 20
-    searchArray = Array.new
-    searchArray = ["<ul>"]
-    ret = {}
-
-    if itemType
-      parameters = {term: itemType, limit: limit }
-      searchResult = Yelp.client.search(address, parameters)
-    else
-      parameters = {term: 'food', limit: limit }
-      searchResult = Yelp.client.search(address, parameters)
-    end
-
-    searchResult.businesses.each do |b|
-        searchArray.push("<li>" + b.name.to_s + "</li>")
-    end
-
-    searchArray.push("</ul>")
-
-    ret["result"] = searchArray
-
-  
-    respond_to do |format|
-      format.json {
-        render json: ret
-      }
-    end
-
-  end
-
-  def add_uploads_location_handler 
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -107,7 +79,8 @@ class UploadsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def upload_params
-      params.require(:upload).permit(:name, :description, :picture, :user_id)
+      params.require(:upload).permit(:name, :description, :picture, :user_id, :location, :geo_location)
+
     end
 
     def name_exists?(file_name)

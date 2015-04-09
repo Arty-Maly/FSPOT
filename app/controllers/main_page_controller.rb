@@ -4,20 +4,35 @@ class MainPageController < ApplicationController
       flash[:notice] = "You must be logged in to view that page!"
       redirect_to root_path
     else
-      if params[:search] or params[:foodCatogory] or params[:place]
-        searchItem = params[:search]
-        foodCatogory = params[:foodCatogory]
-        place = params[:place]
-
-        @uploads = Upload.where(name: searchItem)
-
-      else
-        @uploads = Upload.all
-      end
+      @uploads = Upload.all
     end
   end
 
-  def search_handle
+
+  def search_handler
+
+    if params[:food] or params[:category] or params[:place]
+        searchItem = params[:food]
+        foodCatogory = params[:category]
+        place = params[:place]
+
+        # puts "------------------"
+        # puts searchItem
+        # puts foodCatogory
+        # puts place
+
+        @uploads = Upload.where(name: searchItem)
+
+    else
+        @uploads = Upload.all
+    end
+
+    respond_to do |format|
+      format.json {
+        render json: { response: "search successfully" }
+      }
+    end
     
   end
+
 end

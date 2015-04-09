@@ -17,13 +17,13 @@ Mvp::Application.routes.draw do
 
   get "/main" => "main_page#index", as: :main
 
-  get "/map_search" => "main_page#search_handler", as: :search
+  get "/main/map_search" => "main_page#search_handler", as: :query_search
 
   get "/friends" => "friends#index"
 
   post "/friends" => "friends#follow"
 
-  get "/maps" => "maps#index"
+  get "/maps" => "maps#index", as: :geo
 
   get "/uploads/new" => "uploads#new"
 
@@ -35,9 +35,7 @@ Mvp::Application.routes.draw do
 
   post "/comment" => "comment#create"
 
-  get "/name_upload_location" => "uploads#name_location_handler", as: :name_location
 
-  get "/add_lcoation" => "uploads#add_uploads_location_handler", as: :add_location 
 
   post "/like" => "likes#create"
 

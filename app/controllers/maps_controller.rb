@@ -43,7 +43,6 @@ class MapsController < ApplicationController
  
 		ret[:center] = {lat: center_lat, lng: center_lng}
 		ret[:result] = searchArray
-		puts ret
 
 		respond_to do |format|
 			format.json {
