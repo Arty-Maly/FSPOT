@@ -17,7 +17,7 @@ Mvp::Application.routes.draw do
 
   get "/main" => "main_page#index", as: :main
 
-  get "/main/map_search" => "main_page#search_handler", as: :query_search
+  # get "/main/map_search" => "main_page#search_handler", as: :query_search
 
   get "/friends" => "friends#index"
 

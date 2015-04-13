@@ -33,7 +33,9 @@ class MapsController < ApplicationController
 				image_url: b.image_url,
 				lat: b.location.coordinate.latitude.to_f,
 				lng: b.location.coordinate.longitude.to_f,
-				address: b.location.address
+				address: b.location.address,
+				rating_image: b.rating_img_url,
+				mobile_url: b.mobile_url
 			}
 			searchArray << searchHash
 		end

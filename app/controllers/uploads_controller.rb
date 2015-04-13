@@ -25,7 +25,7 @@ class UploadsController < ApplicationController
   # POST /uploads.json
   def create
 
-    if Restaurant.where(restaurant_name: params[:restaurant_name]).blank?
+    if Restaurant.where(location: params[:upload][:location]).blank?
       @restaurant = Restaurant.new(:restaurant_name => params[:restaurant_name], :location => params[:upload][:location], :geo_loaction => params[:geo_location])
       @restaurant.save
     end

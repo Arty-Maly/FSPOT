@@ -1,38 +1,154 @@
 class MainPageController < ApplicationController	
+
   def index
+
     if(session[:user_id] == nil)
-      flash[:notice] = "You must be logged in to view that page!"
-      redirect_to root_path
+        flash[:notice] = "You must be logged in to view that page!"
+        redirect_to root_path
+
     else
-      @uploads = Upload.all
+
+        if params[:search] or params[:category] 
+
+          searchItem = params[:search]
+          category = params[:category]
+
+          if category == "find the nearst dishes"
+            search_nearest(searchItem, category)
+          elsif category == "find the best dishes"
+            search_best(searchItem, category)
+          elsif category == "find the latest dishes"
+            search_latest(searchItem, category)
+          else
+            search_item(searchItem)
+          end
+
+        else
+            @uploads = Upload.all
+            load_distance
+        end
+
     end
+
   end
 
+  def search_nearest(searchItem, category)
 
-  def search_handler
+      if searchItem
 
-    if params[:food] or params[:category] or params[:place]
-        searchItem = params[:food]
-        foodCatogory = params[:category]
-        place = params[:place]
+        @uploads = Upload.where("name LIKE ?", "%#{searchItem}%")
 
-        # puts "------------------"
-        # puts searchItem
-        # puts foodCatogory
-        # puts place
+      else
 
-        @uploads = Upload.where(name: searchItem)
+        @uploads = Upload.first(20)
 
-    else
-        @uploads = Upload.all
-    end
+      end
 
-    respond_to do |format|
-      format.json {
-        render json: { response: "search successfully" }
-      }
-    end
-    
+      load_distance
+
+      @upload_search.sort_by! { |k| k[1]}
+
+      @upload_search.each do |i|
+        puts "--------------"
+        puts i[1]
+      end
+
+
+
+  end
+
+  def search_best(searchItem, category)
+
+        if searchItem
+
+          @uploads = Upload.where("name LIKE ? ", "%#{searchItem}%").order('rating DESC')
+
+        else
+
+          @uploads = Upload.order('rating DESC')
+
+        end
+
+        load_distance
+
+  end
+
+  def search_latest(searchItem, category)
+
+        if searchItem
+
+          @uploads = Upload.where("name LIKE ? ", "%#{searchItem}%").order('created_at DESC')
+
+        else
+
+          @uploads = Upload.order('created_at DESC')
+
+        end
+
+        load_distance
+
+  end
+
+  def search_item(searchItem)
+
+        if searchItem
+
+          @uploads = Upload.where("name LIKE ?", "%#{searchItem}%")
+
+        else
+
+          @uploads = Upload.all
+
+        end
+
+        load_distance
+
+  end
+
+ def find_distance(loc1, loc2)
+
+      rad_per_deg = Math::PI/180  # PI / 180
+      rkm = 6371                  # Earth radius in kilometers
+      rm = rkm * 1000             # Radius in meters
+
+      dlat_rad = (loc2[0]-loc1[0]) * rad_per_deg  # Delta, converted to rad
+      dlon_rad = (loc2[1]-loc1[1]) * rad_per_deg
+
+      lat1_rad, lon1_rad = loc1.map {|i| i * rad_per_deg }
+      lat2_rad, lon2_rad = loc2.map {|i| i * rad_per_deg }
+
+      a = Math.sin(dlat_rad/2)**2 + Math.cos(lat1_rad) * Math.cos(lat2_rad) * Math.sin(dlon_rad/2)**2
+      c = 2 * Math::atan2(Math::sqrt(a), Math::sqrt(1-a))
+
+      return (rm * c * 0.000621371).round(2) # Delta in meters
+
+  end
+
+  def load_distance
+
+        lat1 = session[:location][:lat]
+        lng1 = session[:location][:lng]
+        loc1 = [lat1.to_f, lng1.to_f]
+
+        @upload_search = []
+
+        @uploads.each do |upload|
+
+            geo_location = upload.geo_location.split(',')
+            lat2 = geo_location[0]
+            lng2 = geo_location[1]
+            loc2 = [lat2.to_f, lng2.to_f]
+
+            puts "----------"
+            puts "loc1"
+            puts loc1
+            puts "loc2"
+            puts loc2
+
+            d = find_distance(loc1, loc2)
+            @upload_search << [upload, d]
+
+        end 
   end
 
 end

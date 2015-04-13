@@ -42,33 +42,22 @@
 		  });
      }
 
-    function sendQuery() {
-
-      var category = $('#foodCategory').val();
-      var place = $("#place").val();
-      var food = $("#search").val();
-
-      $.ajax({
-          url: "<%= query_search_path %>", 
-          data: {
-            category: category,
-            place: place,
-            food: food
-          }
-      }).done(function(data) {
-        // alert(data.response);
-      });
-
-    }
-
-
 
 </script>
 
-<script type="text/javascript">
+<script>
+
       $(function() {
-         $('nav#menu').mmenu();
+
+        $('nav#menu').mmenu();
+
+        $('#category').change(function() {
+            this.form.submit();
+        });
+
       });
+
+
 </script>
 
 <!-- header -->
@@ -94,32 +83,26 @@
 <div class="banner">
      <div class="container_wrap">
       <h1>F-SPOT</h1>
-       <form action="javascript:void(0);" method="get">
+      <div class="row">
+       <form action="/main" method="get">
           <div class="dropdown-buttons">   
             <div class="dropdown-button">                   
-               <select id="foodCategory" class="dropdown" tabindex="9" data-settings='{"wrapperClass":"flat"}'>
-               <option value="pizze">Pizza</option>
-               <option value="burger">Burger</option>
-               <option value="salad">Salad</option>
-               <option value="chinese food">Chinese Food</option>
-               <option value="cake">Cake</option>
+               <select id ="category" name="category" class="dropdown" tabindex="9" data-settings='{"wrapperClass":"flat"}'>
+               <option>By Catogory(nearest, latest, best ..)</option>
+               <option value="find the nearst dishes">find the nearst dishes</option>
+               <option value="find the best dishes">find the best dishes</option>
+               <option value="find the latest dishes">find the latest dishes</option>
                </select>
             </div>
-             <div class="dropdown-button">
-              <select id="place" class="dropdown" tabindex="9" data-settings='{"wrapperClass":"flat"}'>
-               <option value="0">Place</option> 
-               <option value="1">Boston</option>
-               <option value="2">New York</option>
-              </select>
-            </div>
-         </div>
-         <input type="text" id="search" placeholder="food, place, entertainment..">
+          </div>
+         <input type="text" name="search" placeholder="Find dishes">
           <div class="contact_btn">
-               <label class="btn1 btn-2 btn-2g"><input name="submit" type="submit" id="submit" value="Search" onclick="sendQuery()"></label>
+               <label class="btn1 btn-2 btn-2g"><input name="submit" type="submit" id="submit" value="Search" ></label>
           </div>
       </form>              
      </div>
 </div>
+
 <!-- need to see if @user_id = upload.user_id is a good idea -->
 <!-- slider with food's name, image-->
 <div class="content_middle">
@@ -127,13 +110,14 @@
     <div class="content_middle_box">
         <div class="col-lg-3">
           <div class="lazy">
-            <% @uploads.each do |upload| %>
+            <% @upload_search.each do |upload| %>
             <div class="inner_wrap">
-              <h1><%= upload.name %></h1>
-                  <% @upload_id =  upload.id %>
-              <h4>Uploaded By: @<%=User.find(upload.user_id).email %></h4><br>
-              <h4 class="green"><%= upload.description %></h4>
-              <img data-lazy =<%= image_url upload.picture_url %>><br>
+              <h1><%= upload[0].name %></h1>
+                  <% @upload_id =  upload[0].id %>
+              <h4><%= upload[1] %> miles from here</h4>
+              <h4>Uploaded By: @<%=User.find(upload[0].user_id).email %></h4><br>
+              <h4 class="green"><%= upload[0].description %></h4>
+              <img data-lazy =<%= image_url upload[0].picture_url %>><br>
             <!-- like the food or dislike -->
 <div class="content_middle">
   <div class="container">
