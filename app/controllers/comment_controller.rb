@@ -4,7 +4,7 @@ class CommentController < ApplicationController
     	# @comment = Comment.new
     	redirect_to main_path
   	end
-
+#hellooooooooooo test test test
 	def create
 
 		upload = Upload.find(params[:upload_id])
