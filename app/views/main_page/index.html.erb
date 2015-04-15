@@ -104,7 +104,8 @@
           <h4><%= upload[0].name %></h4>
           <% @upload_id =  upload[0].id %>
           <h4 class="green"><%= upload[1] %> miles <%= upload[0].rating %> stars</h4n>
-          <h4>Uploaded By: @<%=User.find(upload[0].user_id).email %></h4><br>
+          <h4>Uploaded By: @<%=User.find(upload[0].user_id).email %></h4>
+          <h4 ><%= upload[5] %>   likes <h4>
           <h4 class="green"><%= upload[0].description %></h4>
           <img data-lazy =<%= image_url upload[0].picture_url %>><br>
 

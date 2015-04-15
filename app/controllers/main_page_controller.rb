@@ -139,6 +139,8 @@ class MainPageController < ApplicationController
 
           comments = Comment.where(upload_id: upload.id).first(5)
 
+          likes = Like.where(upload_id: upload.id).count
+
 
           if comments == nil
 
@@ -158,7 +160,7 @@ class MainPageController < ApplicationController
           end
 
    
-          @upload_search << [upload, d, restaurant.restaurant_name, restaurant.location, user_comment]
+          @upload_search << [upload, d, restaurant.restaurant_name, restaurant.location, user_comment, likes]
 
       end 
   end
