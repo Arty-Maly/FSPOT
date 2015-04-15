@@ -1,2 +1,7 @@
 
 <h1><%=User.find(session[:user_id]).email%><h1>
+<%array = Upload.where(user_id: session[:user_id])%>
+<% array.each do |a| %>
+<img src=<%=a.picture%>></img>
+<br>
+<%end%>
