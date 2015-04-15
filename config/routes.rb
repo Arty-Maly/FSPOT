@@ -36,6 +36,8 @@ Mvp::Application.routes.draw do
 
   post "/comment" => "comment#create"
 
+  get "/personal" => "personal#index", as: :personal
+
 
 
   post "/like" => "likes#create"
