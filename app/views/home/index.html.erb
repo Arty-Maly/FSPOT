@@ -1,3 +1,24 @@
+<script>
+    navigator.geolocation.getCurrentPosition(geocodedAddress);
+
+    function geocodedAddress(position){
+
+      var lat = position.coords.latitude;
+      var lng = position.coords.longitude;
+
+     $.ajax({
+          url: "<%= location_path %>", 
+          data: {
+            lat: lat,
+            lng: lng
+          }
+      }).done(function(data) {
+        // alert(data.response);
+      });
+      
+     }
+</script>
+
 <% if(flash.present?) %>
   <% flash.each do |msg| %>
     <DIV class="<%= msg[0] %>">

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  comments_id: 
+  likes_id: 
+  relationships_id: 
+  uploads_id: 
+  user_id: 
+  read: false
+
+two:
+  comments_id: 
+  likes_id: 
+  relationships_id: 
+  uploads_id: 
+  user_id: 
+  read: false

@@ -25,7 +25,7 @@ class MainPageController < ApplicationController
 
         else
             @uploads = Upload.all
-            load_distance
+            load_info
         end
 
     end
@@ -44,16 +44,9 @@ class MainPageController < ApplicationController
 
       end
 
-      load_distance
+      load_info
 
       @upload_search.sort_by! { |k| k[1]}
-
-      @upload_search.each do |i|
-        puts "--------------"
-        puts i[1]
-      end
-
-
 
   end
 
@@ -69,7 +62,7 @@ class MainPageController < ApplicationController
 
         end
 
-        load_distance
+        load_info
 
   end
 
@@ -85,7 +78,7 @@ class MainPageController < ApplicationController
 
         end
 
-        load_distance
+        load_info
 
   end
 
@@ -101,7 +94,7 @@ class MainPageController < ApplicationController
 
         end
 
-        load_distance
+        load_info
 
   end
 
@@ -124,31 +117,52 @@ class MainPageController < ApplicationController
 
   end
 
-  def load_distance
+  def load_info
 
-        lat1 = session[:location][:lat]
-        lng1 = session[:location][:lng]
-        loc1 = [lat1.to_f, lng1.to_f]
+      lat1 = session[:location][:lat]
+      lng1 = session[:location][:lng]
 
-        @upload_search = []
+      loc1 = [lat1.to_f, lng1.to_f]
 
-        @uploads.each do |upload|
+      @upload_search = []
 
-            geo_location = upload.geo_location.split(',')
-            lat2 = geo_location[0]
-            lng2 = geo_location[1]
-            loc2 = [lat2.to_f, lng2.to_f]
+      @uploads.each do |upload|
 
-            puts "----------"
-            puts "loc1"
-            puts loc1
-            puts "loc2"
-            puts loc2
+          geo_location = upload.geo_location.split(',')
+          lat2 = geo_location[0]
+          lng2 = geo_location[1]
+          loc2 = [lat2.to_f, lng2.to_f]
 
-            d = find_distance(loc1, loc2)
-            @upload_search << [upload, d]
+          d = find_distance(loc1, loc2)
 
-        end 
+          restaurant = Restaurant.find_by id: upload.restaurant_id
+
+          comments = Comment.where(upload_id: upload.id).first(5)
+
+
+          if comments == nil
+
+            user_comment = []
+
+          else
+
+            user_comment = []
+
+            comments.each do |comment|
+
+              user = User.find(comment.user_id).email
+              user_comment << [user, comment.description]
+
+            end
+
+          end
+
+   
+          @upload_search << [upload, d, restaurant.restaurant_name, restaurant.location, user_comment]
+
+      end 
   end
+
+
 
 end

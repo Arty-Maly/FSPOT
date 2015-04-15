@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   has_many :comments, dependent: :destroy
 
   has_many :likes, dependent: :destroy
+  has_many :notifications
   
   attr_accessor :password
   validates_confirmation_of :password

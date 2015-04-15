@@ -1,4 +1,5 @@
 Mvp::Application.routes.draw do
+  get "notifications/index"
   resources :likes
 
   resources :uploads

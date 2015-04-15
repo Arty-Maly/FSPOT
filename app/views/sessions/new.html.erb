@@ -1,4 +1,25 @@
+<script>
+    navigator.geolocation.getCurrentPosition(geocodedAddress);
 
+    function geocodedAddress(position){
+
+      var lat = position.coords.latitude;
+      var lng = position.coords.longitude;
+
+      $.ajax({
+          url: "<%= location_path %>", 
+          data: {
+            lat: lat,
+            lng: lng
+          }
+      }).done(function(data) {
+        // alert(data.response);
+      });
+
+     }
+
+
+</script>
 <!-- Navigation --><% if(flash.present?) %>
   <NAV class="navbar navbar-default navbar-custom navbar-fixed-top">
     <DIV class="container-fluid">

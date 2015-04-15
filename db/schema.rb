@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150413201114) do
+ActiveRecord::Schema.define(version: 20150415152938) do
 
   create_table "comments", force: true do |t|
     t.integer  "user_id"
@@ -27,6 +27,24 @@ ActiveRecord::Schema.define(version: 20150413201114) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "notifications", force: true do |t|
+    t.integer  "comments_id"
+    t.integer  "likes_id"
+    t.integer  "relationships_id"
+    t.integer  "uploads_id"
+    t.integer  "user_id"
+    t.boolean  "read"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "friends_id"
+  end
+
+  add_index "notifications", ["comments_id"], name: "index_notifications_on_comments_id"
+  add_index "notifications", ["likes_id"], name: "index_notifications_on_likes_id"
+  add_index "notifications", ["relationships_id"], name: "index_notifications_on_relationships_id"
+  add_index "notifications", ["uploads_id"], name: "index_notifications_on_uploads_id"
+  add_index "notifications", ["user_id"], name: "index_notifications_on_user_id"
 
   create_table "relationships", force: true do |t|
     t.integer  "follower_id"
@@ -45,6 +63,8 @@ ActiveRecord::Schema.define(version: 20150413201114) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "geo_loaction"
+    t.string   "rating_img"
+    t.string   "phone"
   end
 
   create_table "uploads", force: true do |t|

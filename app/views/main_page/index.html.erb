@@ -3,28 +3,21 @@
     navigator.geolocation.getCurrentPosition(geocodedAddress);
 
     function geocodedAddress(position){
-  		var geo = document.getElementById("geo");
-  		var lat = position.coords.latitude;
-  		var lng = position.coords.longitude;
 
-     $.ajax({
-          url: "<%= location_path %>", 
-          data: {
-            lat: lat,
-            lng: lng
-          }
-      }).done(function(data) {
-        // alert(data.response);
-      });
+      var geo = document.getElementById("geo");
+      var lat = position.coords.latitude;
+      var lng = position.coords.longitude;
 
-  		var geocoder = new google.maps.Geocoder();
-  		var latlng = new google.maps.LatLng(lat, lng);
 
-  		geocoder.geocode({'latLng': latlng}, function(results, status) {
-		    if (status == google.maps.GeocoderStatus.OK) {
-		      if (results[1]) {
+      var geocoder = new google.maps.Geocoder();
+      var latlng = new google.maps.LatLng(lat, lng);
+
+      geocoder.geocode({'latLng': latlng}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          if (results[1]) {
             addr = results[1].formatted_address;
-		      	geo.innerHTML = (results[1].formatted_address);
+            current_lcoation = results[1].formatted_address.split(",");
+            geo.innerHTML = current_lcoation[0] + current_lcoation[1];
             $.ajax({
                 url: "<%= address_path %>", 
                 data: {
@@ -33,18 +26,17 @@
             }).done(function(data) {
               // alert(data.response);
             });
-		      } else {
-		        alert('No results found');
-		      }
-		    } else {
-		      alert('Geocoder failed due to: ' + status);
-		    }
-		  });
+          } else {
+            alert('No results found');
+          }
+        } else {
+          alert('Geocoder failed due to: ' + status);
+        }
+      });
      }
 
 
 </script>
-
 <script>
 
       $(function() {
@@ -56,7 +48,6 @@
         });
 
       });
-
 
 </script>
 
@@ -72,9 +63,8 @@
     <nav id="menu">
       <ul>
          <li class="Selected"><a href="#"></a></li>
-         <li><a href="/friends">Following Friends</a></li>
+         <li><a href="/friends">Searching Friends</a></li>
          <li><a href="#">Personal Page</a></li>
-         <li><a href="#">Entertainment</a></li>
       </ul>
    </nav>
 </div>
@@ -88,7 +78,7 @@
           <div class="dropdown-buttons">   
             <div class="dropdown-button">                   
                <select id ="category" name="category" class="dropdown" tabindex="9" data-settings='{"wrapperClass":"flat"}'>
-               <option>By Catogory(nearest, latest, best ..)</option>
+               <option>By Catogory(nearest..)</option>
                <option value="find the nearst dishes">find the nearst dishes</option>
                <option value="find the best dishes">find the best dishes</option>
                <option value="find the latest dishes">find the latest dishes</option>
@@ -104,74 +94,100 @@
 </div>
 
 <!-- need to see if @user_id = upload.user_id is a good idea -->
+
 <!-- slider with food's name, image-->
 <div class="content_middle">
-  <div class="container">
-    <div class="content_middle_box">
-        <div class="col-lg-3">
-          <div class="lazy">
-            <% @upload_search.each do |upload| %>
-            <div class="inner_wrap">
-              <h1><%= upload[0].name %></h1>
-                  <% @upload_id =  upload[0].id %>
-              <h4><%= upload[1] %> miles from here</h4>
-              <h4>Uploaded By: @<%=User.find(upload[0].user_id).email %></h4><br>
-              <h4 class="green"><%= upload[0].description %></h4>
-              <img data-lazy =<%= image_url upload[0].picture_url %>><br>
-            <!-- like the food or dislike -->
-<div class="content_middle">
-  <div class="container">
-    <div class="content_middle_box">
-        <div class="col-lg-3">
-          
-          <div class="button-group" style="margin-left:25%;">
-            <form action="like" method="post">
-            <button type="submit" class="btn btn-default btn-lg">
-               <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
-              <input type="hidden" name="upload_id" value= <%=@upload_id%> >
-              <input type="hidden" name="user_id" value= <%=session[:user_id]%> >
-              
-              <span class="glyphicon glyphicon-ok-sign" aria-hidden="true">
+  <div class="col-lg-3" style="text-align: left;">
+  <div class="lazy">
+    <% @upload_search.each do |upload| %>
+        <div class="inner_wrap">
+          <h4><%= upload[0].name %></h4>
+          <% @upload_id =  upload[0].id %>
+          <h4 class="green"><%= upload[1] %> miles <%= upload[0].rating %> stars</h4n>
+          <h4>Uploaded By: @<%=User.find(upload[0].user_id).email %></h4><br>
+          <h4 class="green"><%= upload[0].description %></h4>
+          <img data-lazy =<%= image_url upload[0].picture_url %>><br>
 
-              </span>
-            </button>
+          <div class="row">
+          <!-- like the food  -->
+            <form action="like" method="post" >
+              <button type="submit" class="btn btn-default btn-lg">
+                 <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+                <input type="hidden" name="upload_id" value= <%=@upload_id%> >
+                <input type="hidden" name="user_id" value= <%=session[:user_id]%> >
+                
+                <span class="glyphicon glyphicon-heart" aria-hidden="true">
+
+                </span>
+              </button>
+
+
+            <!-- don't like the food -->
+
+              <button type="button" class="btn btn-default btn-lg" >
+                <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+              </button>
+            </br>
+
             </form>
-            <button type="button" class="btn btn-default btn-lg " >
-              <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
-            </button>
-            <button type="button" class="btn btn-default btn-lg " >
-              <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-            </button>
-          </div>
         </div>
+
+        <div style="text-align:left;">
+        <strong>Comments</strong></br>
+        <!-- show comments -->
+        <% upload[4].each do |comment| %>
+
+        <div class="inner_wrap1" >
+          <ul class="item_module">
+            <li class="module_left"><img src="/assets/m1.jpg" class="img-responsive" alt=""/></li>
+            <li class="module_right">
+<!--               <img src="/assets/m_star.png" class="img-responsive" alt=""/> -->
+              <h5><%= comment[0] %></h5>
+              <p><%= comment[1] %></p>
+
+            </li>
+            <div class="clear"> </div>
+           </ul>
+        </div>
+
+        <% end %>
       </div>
-    </div>
-</div>
 
 
-<!-- add comments-->
 
-            <div class="banner" >
+
+      <!-- add comments-->
+
+          <div class="banner" >
             <div class="container_wrap">
-            <form action="comment" method="post">
-            <input type="text" name="description" placeholder="add comments">
-            <div class="contact_btn">
-            <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
-               <label class="btn1 btn-2 btn-2g"><input name="submit" type="submit" id="submit" value="submit"></label>
+              <form action="comment" method="post">
+                <input type="text" name="description" placeholder="add comments">
+                <div class="contact_btn">
+                  <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+                     <label class="btn1 btn-2 btn-2g"><input name="submit" type="submit" id="submit" value="submit"></label>
+                </div>
+                <input type="hidden" name="upload_id" value= <%=@upload_id%> >
+                <input type="hidden" name="user_id" value= <%=session[:user_id]%> >
+              </form>              
+            </div>
           </div>
-          <input type="hidden" name="upload_id" value= <%=@upload_id%> >
-          <input type="hidden" name="user_id" value= <%=session[:user_id]%> >
-          </form>              
-     </div>
-</div>
-            </div>
-            <% end %>
 
-            </div>
-        </div>
-    </div>
-  </div>
-</div>
+
+      <!-- restaurant info -->
+      <div class="col-lg-3" style="text-align: left;">
+          </br>
+          <strong>About the Place</strong></br>
+          <p>Restaurants: </p></br>
+          <h4 class="green"><%= upload[2] %></h4></br>
+          <p>Location: </p></br>
+          <h4 class="green"><%= upload[3] %></h4>
+      </div>
+
+      </div>
+      <% end %>
+      </div>
+   </div>
+ </div>
 
 
 
@@ -180,7 +196,7 @@
 
 
 <!-- show comments-->
-<div class="container">
+<!-- <div class="container">
   <div class="col-lg-3">
       <div class="inner_wrap1">
           <ul class="item_module">
@@ -195,14 +211,14 @@
            </ul>
       </div>
   </div>
-</div>
+</div> -->
 
 
 <!--upload-->
 <div class="navbar navbar-default", role="navigation">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-6">
+			<div class="col-lg-3" style="text-align: left;">
 				<p id="geo"></p>
 			</div>
 			<div class="col-lg-6">
