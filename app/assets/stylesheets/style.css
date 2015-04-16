@@ -127,7 +127,7 @@ body{
 	-webkit-background-size:cover;
 	-moz-background-size:cover;
 	-o-background-size:cover;
-	min-height:200px;
+	min-height:150px;
 	text-align:center;
 	padding-top:20px;
 }
@@ -164,8 +164,21 @@ body{
 	-moz-border-radius: 100px;
 	-o-border-radius: 100px;
 	font-weight:500;
-	margin-bottom: 1em;
+	margin-bottom: 0.5em;
 	font-family: 'Montserrat', sans-serif;
+}
+
+
+/**** banner for comment ******/
+.comment{
+	background: url('/assets/comment-background.jpg') no-repeat center top;
+	background-size:cover;
+	-webkit-background-size:cover;
+	-moz-background-size:cover;
+	-o-background-size:cover;
+	min-height:150px;
+	text-align:center;
+	padding-top:20px;
 }
 /**** Drop Down *********/
 /* PREFIXED CSS */

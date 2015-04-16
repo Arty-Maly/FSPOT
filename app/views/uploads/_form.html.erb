@@ -44,6 +44,8 @@
         if(restaurants == data.result[i].name) {
           $('#upload_location').val(data.result[i].address);
           $('#upload_geo_location').val([data.result[i].lat, data.result[i].lng]);
+          $('#rating_img').val(data.result[i].rating_image);
+          $('#phone').val(data.result[i].phone);
 
 
         }
@@ -115,6 +117,9 @@
                     <label for="rating1">1</label>
                 </span>
               </DIV>
+
+              <input type="hidden" name="phone" id="phone" >
+              <input type="hidden" name="rating_img" id="rating_img"> 
 
 
 

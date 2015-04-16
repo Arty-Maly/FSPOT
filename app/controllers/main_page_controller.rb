@@ -137,6 +137,8 @@ class MainPageController < ApplicationController
 
           restaurant = Restaurant.find_by id: upload.restaurant_id
 
+          restaurant_rating_url = restaurant.rating_img
+
           comments = Comment.where(upload_id: upload.id).first(5)
 
           likes = Like.where(upload_id: upload.id).count
@@ -160,7 +162,7 @@ class MainPageController < ApplicationController
           end
 
    
-          @upload_search << [upload, d, restaurant.restaurant_name, restaurant.location, user_comment, likes]
+          @upload_search << [upload, d, restaurant.restaurant_name, restaurant.location, user_comment, likes, restaurant_rating_url]
 
       end 
   end

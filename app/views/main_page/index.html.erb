@@ -51,52 +51,52 @@
 
 </script>
 
-<!-- header -->
-<div class="right">
-  <!-- <a href="/maps"></a>  -->
-  <%= link_to "", geo_path %>
-</div>
-<div id="page">
-   <div id="header_nav">
-      <a href="#menu"></a>
-   </div>
-    <nav id="menu">
-      <ul>
-         <li class="Selected"><a href="#"></a></li>
-         <li><a href="/friends">Searching Friends</a></li>
-         <li><a href="/personal">Personal Page </a> </li>
-      </ul>
-   </nav>
-</div>
-
-<!-- search-->
-<div class="banner">
-     <div class="container_wrap">
-      <h1>F-SPOT</h1>
-      <div class="row">
-       <form action="/main" method="get">
-          <div class="dropdown-buttons">   
-            <div class="dropdown-button">                   
-               <select id ="category" name="category" class="dropdown" tabindex="9" data-settings='{"wrapperClass":"flat"}'>
-               <option>By Catogory(nearest..)</option>
-               <option value="find the nearst dishes">find the nearst dishes</option>
-               <option value="find the best dishes">find the best dishes</option>
-               <option value="find the latest dishes">find the latest dishes</option>
-               </select>
-            </div>
-          </div>
-         <input type="text" name="search" placeholder="Find dishes">
-          <div class="contact_btn">
-               <label class="btn1 btn-2 btn-2g"><input name="submit" type="submit" id="submit" value="Search" ></label>
-          </div>
-      </form>              
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <!-- header -->
+  <div class="right">
+    <!-- <a href="/maps"></a>  -->
+    <%= link_to "", geo_path %>
+  </div>
+  <div id="page">
+     <div id="header_nav">
+        <a href="#menu"></a>
      </div>
+      <nav id="menu">
+        <ul>
+           <li class="Selected"><a href="#"></a></li>
+           <li><a href="/friends">Searching Friends</a></li>
+           <li><a href="/personal">Personal Page</a></li>
+        </ul>
+     </nav>
+  </div>
+
+  <!-- search-->
+  <div class="banner" style="height: 100px;">
+        <div class="row">
+           <form action="/main" method="get">
+              <div class="dropdown-buttons">   
+                <div class="dropdown-button">                   
+                   <select id ="category" name="category" class="dropdown" tabindex="9" data-settings='{"wrapperClass":"flat"}'>
+                   <option>By Catogory(nearest..)</option>
+                   <option value="find the nearst dishes">find the nearst dishes</option>
+                   <option value="find the best dishes">find the best dishes</option>
+                   <option value="find the latest dishes">find the latest dishes</option>
+                   </select>
+                </div>
+              </div>
+             <input type="text" name="search" placeholder="Find dishes">
+              <div class="contact_btn">
+                   <label class="btn1 btn-2 btn-2g"><input name="submit" type="submit" id="submit" value="Search" ></label>
+              </div>
+          </form>              
+        </div>
+  </div>
 </div>
 
 <!-- need to see if @user_id = upload.user_id is a good idea -->
 
 <!-- slider with food's name, image-->
-<div class="content_middle">
+<div class="content_middle" style="margin-top:150px">
   <div class="col-lg-3" style="text-align: left;">
   <div class="lazy">
     <% @upload_search.each do |upload| %>
@@ -159,19 +159,17 @@
 
       <!-- add comments-->
 
-          <div class="banner" >
-            <div class="container_wrap">
-              <form action="comment" method="post">
-                <input type="text" name="description" placeholder="add comments">
-                <div class="contact_btn">
-                  <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
-                     <label class="btn1 btn-2 btn-2g"><input name="submit" type="submit" id="submit" value="submit"></label>
-                </div>
-                <input type="hidden" name="upload_id" value= <%=@upload_id%> >
-                <input type="hidden" name="user_id" value= <%=session[:user_id]%> >
-              </form>              
+
+          <form action="comment" method="post">
+            <input type="text" name="description" placeholder="add comments">
+            <div class="contact_btn">
+              <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+                 <label class="btn1 btn-2 btn-2g"><input name="submit" type="submit" id="submit" value="submit"></label>
             </div>
-          </div>
+            <input type="hidden" name="upload_id" value= <%=@upload_id%> >
+            <input type="hidden" name="user_id" value= <%=session[:user_id]%> >
+          </form>              
+
 
 
       <!-- restaurant info -->
@@ -179,9 +177,12 @@
           </br>
           <strong>About the Place</strong></br>
           <p>Restaurants: </p></br>
-          <h4 class="green"><%= upload[2] %></h4></br>
+          <h4 class="green"><%= upload[2] %><img src=<%= upload[6] %> /></h4></br>         
           <p>Location: </p></br>
           <h4 class="green"><%= upload[3] %></h4>
+      </div>
+
+      <div style="height:50px;">
       </div>
 
       </div>
@@ -191,41 +192,17 @@
  </div>
 
 
-
-
-
-
-
-<!-- show comments-->
-<!-- <div class="container">
-  <div class="col-lg-3">
-      <div class="inner_wrap1">
-          <ul class="item_module">
-            <li class="module_left"><img src="/assets/m1.jpg" class="img-responsive" alt=""/></li>
-            <li class="module_right">
-              <img src="/assets/m_star.png" class="img-responsive" alt=""/>
-              <h5>Jane</h5>
-              <p>"I like it"</p>
-
-            </li>
-            <div class="clear"> </div>
-           </ul>
-      </div>
-  </div>
-</div> -->
-
-
 <!--upload-->
-<div class="navbar navbar-default", role="navigation">
+<div class="navbar navbar-default navbar-fixed-bottom", role="navigation", style="background-color: ##E6E6E6;">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-3" style="text-align: left;">
-				<p id="geo"></p>
-			</div>
-			<div class="col-lg-6">
+
+			<p id="geo" style="position:absolute; bottom: 15px;"></p>
+
+			<div class="pull-right" style="margin-right: 20px;">
 				<div class="upload">
-				  <a href="/uploads/new" type="button" class="btn btn-default btn-lg pull-right">
-				  	<span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
+				  <a href="/uploads/new" type="button" >
+            <img src="assets/upload.png" />
 				  </a>
 				</div>
 			</div>	
