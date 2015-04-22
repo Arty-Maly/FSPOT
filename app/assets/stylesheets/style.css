@@ -31,7 +31,7 @@ img{max-width:100%;}
 body{
    font-family: 'Montserrat', sans-serif;
    font-size: 100%;
-   background:#fff; 
+   background:#ECECEC; 
 }
 .header{
 	background:#fff;
@@ -122,7 +122,7 @@ body{
 }
 
 .banner{
-	
+	background: url('/assets/banner.jpg') no-repeat center top;
 	background-size:cover;
 	-webkit-background-size:cover;
 	-moz-background-size:cover;
@@ -395,7 +395,7 @@ body{
 	-o-border-radius: 40px;
 }
 .btn-2 {
-	background: #cb4e4e;
+	background: #81CFE0;
 	color: #fff;
 	box-shadow: 0 3px #c1412e;
 	-webkit-transition: none;
@@ -406,8 +406,6 @@ body{
 	border: none;
 	font-family: inherit;
 	font-size: inherit;
-	color: inherit;
-	background: none;
 	cursor: pointer;
 	padding: 10px 15px;
 	display: inline-block;
@@ -419,8 +417,8 @@ body{
 	-webkit-transition: all 0.3s;
 	-moz-transition: all 0.3s;
 	transition: all 0.3s;
-	background: #e94e38;
-	color: #fff;
+	background: #67809F;
+	color: #67809F;
 	font-size:12px;
 	text-shadow: -1px 0px 1px rgba(214, 214, 214, 0.59);
 	-webkit-text-shadow: -1px 0px 1px rgba(214, 214, 214, 0.59);
@@ -931,8 +929,8 @@ p.m_5{
    transition-delay: 0.1s;
 }
 .inner_wrap, .inner_wrap2{
-	background:#fff;
-	padding:2em 1em 1em;
+	background:#ECECEC;
+	
 	text-align:center;
 	border-bottom-left-radius: 3px;
    -webkit-border-bottom-left-radius: 3px;
@@ -1013,8 +1011,8 @@ ul.vision li.desc a{
 	color:#fff;
 }
 .inner_wrap1 {
-	background: #fff;
-	padding:2em 1em 1em;
+	background: #ECECEC;
+
 	border-bottom-left-radius: 3px;
 	-webkit-border-bottom-left-radius: 3px;
 	-moz-border-bottom-left-radius: 3px;
