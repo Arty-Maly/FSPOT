@@ -1,227 +1,274 @@
-<script src="https://maps.googleapis.com/maps/api/js"></script>
-<script>
-    navigator.geolocation.getCurrentPosition(geocodedAddress);
+<SCRIPT src="https://maps.googleapis.com/maps/api/js"></SCRIPT>
+<SCRIPT>
+  navigator.geolocation.getCurrentPosition(geocodedAddress);
 
-    function geocodedAddress(position){
+  function geocodedAddress(position){
+    var geo = document.getElementById("geo");
+    var lat = position.coords.latitude;
+    var lng = position.coords.longitude;
 
-      var geo = document.getElementById("geo");
-      var lat = position.coords.latitude;
-      var lng = position.coords.longitude;
+    var geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(lat, lng);
 
-
-      var geocoder = new google.maps.Geocoder();
-      var latlng = new google.maps.LatLng(lat, lng);
-
-      geocoder.geocode({'latLng': latlng}, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          if (results[1]) {
-            addr = results[1].formatted_address;
-            current_lcoation = results[1].formatted_address.split(",");
-            geo.innerHTML = current_lcoation[0] + current_lcoation[1];
-            $.ajax({
-                url: "<%= address_path %>", 
-                data: {
-                  addr: addr
-                }
-            }).done(function(data) {
-              // alert(data.response);
-            });
-          } else {
-            alert('No results found');
-          }
+    geocoder.geocode({'latLng': latlng}, function(results, status) {
+      if(status == google.maps.GeocoderStatus.OK) {
+        if(results[1]) {
+          addr = results[1].formatted_address;
+          current_lcoation = results[1].formatted_address.split(",");
+          geo.innerHTML = current_lcoation[0] + current_lcoation[1];
+          $.ajax({ url: "<%= address_path %>", 
+                   data: { addr: addr } }).done(function(data) {
+                                                  // alert(data.response);
+                                                });
         } else {
-          alert('Geocoder failed due to: ' + status);
+          alert('No results found');
         }
-      });
-     }
+      } else {
+        alert('Geocoder failed due to: ' + status);
+      }
+    });
+  }
+</SCRIPT>
+<SCRIPT>
+  $(function() {
+    $('nav#menu').mmenu();
 
+    $('#category').change(function() {
+      this.form.submit();
+    });
+ });
+</SCRIPT>
 
-</script>
-<script>
-
-      $(function() {
-
-        $('nav#menu').mmenu();
-
-        $('#category').change(function() {
-            this.form.submit();
-        });
-
-      });
-
-</script>
-
-<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+<DIV class="navbar navbar-default navbar-fixed-top" role="navigation">
   <!-- header -->
-  <div class="right">
+  <DIV class="right">
     <!-- <a href="/maps"></a>  -->
     <%= link_to "", geo_path %>
-  </div>
-  <div id="page">
-     <div id="header_nav">
-        <a href="#menu"></a>
-     </div>
-      <nav id="menu">
-        <ul>
-           <li class="Selected"><a href="#"></a></li>
-           <li><a href="/friends">Searching Friends</a></li>
-           <li><a href="/personal">Personal Page</a></li>
-        </ul>
-     </nav>
-  </div>
+  </DIV>
+
+  <DIV id="page">
+    <DIV id="header_nav">
+      <A href="#menu">
+      </A>
+    </DIV>
+
+    <NAV id="menu">
+      <UL>
+        <LI class="Selected">
+	  <A href="#">
+	  </A>
+	</LI>
+
+        <LI>
+	  <A href="/friends">
+	    Searching Friends
+	  </A>
+	</LI>
+
+        <LI>
+	  <A href="/personal">
+	    Personal Page
+	  </A>
+	</LI>
+        </UL>
+     </NAV>
+  </DIV>
 
   <!-- search-->
-  <div class="banner" style="height: 100px;">
-        <div class="row">
-           <form action="/main" method="get">
-              <div class="dropdown-buttons">   
-                <div class="dropdown-button">                   
-                   <select id ="category" name="category" class="dropdown" tabindex="9" data-settings='{"wrapperClass":"flat"}'>
-                   <option>By Catogory(nearest..)</option>
-                   <option value="find the nearst dishes">find the nearst dishes</option>
-                   <option value="find the best dishes">find the best dishes</option>
-                   <option value="find the latest dishes">find the latest dishes</option>
-                   </select>
-                </div>
-              </div>
-             <input type="text" name="search" placeholder="Find dishes">
-              <div class="contact_btn">
-                   <label class="btn1 btn-2 btn-2g"><input name="submit" type="submit" id="submit" value="Search" ></label>
-              </div>
-          </form>              
-        </div>
-  </div>
-</div>
+  <DIV class="banner" style="height: 100px;">
+    <DIV class="row">
+      <FORM action="/main" method="get">
+        <DIV class="dropdown-buttons">   
+          <DIV class="dropdown-button">                   
+            <SELECT id ="category" name="category" class="dropdown" tabindex="9" data-settings='{"wrapperClass":"flat"}'>
+              <OPTION>
+		By Catogory(nearest..)
+	      </OPTION>
+
+              <OPTION value="find the nearst dishes">
+		find the nearst dishes
+	      </OPTION>
+
+              <OPTION value="find the best dishes">
+		find the best dishes
+	      </OPTION>
+
+              <OPTION value="find the latest dishes">
+		find the latest dishes
+	      </OPTION>
+            </SELECT>
+          </DIV>
+        </DIV>
+
+        <INPUT type="text" name="search" placeholder="Find dishes">
+
+        <DIV class="contact_btn">
+          <LABEL class="btn1 btn-2 btn-2g">
+	    <INPUT name="submit" type="submit" id="submit" value="Search" >
+	  </LABEL>
+        </DIV>
+      </FORM>              
+    </DIV>
+  </DIV>
+</DIV>
 
 <!-- need to see if @user_id = upload.user_id is a good idea -->
 
 <!-- slider with food's name, image-->
-<div class="content_middle" style="margin-top:150px">
-  <div class="col-lg-3" style="text-align: left;">
-  <div class="lazy">
-    <% @upload_search.each do |upload| %>
-        <div class="inner_wrap">
-          <h4><%= upload[0].name %></h4>
+<DIV class="content_middle" style="margin-top:150px">
+  <DIV class="col-lg-3" style="text-align: left;">
+    <DIV class="lazy">
+      <% @upload_search.each do |upload| %>
+        <DIV class="inner_wrap">
+          <H4>
+	    <%= upload[0].name %>
+	  </H4>
+
           <% @upload_id =  upload[0].id %>
-          <h4 class="green"><%= upload[1] %> miles <%= upload[0].rating %> stars</h4n>
+            <H4 class="green">
+	      <%= upload[1] %> miles <%= upload[0].rating %> stars
+	    </H4>
           
-          <h4 ><%= upload[5] %>   likes <h4>
-          <h4 class="green"><%= upload[0].description %></h4>
-          <img data-lazy =<%= image_url upload[0].picture_url %>><br>
+            <H4>
+	      <%= upload[5] %>   likes
+	    </H4>
 
-          <div class="row">
-          <!-- dont like the food  -->
+            <H4 class="green">
+	      <%= upload[0].description %>
+	    </H4>
 
-          <% if dislike_id = Like.find_by(user_id: session[:user_id], upload_id: @upload_id) %>
-            <form action="dislike" method="post" >
-              <button type="submit" class="btn btn-default btn-lg" style="background-color: red">
-                 <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
-                <input type="hidden" name="id" value= <%=dislike_id.id%> >
+            <IMG data-lazy =<%= image_url upload[0].picture_url %>><BR>
+
+            <DIV class="row">
+              <!-- dont like the food  -->
+              <% if(dislike_id = Like.find_by(user_id: session[:user_id], upload_id: @upload_id)) %>
+		<FORM action="dislike" method="post" >
+		  <BUTTON type="submit" class="btn btn-default btn-lg" style="background-color: red">
+                    <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+
+                    <INPUT type="hidden" name="id" value= <%= dislike_id.id %> >
+
+                    <SPAN class="glyphicon glyphicon-remove-sign" aria-hidden="true">
+                    </SPAN>
+		  </BUTTON>
+		</FORM>
+	      <% else %>
+		<!-- like the food -->
+		<FORM action="like" method="post" >
+		  <BUTTON type="submit" class="btn btn-default btn-lg" style="background-color: #87D37C">
+                    <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+
+                    <INPUT type="hidden" name="upload_id" value= <%=@upload_id%> >
+                    <INPUT type="hidden" name="user_id" value= <%=session[:user_id]%> >
                 
-                
-                <span class="glyphicon glyphicon-remove-sign" aria-hidden="true">
+                    <SPAN class="glyphicon glyphicon-heart" aria-hidden="true">
+                    </SPAN>
+		  </BUTTON>
+		</FORM>
+	      <% end %>
+	    </DIV>
 
-                </span>
-              </button>
-              </form>
-          <%else%>
+	    <H4>
+	      Uploaded By: <%= link_to "@#{User.find(upload[0].user_id).email}", { action: 'show', id: upload[0].user_id, controller: 'users' }, { class: 'users' } %>
+	    </H4>
 
-            <!-- like the food -->
-        <form action="like" method="post" >
-              <button type="submit" class="btn btn-default btn-lg" style="background-color: #87D37C">
-                 <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
-                <input type="hidden" name="upload_id" value= <%=@upload_id%> >
-                <input type="hidden" name="user_id" value= <%=session[:user_id]%> >
-                
-                <span class="glyphicon glyphicon-heart" aria-hidden="true">
+            <DIV style="text-align:left;">
+                <STRONG>
+		  Comments
+		</STRONG>
+	      <BR />
+                <!-- show comments -->
+		<% upload[4].each do |comment| %>
+		  <BR />
+		    <DIV class="inner_wrap1" >
+		      <UL class="item_module">
+			<LI class="module_left"><IMG src="/assets/m1.jpg" class="img-responsive" alt=""/>
+			</LI>
 
-                </span>
-              </button>
-        </form>
-        <%end%>
-       </div>
+			<LI class="module_right">
+			  <!--               <img src="/assets/m_star.png" class="img-responsive" alt=""/> -->
+			  <H5>
+			    <%= comment[0] %>
+			  </H5>
 
-       <h4>Uploaded By: @<%=User.find(upload[0].user_id).email %></h4>
-        <div style="text-align:left;">
-        <strong>Comments</strong></br>
-        <!-- show comments -->
+			  <P>
+			    <%= comment[1] %>
+			  </P>
+			</LI>
 
-        <% upload[4].each do |comment| %>
-        <br>
+			<DIV class="clear">
+			</DIV>
+		      </UL>
+		    </DIV>
+		<% end %>
+	    </DIV>
 
-        <div class="inner_wrap1" >
-          <ul class="item_module">
-            <li class="module_left"><img src="/assets/m1.jpg" class="img-responsive" alt=""/></li>
-            <li class="module_right">
-<!--               <img src="/assets/m_star.png" class="img-responsive" alt=""/> -->
-              <h5><%= comment[0] %></h5>
-              <p><%= comment[1] %></p>
+	    <!-- add comments-->
 
-            </li>
-            <div class="clear"> </div>
-           </ul>
-        </div>
+            <FORM action="comment" method="post">
+              <INPUT type="text" name="description" placeholder="add comments">
 
-        <% end %>
-      </div>
+              <DIV class="contact_btn">
+		<%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
 
+                <LABEL class="btn1 btn-2 btn-2g">
+		  <INPUT name="submit" type="submit" id="submit" value="submit">
+		</LABEL>
+              </DIV>
 
+              <INPUT type="hidden" name="upload_id" value= <%=@upload_id%> >
 
+              <INPUT type="hidden" name="user_id" value= <%=session[:user_id]%> >
+            </FORM>              
 
-      <!-- add comments-->
+	    <!-- restaurant info -->
 
+	    <DIV class="col-lg-3" style="text-align: left;">
+	      <BR />
+                <STRONG>
+		  About the Place
+		</STRONG>
+	      <BR />
+                <P>
+		  Restaurants:
+		</P>
+	      <BR />
+                <H4 class="green">
+		  <%= upload[2] %><IMG src=<%= upload[6] %> />
+		</H4>
+	      <BR />
+                <P>
+		  Location:
+		</P>
+	      <BR />
+                <H4 class="green">
+		  <%= upload[3] %>
+		</H4>
+	    </DIV>
 
-          <form action="comment" method="post">
-            <input type="text" name="description" placeholder="add comments">
-            <div class="contact_btn">
-              <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
-                 <label class="btn1 btn-2 btn-2g"><input name="submit" type="submit" id="submit" value="submit"></label>
-            </div>
-            <input type="hidden" name="upload_id" value= <%=@upload_id%> >
-            <input type="hidden" name="user_id" value= <%=session[:user_id]%> >
-          </form>              
-
-
-
-      <!-- restaurant info -->
-      <div class="col-lg-3" style="text-align: left;">
-          </br>
-          <strong>About the Place</strong></br>
-          <p>Restaurants: </p></br>
-          <h4 class="green"><%= upload[2] %><img src=<%= upload[6] %> /></h4></br>         
-          <p>Location: </p></br>
-          <h4 class="green"><%= upload[3] %></h4>
-      </div>
-
-      <div style="height:50px;">
-      </div>
-
-      </div>
+	    <DIV style="height:50px;">
+	    </DIV>
+	</DIV>
       <% end %>
-      </div>
-   </div>
- </div>
-
+    </DIV>
+  </DIV>
+</DIV>
 
 <!--upload-->
-<div class="navbar navbar-default navbar-fixed-bottom", role="navigation", style="background-color: #3498DB">
-	<div class="container">
-		<div class="row">
 
-			<p id="geo" style="position:absolute; bottom: 15px;"></p>
+<DIV class="navbar navbar-default navbar-fixed-bottom", role="navigation", style="background-color: #3498DB">
+  <DIV class="container">
+    <DIV class="row">
+      <P id="geo" style="position:absolute; bottom: 15px;">
+      </P>
 
-			<div class="pull-right" style="margin-right: 20px;">
-				<div class="upload">
-				  <a href="/uploads/new" type="button" >
-            <img src="assets/upload.png" />
-				  </a>
-				</div>
-			</div>	
-		</div>
-	</div>
-</div>
-
-
-
-
-
+      <DIV class="pull-right" style="margin-right: 20px;">
+	<DIV class="upload">
+	  <A href="/uploads/new" type="button" >
+            <IMG src="assets/upload.png" />
+	  </A>
+	</DIV>
+      </DIV>	
+    </DIV>
+  </DIV>
+</DIV>
