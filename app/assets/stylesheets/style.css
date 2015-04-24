@@ -85,7 +85,7 @@ body{
 	position: absolute;
 	top: 5px;
 	right: 3px;
-	background: url('/assets/search1.png');
+	background: url('search1.png');
 	height: 22px;
 	width: 22px;
 }
@@ -106,7 +106,7 @@ body{
 	right:32px;
 	border: none;
 	outline: none;
-	background: url('/assets/search1.png') no-repeat right 4px;
+	background: url('search1.png') no-repeat right 4px;
 	width: 30px;
 	height: 33px;
 }
@@ -118,11 +118,11 @@ body{
 	position: absolute;
 	top: 19px;
 	left: 10px;
-	background: url('/assets/nav.png');
+	background: url('nav.png');
 }
 
 .banner{
-	background: url('/assets/banner.jpg') no-repeat center top;
+	background: url('banner.jpg') no-repeat center top;
 	background-size:cover;
 	-webkit-background-size:cover;
 	-moz-background-size:cover;
@@ -171,7 +171,7 @@ body{
 
 /**** banner for comment ******/
 .comment{
-	background: url('/assets/comment-background.jpg') no-repeat center top;
+	background: url('comment-background.jpg') no-repeat center top;
 	background-size:cover;
 	-webkit-background-size:cover;
 	-moz-background-size:cover;
