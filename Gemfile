@@ -38,6 +38,7 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'bcrypt'
 gem 'carrierwave'
+gem 'mini_magick'
 # In order to store our credentials for Amazon S3
 gem 'figaro'
 # In order for carrierwave to communicate with Amazon S3
