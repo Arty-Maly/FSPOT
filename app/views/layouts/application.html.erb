@@ -1,43 +1,35 @@
 <!DOCTYPE html>
-<html>
+<HTML>
+  <META name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <META name="apple-mobile-web-app-capable" content="yes">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <HEAD>
+    <TITLE>
+      Mvp
+    </TITLE>  
 
-  <meta name="apple-mobile-web-app-capable" content="yes">
-
-<head>
-  <title>Mvp</title>  
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-
-
-  <%= stylesheet_link_tag "slick.css" %>
-
-  <%= stylesheet_link_tag "mmenu.css" %>
-  <%= stylesheet_link_tag "style.css" %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
 
 
-  <%= javascript_include_tag "slick.js" %>
-  <%= javascript_include_tag "mmenu.js" %>
+    <%= stylesheet_link_tag "slick" %>
 
-  
-
-
-  <!-- Custom Fonts -->
-  <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-  <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-
-  
+    <%= stylesheet_link_tag "mmenu" %>
+    <%= stylesheet_link_tag "style" %>
 
 
+    <%= javascript_include_tag "slick" %>
+    <%= javascript_include_tag "mmenu" %>
 
-</head>
-<body>
+    <!-- Custom Fonts -->
+    <LINK href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <LINK href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <LINK href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <LINK href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+  </HEAD>
 
-<%= yield %>
-
-</body>
-</html>
+  <BODY>
+    <%= yield %>
+  </BODY>
+</HTML>
