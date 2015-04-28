@@ -73,7 +73,8 @@ Mvp::Application.configure do
                                'slick.css',
                                'slick.js',
                                'mmenu.js',
-                               'mmenu.css']
+                               'mmenu.css',
+                               'upload.png']
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
