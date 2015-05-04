@@ -39,7 +39,7 @@ Mvp::Application.routes.draw do
   get "/personal" => "personal#index", as: :personal
 
 
-  post "dislike" => "likes#destroy"
+  post "/dislike" => "likes#destroy"
   post "/like" => "likes#create"
 
   
