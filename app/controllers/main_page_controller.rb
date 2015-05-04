@@ -116,18 +116,20 @@ class MainPageController < ApplicationController
         user_comment = []
 
         comments.each do |comment|
-
           user = User.find(comment.user_id).email
           user_comment << [user, comment.description]
-
         end
-
       end
 
-   
-
-      @upload_search << [upload, d, restaurant.restaurant_name, restaurant.location, user_comment, likes, restaurant_rating_url, restaurant.yelpUrl, restaurant.geo_loaction]
+      @upload_search << [upload,
+                         d,
+                         restaurant.restaurant_name,
+                         restaurant.location,
+                         user_comment,
+                         likes,
+                         restaurant_rating_url,
+                         restaurant.yelp_url,
+                         restaurant.geo_loaction]
     end 
-
   end
 end
