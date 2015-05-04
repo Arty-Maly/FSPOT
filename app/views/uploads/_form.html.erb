@@ -1,76 +1,52 @@
+
 <SCRIPT>
+
   function readURL(input) {
     if(input.files && input.files[0]) {
       document.getElementById('img_prev').style.backgroundImage="url('"+URL.createObjectURL(input.files[0])+"')";
     }
   }
+  
+  
 
-  var addr = "<%= session[:address][:addr] %>";
 
-  $.get("<%= map_search_path %>",
-	{ addr: addr },
-	showSearchResult)
 
-  function showSearchResult(data) {
-    select = document.getElementById('restaurant');
 
-    for(var i = 0; i < data.result.length; i++) {
-        var opt = document.createElement('option');
-        opt.value = data.result[i].name;
-        opt.innerHTML = data.result[i].name;
-        select.appendChild(opt);
-    }
-
-    $( "#restaurant" ).change(function() {
-      var restaurants = $('#restaurant').val();
-
-      for (var i = 0; i < data.result.length; i++) {
-        if(restaurants == data.result[i].name) {
-          $('#upload_location').val(data.result[i].address);
-          $('#upload_geo_location').val([data.result[i].lat,
-					 data.result[i].lng]);
-          $('#rating_img').val(data.result[i].rating_image);
-          $('#phone').val(data.result[i].phone);
-        }
-      }
-    }); 
-  }
 </SCRIPT>
 
-<DIV id="pictureInfo">
-  <%= form_for(@upload) do |f| %>
-    <% if @upload.errors.any? %>
-      <DIV id="error_explanation">
-	<H2>
-	  <%= pluralize(@upload.errors.count, "error") %> prohibited this upload from being saved:
-	</H2>
 
-	<UL>
-	  <% @upload.errors.full_messages.each do |msg| %>
-            <LI>
-	      <%= msg %>
-	    </LI>
-	  <% end %>
-	</UL>
-      </DIV>
-    <% end %>
 
-    <DIV class="container">
-      <DIV class="col-lg-3">
-        <DIV class="inner_wrap1">
-          <DIV class="field">
-              <H3>
-		<%= f.label :name %>
-	      </H3>
-            <BR />
-              <%= f.text_field :name,  class: "form-control" %>
-          </DIV>
+<div id="pictureInfo">
+<%= form_for(@upload) do |f| %>
+  <% if @upload.errors.any? %>
+    <DIV id="error_explanation">
+      <H2>
+	<%= pluralize(@upload.errors.count, "error") %> prohibited this upload from being saved:
+      </H2>
 
-          <DIV class="field">
-              <H3>
-		<%= f.label :description %>
-	      </H3>
-            <BR />
+      <UL>
+	<% @upload.errors.full_messages.each do |msg| %>
+          <LI>
+	    <%= msg %>
+	  </LI>
+	<% end %>
+      </UL>
+    </DIV>
+  <% end %>
+
+  <div class="container">
+      <div class="col-lg-3">
+          <div class="inner_wrap1">
+              <DIV class="field" >
+                  <h3><%= f.label :name %></h3>
+                <BR />
+                  <%= f.text_field :name,  class: "form-control" %>
+              </DIV>
+
+              <DIV class="field">
+                <h3><%= f.label :description %></h3>
+              <BR />
+
                 <%= f.text_field :description, class: "form-control" %>
               </DIV>
 
@@ -101,18 +77,30 @@
                 </SPAN>
               </DIV>
 
+
               <INPUT type="hidden" name="phone" id="phone" >
               <INPUT type="hidden" name="rating_img" id="rating_img"> 
 
-              <DIV class="form-group">
-                 <H3>
-		   Restaurants
-		 </H3>
 
-                 <SELECT id="restaurant" name="restaurant_name" class="form-control" >
-                 </SELECT>
-              </DIV>
+<!-- 
 
+              <div class="form-group">
+                 <h3>Restaurants</h3>
+                 <select id="restaurant" name="restaurant_name" class="form-control" >
+                 </select>
+              </div> -->
+
+              <div class="ui-widget">
+                <h3 for="tags">Restaurants: </h3>
+                <input id="restaurant" name="restaurant_name" class="form-control">
+              </div>
+              <div id="someRestaurant" >
+       
+              </div>
+
+
+
+ 
               <DIV class="upload">
                   <%= f.label :picture %>
                 <BR />
@@ -127,9 +115,12 @@
 
               <DIV class="actions">
                 <%= f.submit :class => "btn btn-info"  %>
-              </DIV>
-        </DIV>
-      </DIV>
-    </DIV>
-  <% end %>
-</DIV>
+
+          </div>
+      </div>
+  </div>
+
+<% end %>
+</div>
+
+

@@ -44,35 +44,22 @@
   <DIV class="right">
     <!-- <a href="/maps"></a>  -->
     <%= link_to "", geo_path %>
-  </DIV>
 
-  <DIV id="page">
-    <DIV id="header_nav">
-      <A href="#menu">
-      </A>
-    </DIV>
+  </div>
+  <div id="page">
+     <div id="header_nav">
+        <a href="#menu"></a>
+     </div>
+      <nav id="menu">
+        <ul>
+           <li class="Selected"><a href="#"></a></li>
+           <li><a href="/friends">Searching Friends</a></li>
+           <li><a href="/personal">Personal Page</a></li>
+           <li><a href="/notifications">Notification</a></li>
+        </ul>
+     </nav>
+  </div>
 
-    <NAV id="menu">
-      <UL>
-        <LI class="Selected">
-	  <A href="#">
-	  </A>
-	</LI>
-
-        <LI>
-	  <A href="/friends">
-	    Searching Friends
-	  </A>
-	</LI>
-
-        <LI>
-	  <A href="/personal">
-	    Personal Page
-	  </A>
-	</LI>
-        </UL>
-     </NAV>
-  </DIV>
 
   <!-- search-->
   <DIV class="banner" style="height: 100px;">
@@ -161,6 +148,7 @@
                     <INPUT type="hidden" name="upload_id" value= <%=@upload_id%> >
                     <INPUT type="hidden" name="user_id" value= <%=session[:user_id]%> >
                 
+
                     <SPAN class="glyphicon glyphicon-heart" aria-hidden="true">
                     </SPAN>
 		  </BUTTON>
@@ -205,21 +193,17 @@
 
 	    <!-- add comments-->
 
-            <FORM action="comment" method="post">
-              <INPUT type="text" name="description" placeholder="add comments">
+      <form action="comment" method="post" >
+        <input type="text" name="description" placeholder="add comments" class="form-control">
 
-              <DIV class="contact_btn">
-		<%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+          <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+        </br>
+             <button name="submit" type="submit" id="submit" value="submit" class="btn btn-primary btn-sm">Submit</button>
+   
 
-                <LABEL class="btn1 btn-2 btn-2g">
-		  <INPUT name="submit" type="submit" id="submit" value="submit">
-		</LABEL>
-              </DIV>
-
-              <INPUT type="hidden" name="upload_id" value= <%=@upload_id%> >
-
-              <INPUT type="hidden" name="user_id" value= <%=session[:user_id]%> >
-            </FORM>              
+        <input type="hidden" name="upload_id" value= <%=@upload_id%> >
+        <input type="hidden" name="user_id" value= <%=session[:user_id]%> >
+      </form>              
 
 	    <!-- restaurant info -->
 
@@ -249,13 +233,17 @@
 	    <DIV style="height:50px;">
 	    </DIV>
 	</DIV>
-      <% end %>
-    </DIV>
+
+
+        <% end %>
+      </div>
+
+
+
   </DIV>
 </DIV>
 
 <!--upload-->
-
 <DIV class="navbar navbar-default navbar-fixed-bottom", role="navigation", style="background-color: #3498DB">
   <DIV class="container">
     <DIV class="row">
@@ -263,12 +251,13 @@
       </P>
 
       <DIV class="pull-right" style="margin-right: 20px;">
-	<DIV class="upload">
-	  <A href="/uploads/new" type="button" >
+  <DIV class="upload">
+    <A href="/uploads/new" type="button" >
             <%= image_tag('upload.png') %>
-	  </A>
-	</DIV>
-      </DIV>	
+    </A>
+  </DIV>
+      </DIV>  
     </DIV>
   </DIV>
 </DIV>
+

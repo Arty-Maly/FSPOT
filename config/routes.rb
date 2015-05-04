@@ -38,6 +38,10 @@ Mvp::Application.routes.draw do
 
   get "/personal" => "personal#index", as: :personal
 
+  get "/notifications" => "notifications#index", as: :notifications
+
+
+
 
   post "dislike" => "likes#destroy"
   post "/like" => "likes#create"

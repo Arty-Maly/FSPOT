@@ -1,2 +1,84 @@
-<h1>Notifications#index</h1>
-<p>Find me in app/views/notifications/index.html.erb</p>
+<nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-3">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"><%= @user_name %></a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="navbar-collapse-3">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">Likes</a></li>
+        <li><a href="#">Comments</a></li>
+        <li><a href="#">Following</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container -->
+</nav><!-- /.navbar -->
+
+
+<div class="container" id="follow">
+<% @user_follow.each do |user| %>
+  <div class="col-lg-3">
+    <div class="content_middle_box">
+      <div class="inner_wrap1">
+          <ul class="item_module">
+            <li class="module_left"><img src="/assets/m1.jpg" class="img-responsive" alt=""/></li>
+            <li class="module_right">
+				<h4 class="green"><%= user %></h4> just following you on FSPOT
+            </li>
+            <div class="clear"> </div>
+           </ul>
+      </div>
+    </div>
+  </div>
+<% end %> 
+</div>
+
+
+
+<div class="container" id="like">
+<% @user_like.each do |user| %>
+  <div class="col-lg-3">
+    <div class="content_middle_box">
+      <div class="inner_wrap1">
+          <ul class="item_module">
+            <li class="module_left"><img src=<%= user[1][1] %> class="img-responsive" alt=""/ style="height:50px; width:50px;"></li>
+            <li class="module_right">
+				<h4 class="green"><%= user[0] %></h4> likes your <%= user[1][0] %>
+            </li>
+            <div class="clear"> </div>
+           </ul>
+      </div>
+    </div>
+  </div>
+<% end %> 
+</div>
+
+
+<div class="container" id="comment">
+<% @user_comment.each do |user| %>
+  <div class="col-lg-3">
+    <div class="content_middle_box">
+      <div class="inner_wrap1">
+          <ul class="item_module">
+            <li class="module_left"><img src=<%= user[1][2] %> class="img-responsive" alt=""/ style="height:50px; width:50px;"></li>
+            <li class="module_right">
+				<h4 class="green"><%= user[0] %></h4> comments on your "<%= user[1][0] %>" <h4 class="green"><%= user[1][1]%></h4>
+            </li>
+            <div class="clear"> </div>
+           </ul>
+      </div>
+    </div>
+  </div>
+<% end %> 
+</div>
+
+
+

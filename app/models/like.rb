@@ -5,7 +5,6 @@ class Like < ActiveRecord::Base
 
   after_create :create_notification
 
-  # This is still here right now.
   private
   def create_notification
     @upload = Upload.find_by(self.upload_id)
@@ -15,7 +14,7 @@ class Like < ActiveRecord::Base
                         user_id: @user,
                         friends_id: self.user_id,
                         likes_id: self.id,
-                        read: false
+                        read: false.to_sym
                        )
   end
 end

@@ -1,4 +1,4 @@
-/*
+
 Author: W3layout
 Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
@@ -122,7 +122,7 @@ body{
 }
 
 .banner{
-	background: url('banner.jpg') no-repeat center top;
+    background: url('/assets/banner.jpg') no-repeat center top;
 	background-size:cover;
 	-webkit-background-size:cover;
 	-moz-background-size:cover;
