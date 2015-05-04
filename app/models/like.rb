@@ -5,7 +5,6 @@ class Like < ActiveRecord::Base
 
   after_create :create_notification
 
-  # This is still here right now.
   private
   def create_notification
     @upload = Upload.find_by(self.upload_id)

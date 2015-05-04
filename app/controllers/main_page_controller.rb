@@ -24,7 +24,7 @@ class MainPageController < ApplicationController
           end
 
         else
-            @uploads = Upload.all
+            @uploads = Upload.order('rating DESC')
             load_info
         end
 

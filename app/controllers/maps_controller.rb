@@ -15,9 +15,13 @@ class MapsController < ApplicationController
 
 		ret = {}
 
-		puts searchLocation
-
 		limit = 20
+
+		if params[:addr] == "pizza"
+			parameters = {term: lobster, limit: 100 }
+			searchResult = Yelp.client.search("Boston", parameters)
+
+		end
 
 		#find the data through yelp api		
 		parameters = {term: 'food', limit: limit }
@@ -51,7 +55,7 @@ class MapsController < ApplicationController
 				render json: ret
 			}
 		end
-		
+
 	end
  
 
