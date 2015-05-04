@@ -43,7 +43,7 @@ Mvp::Application.routes.draw do
 
 
 
-  post "dislike" => "likes#destroy"
+  post "/dislike" => "likes#destroy"
   post "/like" => "likes#create"
 
   get "/personal/:id" => "personal#index"

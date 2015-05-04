@@ -85,7 +85,7 @@ body{
 	position: absolute;
 	top: 5px;
 	right: 3px;
-	background: url('search1.png');
+	background: url('search1-fc1e821418e5479b77b4c40fefde3ea9.png');
 	height: 22px;
 	width: 22px;
 }
@@ -106,7 +106,7 @@ body{
 	right:32px;
 	border: none;
 	outline: none;
-	background: url('search1.png') no-repeat right 4px;
+	background: url('search12-d7afea591f3256d84358e2ea27f633dc.png') no-repeat right 4px;
 	width: 30px;
 	height: 33px;
 }
@@ -118,18 +118,18 @@ body{
 	position: absolute;
 	top: 19px;
 	left: 10px;
-	background: url('nav.png');
+	background: url('nav2-f8d03a7789be0bdf381600b419644df1.png');
 }
 
 .banner{
-    background: url('/assets/banner.jpg') no-repeat center top;
-	background-size:cover;
-	-webkit-background-size:cover;
-	-moz-background-size:cover;
-	-o-background-size:cover;
-	min-height:150px;
-	text-align:center;
-	padding-top:20px;
+  background: url('banner-0003984e8a532d5039ad98fb73e022bb.jpg') no-repeat center top;
+  background-size:cover;
+  -webkit-background-size:cover;
+  -moz-background-size:cover;
+  -o-background-size:cover;
+  min-height:150px;
+  text-align:center;
+  padding-top:20px;
 }
 .container_wrap{
 	margin:0 auto;
@@ -767,7 +767,7 @@ i.b_home1{
 i.search1{
 	width:20px;
 	height:20px;
-	background:url(../images/search.png)no-repeat;
+	background:url('search.png')no-repeat;
 	float:left;
 }
 .view .mask,.view .content {
@@ -1104,31 +1104,31 @@ ul.icons li{
 ul.icons li i.icon1{
 	width: 53px;
 	height: 53px;
-	background: url(../images/icons.png) no-repeat -4px -59px;
+	background: url('icons.png') no-repeat -4px -59px;
 	display: inline-block;
 }
 ul.icons li i.icon2{
 	width: 53px;
 	height: 53px;
-	background: url(../images/icons.png) no-repeat -62px -59px;
+	background: url('icons.png') no-repeat -62px -59px;
 	display: inline-block;
 }
 ul.icons li i.icon3{
 	width: 53px;
 	height: 53px;
-	background: url(../images/icons.png) no-repeat -123px -59px;
+	background: url('icons.png') no-repeat -123px -59px;
 	display: inline-block;
 }
 ul.icons li i.icon4{
 	width: 53px;
 	height: 53px;
-	background: url(../images/icons.png) no-repeat -181px -59px;
+	background: url('icons.png') no-repeat -181px -59px;
 	display: inline-block;
 }
 ul.icons li i.icon5{
 	width: 53px;
 	height: 53px;
-	background: url(../images/icons.png) no-repeat -243px -59px;
+	background: url('icons.png') no-repeat -243px -59px;
 	display: inline-block;
 }
 .real{
