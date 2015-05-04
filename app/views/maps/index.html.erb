@@ -41,8 +41,7 @@ function markResult(data) {
   window.map.panTo(latlng);
   window.map.fitBounds(bounds);
 
-  for( i = 0; i < data.result.length; i++){
-      $("#name" + i).html(data.result[i].name);
+  for( i = 0; i < data.result.length; i++){$("#name" + i).html(data.result[i].name);
       $("#addr" + i).html(data.result[i].address);
       $("#img" + i).attr('src', data.result[i].image_url);
       $("#url" + i).prop('href', data.result[i].mobile_url);
@@ -126,32 +125,26 @@ google.maps.event.addDomListener(window, 'load', showMap);
   <div  id="map-canvas" >
   </div>
 </div>
-
-
 <!-- list of restaurants -->
 <% (0...20).each do |i| %>
   <div id="eachRestaurant" class="container" class="result">
       <div class="col-lg-3">
           <div class="inner_wrap1">
               <ul class="item_module">
-                <li class="module_left"><a id="<%= "url#{i}" %>"><img class="foodImage" id="<%= "img#{i}" %>" class="img-responsive" alt=""/></a></li>
+                <a id="<%= "url#{i}" %>">
+                <li class="module_left"><img class="foodImage" id="<%= "img#{i}" %>" class="img-responsive" alt=""/></li>
                 <li class="module_right">
                   <h5 id="<%= "name#{i}" %>"></h5>
                   <p id="<%= "addr#{i}" %>"></p>
                   <img id="<%= "rating#{i}" %>" />
 
                 </li>
+                </a>
                </ul>
           </div>
       </div>
 </div>
 <% end %>
-
-
-
-
-
-
 
 
 
