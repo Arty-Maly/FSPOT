@@ -122,14 +122,14 @@ body{
 }
 
 .banner{
-    background: url('/assets/banner.jpg') no-repeat center top;
-	background-size:cover;
-	-webkit-background-size:cover;
-	-moz-background-size:cover;
-	-o-background-size:cover;
-	min-height:150px;
-	text-align:center;
-	padding-top:20px;
+  background: url('banner.jpg') no-repeat center top;
+  background-size:cover;
+  -webkit-background-size:cover;
+  -moz-background-size:cover;
+  -o-background-size:cover;
+  min-height:150px;
+  text-align:center;
+  padding-top:20px;
 }
 .container_wrap{
 	margin:0 auto;
