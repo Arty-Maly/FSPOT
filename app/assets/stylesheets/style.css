@@ -122,7 +122,7 @@ body{
 }
 
 .banner{
-  background: url('banner.jpg') no-repeat center top;
+  background-image: url('banner.jpg') no-repeat center top;
   background-size:cover;
   -webkit-background-size:cover;
   -moz-background-size:cover;
