@@ -14,7 +14,7 @@ class Like < ActiveRecord::Base
                         user_id: @user,
                         friends_id: self.user_id,
                         likes_id: self.id,
-                        read: 0
+                        read: false.to_sym
                        )
   end
 end
