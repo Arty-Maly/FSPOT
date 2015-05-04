@@ -31,13 +31,14 @@ class LikesController < ApplicationController
     @upload.increment!(:rating)
     respond_to do |format|
       if @like.save
-        format.html { redirect_to @like, notice: 'Like was successfully created.' }
+        format.html { redirect_to "/main", notice: 'Like was successfully created.' }
         format.json { render action: 'show', status: :created, location: @like }
       else
         format.html { render action: 'new' }
         format.json { render json: @like.errors, status: :unprocessable_entity }
       end
     end
+
   end
 
   # PATCH/PUT /likes/1
@@ -45,7 +46,7 @@ class LikesController < ApplicationController
   def update
     respond_to do |format|
       if @like.update(like_params)
-        format.html { redirect_to @like, notice: 'Like was successfully updated.' }
+        format.html { redirect_to :main_path, notice: 'Like was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

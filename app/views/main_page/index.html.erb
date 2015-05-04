@@ -54,7 +54,7 @@
         <ul>
            <li class="Selected"><a href="#"></a></li>
            <li><a href="/friends">Searching Friends</a></li>
-           <li><a href="/personal">Personal Page</a></li>
+           <li><a href=<%="/personal/"+session[:user_id].to_s %>>Personal Page</a></li>
            <li><a href="/notifications">Notification</a></li>
         </ul>
      </nav>
@@ -157,7 +157,7 @@
 	    </DIV>
 
 	    <H4>
-	      Uploaded By: <%= link_to "@#{User.find(upload[0].user_id).email}", { action: 'show', id: upload[0].user_id, controller: 'users' }, { class: 'users' } %>
+	      Uploaded By: <%= link_to "@#{User.find(upload[0].user_id).email}", "/personal/#{upload[0].user_id}" %>
 	    </H4>
 
             <DIV style="text-align:left;">

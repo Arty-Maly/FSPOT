@@ -1,6 +1,8 @@
+<h1> <%= params[:id] %> </h1>
+<% user = User.find(params[:id])%>
 
-<h1><%=User.find(session[:user_id]).email%><h1>
-<%array = Upload.where(user_id: session[:user_id])%>
+<h1><%=user.email%><h1>
+<%array = Upload.where(user_id: params[:id])%>
 <% array.each do |a| %>
 <img src=<%=a.picture%>></img>
 <br>

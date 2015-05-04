@@ -11,7 +11,7 @@ class FriendsController < ApplicationController
     user = (eval params[:user])
 
     User.find(session[:user_id]).follow(User.find(user))
-    User.find(user).follow(User.find(session[:user_id]))
+    
 
     redirect_to "/friends"
   end

@@ -46,6 +46,8 @@ Mvp::Application.routes.draw do
   post "dislike" => "likes#destroy"
   post "/like" => "likes#create"
 
+  get "/personal/:id" => "personal#index"
+
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
