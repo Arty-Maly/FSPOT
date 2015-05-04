@@ -125,7 +125,9 @@ class MainPageController < ApplicationController
       end
 
    
+
       @upload_search << [upload, d, restaurant.restaurant_name, restaurant.location, user_comment, likes, restaurant_rating_url, restaurant.yelpUrl, restaurant.geo_loaction]
     end 
+
   end
 end
