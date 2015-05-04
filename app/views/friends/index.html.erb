@@ -59,3 +59,15 @@
     <% end %>
   <% end %>
 <% end %>
+
+<% relation = Relationship.where(follower_id: session[:user_id]) %>
+<% relation.each do |r| %>
+
+  <% upl = Upload.where(user_id: r.followed_id) %>
+  <% upl .each do |u| %>
+    <h1> <%= User.find(u.user_id).email %> </h1>
+    <img src=<%=u.picture%>></img>
+    <br>
+  <%end%>
+<%end%>
+
