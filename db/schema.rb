@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150415152938) do
+ActiveRecord::Schema.define(version: 20150504191117) do
 
   create_table "comments", force: true do |t|
     t.integer  "user_id"
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20150415152938) do
     t.string   "geo_loaction"
     t.string   "rating_img"
     t.string   "phone"
+    t.string   "yelpUrl"
   end
 
   create_table "uploads", force: true do |t|

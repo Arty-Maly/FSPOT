@@ -2,6 +2,53 @@
 <SCRIPT>
   navigator.geolocation.getCurrentPosition(geocodedAddress);
 
+  function showRestaurantLocation(){
+    document.getElementById("showRestaurant").style.display = 'block'; 
+
+  }
+
+
+  function showMap(position) { 
+  var mapCanvas = document.getElementById('showRestaurant');
+// var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+  var image = 'assets/marker-3ccb249568eec97cc32c37c01d0a8cae.png';
+
+  var latlng = new google.maps.LatLng(42.3654347, -71.258595);
+
+  var mapOptions = {
+    center: latlng,
+    zoom: 13,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  }
+
+  window.map = new google.maps.Map(mapCanvas, mapOptions)
+
+  var marker = new google.maps.Marker({
+    position: latlng,
+    title: "You are here",
+    icon: image
+  });
+
+  resLatlng = $("#latlng").val().split(',');
+  var resMapLatLng = new google.maps.LatLng(resLatlng[0],resLatlng[1]);
+
+  var bounds = new google.maps.LatLngBounds();
+  bounds.extend(resMapLatLng);
+
+  var marker1 = new google.maps.Marker({
+    position: resMapLatLng,
+    title: "restaurant",
+    map: window.map
+  })
+
+  marker.setMap(window.map);
+
+}
+
+google.maps.event.addDomListener(window, 'load', showMap);
+
+
   function geocodedAddress(position){
     var geo = document.getElementById("geo");
     var lat = position.coords.latitude;
@@ -28,6 +75,8 @@
       }
     });
   }
+
+
 </SCRIPT>
 <SCRIPT>
   $(function() {
@@ -213,23 +262,30 @@
                 <STRONG>
 		  About the Place
 		</STRONG>
-	      <BR />
+     <BR />
                 <P>
-		  Restaurants:
-		</P>
-	      <BR />
+      Restaurants:
+    </P>
+
                 <H4 class="green">
-		  <%= upload[2] %><IMG src=<%= upload[6] %> />
-		</H4>
+      <%= upload[2] %><IMG src=<%= upload[6] %> />
+    </H4>
 	      <BR />
+
+
                 <P>
-		  Location:
+      <a href=<%= upload[7] %> >Link to Yelp</a>
 		</P>
 	      <BR />
+                <button onclick="showRestaurantLocation()">
+		  Show Location on the map:
+		</button>
+
                 <H4 class="green">
 		  <%= upload[3] %>
 		</H4>
 	    </DIV>
+      <input type="hidden" name="latlng" id="latlng" value=<%= upload[8]%> />
 
 	    <DIV style="height:50px;">
 	    </DIV>
@@ -239,7 +295,11 @@
         <% end %>
       </div>
 
-
+      <div class="container">
+        <div id="showRestaurant" style="height:400px; display:none" >
+        </div>
+      </div>
+   
 
   </DIV>
 </DIV>

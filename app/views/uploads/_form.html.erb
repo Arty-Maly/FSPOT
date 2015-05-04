@@ -1,112 +1,172 @@
-
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <SCRIPT>
   function readURL(input) {
     if(input.files && input.files[0]) {
       document.getElementById('img_prev').style.backgroundImage="url('"+URL.createObjectURL(input.files[0])+"')";
     }
   }
+
+  $(function() {
+
+
+    $( "#restaurant" ).autocomplete({
+        source: restaurantName,
+        appendTo: "#someRestaurant",
+        select: function (event, ui) {
+
+          $("#restaurant").val(ui.item.label);
+
+              restaurants = ui.item.label;
+              $('#upload_location').val(restaurantInfo[restaurants]['address']);
+              $('#upload_geo_location').val(restaurantInfo[restaurants]['geo_location']);
+              $('#rating_img').val(restaurantInfo[restaurants]['rating_image']);
+              $('#yelp_url').val(restaurantInfo[restaurants]['yelp_url']);
+
+        }
+
+      });
+
+    //getter
+    var appendTo = $( ".selector" ).autocomplete( "option", "appendTo" );
+ 
+    // Setter
+    $( ".selector" ).autocomplete( "option", "appendTo", "#someRestaurant" );
+
+      });
+
+      var addr = "<%= session[:address][:addr] %>";
+      var restaurantName = [];
+      var restaurantInfo = {};
+
+
+      $.get(
+        "<%= map_search_path %>",
+        {
+          addr: addr
+        },
+        storeRestaurantName
+      )
+
+
+
+    function storeRestaurantName(data){
+
+
+
+      for (var i = 0; i < data.result.length; i++){
+
+          restaurantName[i] = data.result[i].name;
+
+          eachRestaurantInfo = {};
+
+          eachRestaurantInfo['address'] = data.result[i].address;
+          eachRestaurantInfo['geo_location'] = [data.result[i].lat, data.result[i].lng];
+          eachRestaurantInfo['rating_image'] = data.result[i].rating_image;
+          eachRestaurantInfo["yelp_url"] = data.result[i].mobile_url;
+          restaurantInfo[data.result[i].name] = eachRestaurantInfo;
+
+
+      }
+
+    }
+
 </SCRIPT>
 
-<DIV id="pictureInfo">
-  <%= form_for(@upload) do |f| %>
-    <% if @upload.errors.any? %>
-      <DIV id="error_explanation">
-	<H2>
-	  <%= pluralize(@upload.errors.count, "error") %> prohibited this upload from being saved:
-	</H2>
 
-	<UL>
-	  <% @upload.errors.full_messages.each do |msg| %>
-            <LI>
-	      <%= msg %>
-	    </LI>
-	  <% end %>
-	</UL>
-      </DIV>
-    <% end %>
+<div id="pictureInfo">
+<%= form_for(@upload) do |f| %>
+  <% if @upload.errors.any? %>
+    <DIV id="error_explanation">
+      <H2>
+  <%= pluralize(@upload.errors.count, "error") %> prohibited this upload from being saved:
+      </H2>
 
-    <DIV class="container">
-      <DIV class="col-lg-3">
-        <DIV class="inner_wrap1">
-          <DIV class="field" >
-              <H3>
-		<%= f.label :name %>
-	      </h3>
-            <BR />
-              <%= f.text_field :name,  class: "form-control" %>
-          </DIV>
-
-          <DIV class="field">
-              <H3>
-		<%= f.label :description %>
-	      </H3>
-            <BR />
-              <%= f.text_field :description, class: "form-control" %>
-          </DIV>
-
-          <DIV class="field">
-            <%= f.hidden_field :location %>
-          </DIV>
-
-          <DIV class="field">
-            <%= f.hidden_field :geo_location %>
-          </DIV>
-
-          <DIV class="field">
-              <H3>
-		<%= f.label :rating %>
-	      </H3>
-	    <BR />
-              <SPAN class="starRating">
-                <INPUT id="rating5" type="radio" name="rating" value="5">
-                <LABEL for="rating5">5</LABEL>
-                <INPUT id="rating4" type="radio" name="rating" value="4">
-                <LABEL for="rating4">4</LABEL>
-                <INPUT id="rating3" type="radio" name="rating" value="3">
-                <LABEL for="rating3">3</LABEL>
-                <INPUT id="rating2" type="radio" name="rating" value="2">
-                <LABEL for="rating2">2</LABEL>
-                <INPUT id="rating1" type="radio" name="rating" value="1">
-                <LABEL for="rating1">1</LABEL>
-              </SPAN>
-          </DIV>
-
-          <INPUT type="hidden" name="phone" id="phone" >
-          <INPUT type="hidden" name="rating_img" id="rating_img"> 
-
-	  <!-- 
-          <div class="form-group">
-          <h3>Restaurants</h3>
-          <select id="restaurant" name="restaurant_name" class="form-control" >
-          </select>
-          </div> -->
-
-	  <DIV class="ui-widget">
-            <H3 for="tags">Restaurants: </H3>
-            <INPUT id="restaurant" name="restaurant_name" class="form-control">
-          </DIV>
-
-          <DIV id="someRestaurant" >
-          </DIV>
- 
-          <DIV class="upload">
-              <%= f.label :picture %>
-            <BR />
-              <%= f.file_field :picture, accept: 'image/jpeg', :onchange => "readURL(this);" %>
-
-	      <DIV id="img_prev" src="#" style="background-size: cover; background-position: center center; height: 300px; width: 300px;">
-	      </DIV>
-
-              <%= f.hidden_field :user_id, :value => session[:user_id] %>
-            <BR />                
-          </DIV>
-
-          <DIV class="actions">
-            <%= f.submit :class => "btn btn-info"  %>
-          </DIV>
-	</DIV>
-      </DIV>
+      <UL>
+  <% @upload.errors.full_messages.each do |msg| %>
+          <LI>
+      <%= msg %>
+    </LI>
   <% end %>
-</DIV>
+
+      </UL>
+    </DIV>
+  <% end %>
+
+  <div class="container">
+      <div class="col-lg-3">
+          <div class="inner_wrap1">
+              <DIV class="field" >
+                  <h3><%= f.label :name %></h3>
+                <BR />
+                  <%= f.text_field :name,  class: "form-control" %>
+              </DIV>
+
+              <DIV class="field">
+                <h3><%= f.label :description %></h3>
+              <BR />
+                <%= f.text_field :description, class: "form-control" %>
+              </DIV>
+
+              <DIV class="field">
+                <%= f.hidden_field :location %>
+              </DIV>
+
+              <DIV class="field">
+                <%= f.hidden_field :geo_location %>
+              </DIV>
+
+              <DIV class="field">
+                <h3><%= f.label :rating %></h3>
+              <BR />
+                <span class="starRating">
+                    <input id="rating5" type="radio" name="rating" value="5">
+                    <label for="rating5">5</label>
+                    <input id="rating4" type="radio" name="rating" value="4">
+                    <label for="rating4">4</label>
+                    <input id="rating3" type="radio" name="rating" value="3">
+                    <label for="rating3">3</label>
+                    <input id="rating2" type="radio" name="rating" value="2">
+                    <label for="rating2">2</label>
+                    <input id="rating1" type="radio" name="rating" value="1">
+                    <label for="rating1">1</label>
+                </span>
+              </DIV>
+
+              <input type="hidden" name="phone" id="phone" >
+              <input type="hidden" name="rating_img" id="rating_img"> 
+              <input type="hidden" name="yelp_url", id="yelp_url">
+
+              <div class="ui-widget">
+                <h3 for="tags">Restaurants: </h3>
+                <input id="restaurant" name="restaurant_name" class="form-control">
+              </div>
+              <div id="someRestaurant" >
+       
+              </div>
+
+
+              <DIV class="upload">
+                          <%= f.label :picture %>
+                        <BR />
+                          <%= f.file_field :picture, accept: 'image/jpeg', :onchange => "readURL(this);" %>
+
+              <DIV id="img_prev" src="#" style="background-size: cover; background-position: center center; height: 300px; width: 300px;">
+              </DIV>
+
+                  <%= f.hidden_field :user_id, :value => session[:user_id] %>
+                <BR />                
+              </DIV>
+
+              <DIV class="actions">
+                <%= f.submit :class => "btn btn-info"  %>
+
+          </div>
+      </div>
+  </div>
+
+<% end %>
+</div>
+
 
 
