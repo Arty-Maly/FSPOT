@@ -767,7 +767,7 @@ i.b_home1{
 i.search1{
 	width:20px;
 	height:20px;
-	background:url(../images/search.png)no-repeat;
+	background:url('search.png')no-repeat;
 	float:left;
 }
 .view .mask,.view .content {
@@ -1104,31 +1104,31 @@ ul.icons li{
 ul.icons li i.icon1{
 	width: 53px;
 	height: 53px;
-	background: url(../images/icons.png) no-repeat -4px -59px;
+	background: url('icons.png') no-repeat -4px -59px;
 	display: inline-block;
 }
 ul.icons li i.icon2{
 	width: 53px;
 	height: 53px;
-	background: url(../images/icons.png) no-repeat -62px -59px;
+	background: url('icons.png') no-repeat -62px -59px;
 	display: inline-block;
 }
 ul.icons li i.icon3{
 	width: 53px;
 	height: 53px;
-	background: url(../images/icons.png) no-repeat -123px -59px;
+	background: url('icons.png') no-repeat -123px -59px;
 	display: inline-block;
 }
 ul.icons li i.icon4{
 	width: 53px;
 	height: 53px;
-	background: url(../images/icons.png) no-repeat -181px -59px;
+	background: url('icons.png') no-repeat -181px -59px;
 	display: inline-block;
 }
 ul.icons li i.icon5{
 	width: 53px;
 	height: 53px;
-	background: url(../images/icons.png) no-repeat -243px -59px;
+	background: url('icons.png') no-repeat -243px -59px;
 	display: inline-block;
 }
 .real{
