@@ -1,52 +1,60 @@
-<div class="right">
+<DIV class="right">
   <!-- <a href="/main"></a> -->
   <%= link_to "", main_path %> 
-</div>
+</DIV>
 <!-- search-->
-<div class="banner">
-     <div class="container_wrap">
-      <h1>following friends</h1>
+<DIV class="banner">
+  <DIV class="container_wrap">
+    <H1>
+      following friends
+    </H1>
 
-       <form action="/friends" method="get">
-         <input type="text" name="search" placeholder="find your friends">
-          <div class="contact_btn">
-               <label class="btn1 btn-2 btn-2g"><input name="submit" type="submit" id="submit" value="Search" ></label>
-          </div>
-      </form>    
+    <FORM action="/friends" method="get">
+      <INPUT type="text" name="search" placeholder="find your friends">
 
-     </div>
-</div>
+      <DIV class="contact_btn">
+        <LABEL class="btn1 btn-2 btn-2g">
+	  <INPUT name="submit" type="submit" id="submit" value="Search" >
+	</LABEL>
+      </DIV>
+    </FORM>    
+  </DIV>
+</DIV>
 
 
 
 <% @users.each do |user| %>
   <% session[:user_id] %> 
+
   <% unless(session[:user_id] == user.id || !Relationship.where(follower_id: user.id).empty?) %>
     <%= form_tag '/friends', :method => 'POST' do %>
         <%= hidden_field_tag :user, user.id %>
       <BR />
+        <DIV class="container">
+	  <DIV class="col-lg-3">
+	    <DIV class="content_middle_box">
+	      <DIV class="inner_wrap1">
+		<UL class="item_module">
+		  <LI class="module_left">
+		    <%= image_tag('m1.jpg', class: "img-responsive") %>
+		  </LI>
 
+		  <LI class="module_right">
+		    <!--  <img src="/assets/m_star.png" class="img-responsive" alt=""/> -->
+		    <H5>
+		      <%= user.email %>
+		    </H5>
 
+		    <%= submit_tag "follow", class: "btn btn-danger" %>
+		  </LI>
 
-<div class="container">
-  <div class="col-lg-3">
-    <div class="content_middle_box">
-      <div class="inner_wrap1">
-          <ul class="item_module">
-            <li class="module_left"><%= image_tag('m1.jpg', class: "img-responsive") %></li>
-            <li class="module_right">
-             <!--  <img src="/assets/m_star.png" class="img-responsive" alt=""/> -->
-              <h5><%= user.email %></h5>
-              <%= submit_tag "follow", class: "btn btn-danger" %>
-            </li>
-            <div class="clear"> </div>
-           </ul>
-      </div>
-    </div>
-  </div>
-</div>
-
+		  <DIV class="clear">
+		  </DIV>
+		</UL>
+	      </DIV>
+	    </DIV>
+	  </DIV>
+	</DIV>
     <% end %>
   <% end %>
 <% end %>
-
