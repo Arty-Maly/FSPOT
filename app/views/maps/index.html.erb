@@ -1,177 +1,187 @@
-<meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-  <script type="text/javascript">
-    (function(document,navigator,standalone) {
-      // prevents links from apps from oppening in mobile safari
-      // this javascript must be the first script in your <head>
-      if ((standalone in navigator) && navigator[standalone]) {
-        var curnode, location=document.location, stop=/^(a|html)$/i;
-        document.addEventListener('click', function(e) {
-          curnode=e.target;
-          while (!(stop).test(curnode.nodeName)) {
-            curnode=curnode.parentNode;
-          }
-          // Condidions to do this only on links to your own app
-          // if you want all links, use if('href' in curnode) instead.
-          if(
-            'href' in curnode && // is a link
-            (chref=curnode.href).replace(location.href,'').indexOf('#') && // is not an anchor
-            ( !(/^[a-z\+\.\-]+:/i).test(chref) ||                       // either does not have a proper scheme (relative links)
-              chref.indexOf(location.protocol+'//'+location.host)===0 ) // or is in the same protocol and domain
-          ) {
-            e.preventDefault();
-            location.href = curnode.href;
-          }
-        },false);
-      }
-    })(document,window.navigator,'standalone');
-  </script>
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-<script>
+<META name="apple-mobile-web-app-capable" content="yes">
+<META name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
 
-function markResult(data) {
-  var locations = [];
-  for (var i = 0; i < data.result.length; i++) {
-    locations.push ({
-      name: data.result[i].name,
-      loc: new google.maps.LatLng(data.result[i].lat, data.result[i].lng),
-    });
-  }
+<SCRIPT type="text/javascript">
+  (function(document,navigator,standalone) {
+    // prevents links from apps from oppening in mobile safari
+    // this javascript must be the first script in your <head>
+    if((standalone in navigator) && navigator[standalone]) {
+      var curnode, location=document.location, stop=/^(a|html)$/i;
 
-  var lat = data.center.lat;
-  var lng = data.center.lng;
-  var latlng = new google.maps.LatLng(lat, lng);
+      document.addEventListener('click', function(e) {
+        curnode=e.target;
 
+        while (!(stop).test(curnode.nodeName)) {
+          curnode=curnode.parentNode;
+        }
 
-  var infowindow = new google.maps.InfoWindow();
+        // Condidions to do this only on links to your own app
+        // if you want all links, use if('href' in curnode) instead.
+        if('href' in curnode && // is a link
+           (chref=curnode.href).replace(location.href,'').indexOf('#') && // is not an anchor
+           (!(/^[a-z\+\.\-]+:/i).test(chref) ||                       // either does not have a proper scheme (relative links)
+            chref.indexOf(location.protocol+'//'+location.host)===0 ) // or is in the same protocol and domain
+           ) { e.preventDefault(); location.href = curnode.href; } },
+				false);
+    }
+  })(document,window.navigator,'standalone');
+</SCRIPT>
 
-  var marker, i;
+<SCRIPT src="https://maps.googleapis.com/maps/api/js?v=3.exp">
+</SCRIPT>
 
-  var bounds = new google.maps.LatLngBounds();
-  for (i = 0; i < locations.length; i++) {  
-    bounds.extend(locations[i].loc);
-    marker = new google.maps.Marker({
-      position: locations[i].loc,
-      map: window.map,
-      draggable: true,
-      animation: google.maps.Animation.DROP
-    });
+<SCRIPT>
+  function markResult(data) {
+    var locations = [];
 
-    google.maps.event.addListener(marker, 'click', (function(marker, i) {
-      return function() {
-        infowindow.setContent('<h1 style="color:green;">' + data.result[i].name + '</h1>' + '<br>' + 
-          data.result[i].address + '<br>' + 'Rating: ' + data.result[i].rating + '<br>' );
-        infowindow.open(window.map, marker);
-      }
-    })(marker, i));
-    marker.setMap(window.map);
-  }
-  window.map.panTo(latlng);
-  window.map.fitBounds(bounds);
+    for (var i = 0; i < data.result.length; i++) {
+      locations.push ({ name: data.result[i].name,
+		        loc: new google.maps.LatLng(data.result[i].lat, data.result[i].lng),
+		      });
+    }
 
-  for( i = 0; i < data.result.length; i++){$("#name" + i).html(data.result[i].name);
+    var lat = data.center.lat;
+    var lng = data.center.lng;
+    var latlng = new google.maps.LatLng(lat, lng);
+
+    var infowindow = new google.maps.InfoWindow();
+
+    var marker, i;
+
+    var bounds = new google.maps.LatLngBounds();
+
+    for (i = 0; i < locations.length; i++) {  
+      bounds.extend(locations[i].loc);
+      marker = new google.maps.Marker({ position: locations[i].loc,
+				        map: window.map,
+				        draggable: true,
+				        animation: google.maps.Animation.DROP
+				      });
+
+      google.maps.event.addListener(marker,
+				    'click',
+				    (function(marker, i) {
+	                               return function() {
+                                                infowindow.setContent('<h1 style="color:green;">' +
+								      data.result[i].name +
+								      '</h1>' +
+								      '<br>' + 
+								      data.result[i].address +
+								      '<br>' +
+								      'Rating: ' +
+								      data.result[i].rating +
+								      '<br>');
+                                                infowindow.open(window.map, marker);
+	                                      }
+                                     })(marker, i));
+      marker.setMap(window.map);
+    }
+
+    window.map.panTo(latlng);
+    window.map.fitBounds(bounds);
+
+    for(i = 0; i < data.result.length; i++) {
+      $("#name" + i).html(data.result[i].name);
       $("#addr" + i).html(data.result[i].address);
       $("#img" + i).attr('src', data.result[i].image_url);
       $("#url" + i).prop('href', data.result[i].mobile_url);
       $("#rating" + i).attr('src', data.result[i].rating_image);
+    }
   }
-}
+
   var addr = $('#address').val();
 
-  $.get(
-    "<%= map_search_path %>",
-    {
-      addr: addr
-    },
-    markResult
-  )
+  $.get("<%= map_search_path %>",
+	{ addr: addr },
+	markResult)
 
-function sendAddress() {
-  var addr = $('#address').val();
+  function sendAddress() {
+    var addr = $('#address').val();
 
-  $.get(
-    "<%= map_search_path %>",
-    {
-      addr: addr
-    },
-    markResult
-  )
-}
+    $.get("<%= map_search_path %>",
+	  { addr: addr },
+	  markResult)
+  }
 
+  function findLocation() {
+    navigator.geolocation.getCurrentPosition(showMap);
+  }
 
-function findLocation() {
-  navigator.geolocation.getCurrentPosition(showMap);
-}
-
-function showMap(position) { 
-  var mapCanvas = document.getElementById('map-canvas');
+  function showMap(position) { 
+    var mapCanvas = document.getElementById('map-canvas');
 // var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
-  var image = 'assets/marker-3ccb249568eec97cc32c37c01d0a8cae.png';
-  var latlng = new google.maps.LatLng(42.3654347, -71.258595);
-  var mapOptions = {
-    center: latlng,
-    zoom: 14,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
+    var image = 'assets/marker-3ccb249568eec97cc32c37c01d0a8cae.png';
+    var latlng = new google.maps.LatLng(42.3654347, -71.258595);
+    var mapOptions = { center: latlng,
+		       zoom: 14,
+		       mapTypeId: google.maps.MapTypeId.ROADMAP
+		     }
+    window.map = new google.maps.Map(mapCanvas, mapOptions)
+    var marker = new google.maps.Marker({ position: latlng,
+					  title: "You are here",
+					  icon: image
+					});
+    marker.setMap(window.map);
   }
-  window.map = new google.maps.Map(mapCanvas, mapOptions)
-  var marker = new google.maps.Marker({
-    position: latlng,
-    title: "You are here",
-    icon: image
-  });
-  marker.setMap(window.map);
-}
 
-google.maps.event.addDomListener(window, 'load', showMap);
+  google.maps.event.addDomListener(window, 'load', showMap);
+</SCRIPT>
 
-</script>
+<DIV id="page">
+  <DIV id="header_nav">
+    <A>
+      <%=link_to "", main_path %>
+    </A>
+  </DIV>
+</DIV>
 
+<DIV class="banner">
+  <DIV class="container_wrap">
+    <H1>
+      F-SPOT
+    </H1>
 
+    <FORM id ="searchAddress" action="javascript:void(0);" method="get" >
+      <INPUT type="text" id="address" name="search" placeholder="Location">
 
-<div id="page">
-   <div id="header_nav">
-      <a><%=link_to "", main_path %></a>
-   </div>
-</div>
-
-<div class="banner">
- <div class="container_wrap">
-  <h1>F-SPOT</h1>
-  <form id ="searchAddress" action="javascript:void(0);" method="get" >
-   <input type="text" id="address" name="search" placeholder="Location">
-   <div class="contact_btn">
-    <input type="submit"  value="Search" class="btn btn-danger" onclick="sendAddress()" >
-    </div>
-  </form>              
-</div>
-</div>
+      <DIV class="contact_btn">
+	<INPUT type="submit"  value="Search" class="btn btn-danger" onclick="sendAddress()" >
+      </DIV>
+    </FORM>              
+  </DIV>
+</DIV>
 
 
 <!-- map -->    
-<div class="container">
-  <div  id="map-canvas" >
-  </div>
-</div>
+<DIV class="container">
+  <DIV  id="map-canvas" >
+  </DIV>
+</DIV>
 <!-- list of restaurants -->
 <% (0...20).each do |i| %>
-  <div id="eachRestaurant" class="container" class="result">
-      <div class="col-lg-3">
-          <div class="inner_wrap1">
-              <ul class="item_module">
-                <a id="<%= "url#{i}" %>">
-                <li class="module_left"><img class="foodImage" id="<%= "img#{i}" %>" class="img-responsive" alt=""/></li>
-                <li class="module_right">
-                  <h5 id="<%= "name#{i}" %>"></h5>
-                  <p id="<%= "addr#{i}" %>"></p>
-                  <img id="<%= "rating#{i}" %>" />
+  <DIV id="eachRestaurant" class="container" class="result">
+    <DIV class="col-lg-3">
+      <DIV class="inner_wrap1">
+        <UL class="item_module">
+          <A id="<%= "url#{i}" %>">
+            <LI class="module_left">
+	      <IMG class="foodImage" id="<%= "img#{i}" %>" class="img-responsive" alt=""/>
+	    </LI>
 
-                </li>
-                </a>
-               </ul>
-          </div>
-      </div>
-</div>
+            <LI class="module_right">
+              <H5 id="<%= "name#{i}" %>">
+	      </H5>
+
+              <P id="<%= "addr#{i}" %>">
+	      </P>
+
+              <IMG id="<%= "rating#{i}" %>" />
+            </LI>
+          </A>
+        </UL>
+      </DIV>
+    </DIV>
+  </DIV>
 <% end %>
 
 
