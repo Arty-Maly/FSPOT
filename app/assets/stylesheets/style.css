@@ -125,6 +125,7 @@ right:0px;
   height:80px;
   background-size: 70%;
 }
+
 #header_nav a,
 .header_nav a{
   display: block;
@@ -976,13 +977,18 @@ ul.star1 li a{
 	font-size:0.8125em;
 	color:#96a6a7;
 }
+
+
 ul.star1 li a img {
 	padding-right: 5px;
+}
+a#linkyelp {
+	font-size: 20px !important;
 }
 h4.green, h4.yellow, h4.blue{
 	color:#1baf5d;
 	text-transform:uppercase;
-	font-size:0.8125em;
+	font-size:0.5125em;
 	margin-bottom: 0;
 }
 h4.yellow{
@@ -1044,6 +1050,11 @@ ul.vision li.desc a{
 }
 div.inner_wrap.slick-slide.slick-active {
 	font-size: 200%
+}
+
+ p#restr-info {
+	color:  #333333 !important;
+	font-size: 25px !important;
 }
 ul.item_module{
 	padding:0;

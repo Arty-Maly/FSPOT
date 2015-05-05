@@ -240,10 +240,10 @@
 	  
 
           <DIV style="text-align:left;">
-              <STRONG>
+             <BR> <STRONG>
 		Comments
 	      </STRONG>
-            <BR />
+            
               <!-- show comments -->
 	      <% upload[4].each do |comment| %>
 		<BR />
@@ -287,33 +287,30 @@
 	  <!-- restaurant info -->
 	  <DIV class="col-lg-3" style="text-align: left;">
             <BR />
-	      <STRONG>
-		About the Place
+	      <STRONG> 
+		<p id = "restr-info" > Restaraunt Info: </p>
 	      </STRONG>
-	    <BR />
-              <P>
-		Restaurants:
-	      </P>
+	    
+      
 
               <H4 class="green">
 		<%= upload[2] %>
 
 		<IMG src="<%= upload[6] %>" />
 	      </H4>
-	    <BR />
+	   
               <P>
-		<A href="<%= upload[7] %>">
-		  Link to Yelp
+		
+		         <H4 class="green">
+    <%= upload[3] %>
+        </H4>
+        <A id ="linkyelp" href="<%= upload[7] %>">
+      Yelp! Page
 		</A>
 	      </P>
-	    <BR />
-              <BUTTON onclick="showRestaurantLocation(<%= @upload_id %>)">
-		Show Location on the map:
-	      </BUTTON>
+	    
 
-              <H4 class="green">
-		<%= upload[3] %>
-	      </H4>
+       
 
               <!-- SHOW restaurant in the map -->
               <DIV id="<%= "showRestaurant#{@upload_id}" %>" style="height:400px; display:none">
