@@ -25,7 +25,6 @@ class LikesController < ApplicationController
   # POST /likes.json
   def create
     
-
     if Like.where(upload_id: params[:upload_id], user_id: params[:user_id]).count == 0
           @like = Like.new(like_params)
           @like.save
