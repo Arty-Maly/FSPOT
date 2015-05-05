@@ -36,6 +36,26 @@
     document.getElementById("showRestaurant").style.display = 'block'; 
   }
 
+  function like(user_id, img_id, like_count){
+
+    $.get(
+        "<%= like_count_path %>",
+        {
+          user_id: user_id,
+          upload_id: img_id
+        },
+        addLike
+      )                  
+  }
+
+  function addLike(data){
+
+    var img_id = data.img_id;
+
+    $("#like" + img_id).text((data.like).toString().concat(" Likes"));
+
+  }
+
   function showMap(position) { 
     var mapCanvas = document.getElementById('showRestaurant');
 // var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -202,9 +222,7 @@
 	      <%= upload[1] %> miles <%= upload[0].rating %> stars
 	    </H4>
           
-            <H4>
-	      <%= upload[5] %>   likes
-	    </H4>
+      <H4 id="<%= "like#{@upload_id}" %>"><%= upload[5] %>  likes</H4>
 
             <H4 class="green">
 	      <%= upload[0].description %>
@@ -213,34 +231,12 @@
             <IMG style="display: block; margin-left: auto; margin-right: auto;" data-lazy =<%= image_url upload[0].picture_url %>><BR>
 
             <DIV class="row">
-              <!-- dont like the food  -->
-              <% if(dislike_id = Like.find_by(user_id: session[:user_id], upload_id: @upload_id)) %>
-		<FORM action="dislike" method="post" >
-		  <BUTTON type="submit" class="btn btn-default btn-lg" style="background-color: red">
-                    <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
-
-                    <INPUT type="hidden" name="id" value= <%= dislike_id.id %> >
-
-                    <SPAN class="glyphicon glyphicon-remove-sign" aria-hidden="true">
-                    </SPAN>
-		  </BUTTON>
-		</FORM>
-	      <% else %>
-		<!-- like the food -->
-		<FORM action="like" method="post" >
-		  <BUTTON type="submit" class="btn btn-default btn-lg" style="background-color: #87D37C">
-                    <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
-
-                    <INPUT type="hidden" name="upload_id" value= <%=@upload_id%> >
-                    <INPUT type="hidden" name="user_id" value= <%=session[:user_id]%> >
-                
-
-                    <SPAN class="glyphicon glyphicon-heart" aria-hidden="true">
-                    </SPAN>
-		  </BUTTON>
-		</FORM>
-	      <% end %>
-	    </DIV>
+              <button class="btn btn-default btn-lg" id="like" onclick="like(<%=session[:user_id]%>, <%=@upload_id%>, <%= upload[5] %>, <%=@upload_id%>)">
+                 <SPAN class="glyphicon glyphicon-heart" aria-hidden="true"></SPAN>
+             </button>
+             <INPUT type="hidden" name="upload_id" id="upload_id" value= <%=@upload_id%> >
+              
+	          </DIV>
 
 	    <H4>
 	      Uploaded By: <%= link_to "@#{User.find(upload[0].user_id).email}", "/personal/#{upload[0].user_id}" %>
