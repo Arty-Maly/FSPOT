@@ -1,31 +1,32 @@
-<META name="apple-mobile-web-app-capable" content="yes">
-<META name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-<SCRIPT type="text/javascript">
-  (function(document,navigator,standalone) {
-    // prevents links from apps from oppening in mobile safari
-    // this javascript must be the first script in your <head>
-    if((standalone in navigator) && navigator[standalone]) {
-      var curnode, location=document.location, stop=/^(a|html)$/i;
-      document.addEventListener('click',
-				function(e) {
-                                  curnode=e.target;
-                                  while(!(stop).test(curnode.nodeName)) {
-                                    curnode=curnode.parentNode;
-                                  }
-                                  // Condidions to do this only on links to your own app
-                                  // if you want all links, use if('href' in curnode) instead.
-                                  if('href' in curnode && // is a link
-				     (chref = curnode.href).replace(location.href, '').indexOf('#') && // is not an anchor
-				     (!(/^[a-z\+\.\-]+:/i).test(chref) ||                              // either does not have a proper scheme (relative links)
-				      chref.indexOf(location.protocol + '//' + location.host)===0)) {  // or is in the same protocol and domain
-				    e.preventDefault();
-				    location.href = curnode.href;
-				  }
-                                },
-				false);
-    }
-  })(document,window.navigator,'standalone');
-</SCRIPT>
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+  <script type="text/javascript">
+    (function(document,navigator,standalone) {
+      // prevents links from apps from oppening in mobile safari
+      // this javascript must be the first script in your <head>
+      if ((standalone in navigator) && navigator[standalone]) {
+        var curnode, location=document.location, stop=/^(a|html)$/i;
+        document.addEventListener('click', function(e) {
+          curnode=e.target;
+          while (!(stop).test(curnode.nodeName)) {
+            curnode=curnode.parentNode;
+          }
+          // Condidions to do this only on links to your own app
+          // if you want all links, use if('href' in curnode) instead.
+          if(
+            'href' in curnode && // is a link
+            (chref=curnode.href).replace(location.href,'').indexOf('#') && // is not an anchor
+            ( !(/^[a-z\+\.\-]+:/i).test(chref) ||                       // either does not have a proper scheme (relative links)
+              chref.indexOf(location.protocol+'//'+location.host)===0 ) // or is in the same protocol and domain
+          ) {
+            e.preventDefault();
+            location.href = curnode.href;
+          }
+        },false);
+      }
+    })(document,window.navigator,'standalone');
+  </script>
 
 <SCRIPT src="https://maps.googleapis.com/maps/api/js"></SCRIPT>
 <SCRIPT>
@@ -33,11 +34,9 @@
 
   function showRestaurantLocation(img_id){
 
-
     var img_id = img_id;
 
     var mapCanvas = document.getElementById('showRestaurant' + img_id);
-
 
     var image = 'assets/marker-3ccb249568eec97cc32c37c01d0a8cae.png';
     var latlng = new google.maps.LatLng(42.3654347, -71.258595);
@@ -50,11 +49,9 @@
     window.map = new google.maps.Map(mapCanvas, mapOptions)
 
     var marker = new google.maps.Marker({ position: latlng,
-
             title: "You are here",
             icon: image
           });
-
 
     resLatlng = $("#latlng" + img_id).val().split(',');
     var resMapLatLng = new google.maps.LatLng(resLatlng[0],resLatlng[1]);
@@ -63,11 +60,9 @@
     bounds.extend(resMapLatLng);
 
     var marker1 = new google.maps.Marker({ position: resMapLatLng,
-
              title: "restaurant",
              map: window.map
            })
-
 
     marker.setMap(window.map);
 
@@ -96,7 +91,7 @@
   }
 
 
-  function geocodedAddress(position) {
+  function geocodedAddress(position){
     var geo = document.getElementById("geo");
     var lat = position.coords.latitude;
     var lng = position.coords.longitude;
@@ -104,24 +99,23 @@
     var geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(lat, lng);
 
-    geocoder.geocode({ 'latLng': latlng },
-		     function(results, status) {
-                       if(status == google.maps.GeocoderStatus.OK) {
-                         if(results[1]) {
-                           addr = results[1].formatted_address;
-                           current_lcoation = results[1].formatted_address.split(",");
-                           geo.innerHTML = current_lcoation[0] + current_lcoation[1];
-                           $.ajax({ url: "<%= address_path %>", 
-				    data: { addr: addr } }).done(function(data) {
-                                                                   // alert(data.response);
-                                                                 });
-                         } else {
-                           alert('No results found');
-                         }
-                       } else {
-                         alert('Geocoder failed due to: ' + status);
-                       }
-                     });
+    geocoder.geocode({'latLng': latlng}, function(results, status) {
+      if(status == google.maps.GeocoderStatus.OK) {
+        if(results[1]) {
+          addr = results[1].formatted_address;
+          current_lcoation = results[1].formatted_address.split(",");
+          geo.innerHTML = current_lcoation[0] + current_lcoation[1];
+          $.ajax({ url: "<%= address_path %>", 
+                   data: { addr: addr } }).done(function(data) {
+                                                  // alert(data.response);
+                                                });
+        } else {
+          alert('No results found');
+        }
+      } else {
+        alert('Geocoder failed due to: ' + status);
+      }
+    });
   }
 </SCRIPT>
 <SCRIPT>
@@ -144,32 +138,32 @@
   <DIV id="page">
      <DIV id="header_nav">
         <A href="#menu">
-	</A>
+  </A>
      </DIV>
       <NAV id="menu">
         <UL>
            <LI class="Selected">
-	     <A href="#">
-	     </A>
-	   </LI>
+       <A href="#">
+       </A>
+     </LI>
 
            <LI>
-	     <A href="/friends">
-	       Searching Friends
-	     </A>
-	   </LI>
+       <A href="/friends">
+         Searching Friends
+       </A>
+     </LI>
 
            <LI>
-	     <A href="<%= '/personal/'+session[:user_id].to_s %>">
-	       Personal Page
-	     </A>
-	   </LI>
+       <A href=<%="/personal/"+session[:user_id].to_s %>>
+         Personal Page
+       </A>
+     </LI>
 
            <LI>
-	     <A href="/notifications">
-	       Notification
-	     </A>
-	   </LI>
+       <A href="/notifications">
+         Notification
+       </A>
+     </LI>
         </UL>
       </NAV>
   </DIV>
@@ -182,20 +176,20 @@
           <DIV class="dropdown-button">                   
             <SELECT id ="category" name="category" class="dropdown" tabindex="9" data-settings='{"wrapperClass":"flat"}'>
               <OPTION>
-		By Catogory(nearest..)
-	      </OPTION>
+    By Catogory(nearest..)
+        </OPTION>
 
               <OPTION value="find the nearst dishes">
-		find the nearst dishes
-	      </OPTION>
+    find the nearst dishes
+        </OPTION>
 
               <OPTION value="find the best dishes">
-		find the best dishes
-	      </OPTION>
+    find the best dishes
+        </OPTION>
 
               <OPTION value="find the latest dishes">
-		find the latest dishes
-	      </OPTION>
+    find the latest dishes
+        </OPTION>
             </SELECT>
           </DIV>
         </DIV>
@@ -204,8 +198,8 @@
 
         <DIV class="contact_btn">
           <LABEL class="btn1 btn-2 btn-2g">
-	    <INPUT name="submit" type="submit" id="submit" value="Search">
-	  </LABEL>
+      <INPUT name="submit" type="submit" id="submit" value="Search" >
+    </LABEL>
         </DIV>
       </FORM>              
     </DIV>
@@ -221,87 +215,83 @@
       <% @upload_search.each do |upload| %>
         <DIV class="inner_wrap">
           <H4>
-	    <%= upload[0].name %>
-	  </H4>
+      <%= upload[0].name %>
+    </H4>
 
           <% @upload_id =  upload[0].id %>
             <H4 class="green">
-	      <%= upload[1] %> miles <%= upload[0].rating %> stars
-	    </H4>
+        <%= upload[1] %> miles <%= upload[0].rating %> stars
+      </H4>
           
-	    <H4 id="<%= "like#{@upload_id}" %>">
-	      <%= upload[5] %>  likes
-	    </H4>
+      <H4 id="<%= "like#{@upload_id}" %>"><%= upload[5] %>  likes</H4>
 
             <H4 class="green">
-	      <%= upload[0].description %>
-	    </H4>
+        <%= upload[0].description %>
+      </H4>
 
-            <IMG style="display: block; margin-left: auto; margin-right: auto;" data-lazy="<%= image_url upload[0].picture_url %>"><BR>
+            <IMG style="display: block; margin-left: auto; margin-right: auto;" data-lazy =<%= image_url upload[0].picture_url %>><BR>
 
             <DIV class="row">
-              <BUTTON class="btn btn-default btn-lg" id="like" onclick="like(<%= session[:user_id] %>, <%= @upload_id %>, <%= upload[5] %>, <%= @upload_id %>)">
-                <SPAN class="glyphicon glyphicon-heart" aria-hidden="true">
-		</SPAN>
-              </BUTTON>
+              <button class="btn btn-default btn-lg" id="like" onclick="like(<%=session[:user_id]%>, <%=@upload_id%>, <%= upload[5] %>, <%=@upload_id%>)">
+                 <SPAN class="glyphicon glyphicon-heart" aria-hidden="true"></SPAN>
+             </button>
+             <INPUT type="hidden" name="upload_id" id="upload_id" value= <%=@upload_id%> >
+              
+            </DIV>
 
-              <INPUT type="hidden" name="upload_id" id="upload_id" value="<%=@upload_id%>">
-	    </DIV>
-
-	    <H4>
-	      Uploaded By: <%= link_to "@#{User.find(upload[0].user_id).email}", "/personal/#{upload[0].user_id}" %>
-	    </H4>
+      <H4>
+        Uploaded By: <%= link_to "@#{User.find(upload[0].user_id).email}", "/personal/#{upload[0].user_id}" %>
+      </H4>
 
             <DIV style="text-align:left;">
                 <STRONG>
-		  Comments
-		</STRONG>
-	      <BR />
+      Comments
+    </STRONG>
+        <BR />
                 <!-- show comments -->
-		<% upload[4].each do |comment| %>
-		  <BR />
-		    <DIV class="inner_wrap1">
-		      <UL class="item_module">
-			<LI class="module_left">
-			  <%= image_tag('m1.jpg', class: "img-responsive") %>
-			</LI>
+    <% upload[4].each do |comment| %>
+      <BR />
+        <DIV class="inner_wrap1" >
+          <UL class="item_module">
+      <LI class="module_left">
+        <%= image_tag('m1.jpg', class: "img-responsive") %>
+      </LI>
 
-			<LI class="module_right">
-			  <!--               <img src="/assets/m_star.png" class="img-responsive" alt=""/> -->
-			  <H5>
-			    <%= comment[0] %>
-			  </H5>
+      <LI class="module_right">
+        <!--               <img src="/assets/m_star.png" class="img-responsive" alt=""/> -->
+        <H5>
+          <%= comment[0] %>
+        </H5>
 
-			  <P>
-			    <%= comment[1] %>
-			  </P>
-			</LI>
+        <P>
+          <%= comment[1] %>
+        </P>
+      </LI>
 
-			<DIV class="clear">
-			</DIV>
-		      </UL>
-		    </DIV>
-		<% end %>
-	    </DIV>
+      <DIV class="clear">
+      </DIV>
+          </UL>
+        </DIV>
+    <% end %>
+      </DIV>
 
-	    <!-- add comments-->
-	    <FORM action="comment" method="post">
-                <INPUT type="text" name="description" placeholder="add comments" class="form-control">
+      <!-- add comments-->
 
-		<%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
-	      </BR>
-                <BUTTON name="submit" type="submit" id="submit" value="submit" class="btn btn-primary btn-sm">
-		  Submit
-		</BUTTON>
+      <form action="comment" method="post" >
+        <input type="text" name="description" placeholder="add comments" class="form-control">
 
-		<INPUT type="hidden" name="upload_id" value="<%=@upload_id%>">
-		<INPUT type="hidden" name="user_id" value="<%=session[:user_id]%>">
-	    </FORM>              
+          <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+        </br>
+             <button name="submit" type="submit" id="submit" value="submit" class="btn btn-primary btn-sm">Submit</button>
+   
 
-	    <!-- restaurant info -->
-	    <DIV class="col-lg-3" style="text-align: left;">
+        <input type="hidden" name="upload_id" value= <%=@upload_id%> >
+        <input type="hidden" name="user_id" value= <%=session[:user_id]%> >
+      </form>              
 
-	      <BR /><STRONG>About the Place</STRONG><BR />
+      <!-- restaurant info -->
+      <DIV class="col-lg-3" style="text-align: left;">
+        <BR /><STRONG>About the Place</STRONG><BR />
         <P>Restaurants:</P>
         <H4 class="green"><%= upload[2] %><IMG src=<%= upload[6] %> /></H4><BR />
         <P><a href=<%= upload[7] %> >Link to Yelp</a></P><BR />
@@ -311,15 +301,13 @@
         <!-- Show restaurant in the map -->
         <div id="<%= "showRestaurant#{@upload_id}" %>" style="height:400px; display:none" >
         </div>
-	    </DIV>
+      </DIV>
 
       <input type="hidden" name="latlng" id=<%= "latlng#{@upload_id}" %> value=<%= upload[8]%> />
 
-	    <DIV style="height:50px;">
-	    </DIV>
-	</DIV>
-      <% end %>
-    </DIV>
+      <DIV style="height:50px;">
+      </DIV>
+  </DIV>
 
 
 
@@ -328,10 +316,8 @@
       </div>
 
 
-
-
-
   </DIV>
+</DIV>
 </DIV>
 
 <!--upload-->
@@ -342,11 +328,11 @@
       </P>
 
       <DIV class="pull-right" style="margin-right: 20px;">
-	<DIV class="upload">
-	  <A href="/uploads/new" type="button">
+  <DIV class="upload">
+    <A href="/uploads/new" type="button" >
             <%= image_tag('upload.png') %>
-	  </A>
-	</DIV>
+    </A>
+  </DIV>
       </DIV>  
     </DIV>
   </DIV>
