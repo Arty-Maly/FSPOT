@@ -947,17 +947,16 @@ p.m_5{
    transition-delay: 0.1s;
 }
 .inner_wrap, .inner_wrap2{
-	background:#cae4f6;
-	
-	text-align:center;
-	border-bottom-left-radius: 3px;
-   -webkit-border-bottom-left-radius: 3px;
-   -moz-border-bottom-left-radius: 3px;
-   -o-border-bottom-left-radius: 3px;
-   border-bottom-right-radius: 3px;
-   -webkit-border-bottom-right-radius: 3px;
-   -moz-border-bottom-right-radius: 3px;
-   -o-border-bottom-right-radius: 3px;
+  background:#cae4f6;
+  text-align:center;
+  border-bottom-left-radius: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  -moz-border-bottom-left-radius: 3px;
+  -o-border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  -webkit-border-bottom-right-radius: 3px;
+  -moz-border-bottom-right-radius: 3px;
+  -o-border-bottom-right-radius: 3px;
 }
 .inner_wrap h3, .inner_wrap2 h3{
 	color: #566375;

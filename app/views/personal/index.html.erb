@@ -38,19 +38,33 @@
   <% end %>
 <% end %>
 
-<H1>
-  User: <%= params[:id] %>
-</H1>
-
 <% user = User.find(params[:id])%>
-
 <% if(params[:id] != user.email) %>
   <% array = Upload.where(user_id: params[:id]) %>
 
   <DIV class="lazy">
-    <% array.each do |a| %>
-        <IMG style="display: block; margin-left: auto; margin-right: auto; padding-right: 1%; padding-left: 1%;" src="<%= image_url(a.picture_url) %>">
-      <BR />
+    <% array.each do |image| %>
+      <DIV class="inner_wrap" style="height: 300px;">
+	<H4>
+	  <%= image.name %>
+	</H4>
+
+        <% @upload_id = image.id %>
+
+        <H4 class="green">
+          <%= image.rating %> stars
+	</H4>
+          
+	<H4 id="<%= "like#{@upload_id}" %>">
+	  <%= Like.where(upload_id: @upload_id).count %> likes
+	</H4>
+
+        <H4 class="green">
+          <%= image.description %>
+	</H4>
+
+	<IMG style="display: block; margin-left: auto; margin-right: auto;" data-lazy="<%= image_url(image.picture_url) %>">
+      </DIV>
     <% end %>
   </DIV>
 <% end %>
