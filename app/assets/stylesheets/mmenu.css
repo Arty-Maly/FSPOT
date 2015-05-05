@@ -319,7 +319,7 @@ html.mm-blocking #mm-blocker
 */
 .mm-is-menu
 {
-	background:#e94e38;
+	background:#3498DB;
 }
 .mm-is-menu *
 {
@@ -332,7 +332,7 @@ html.mm-blocking #mm-blocker
 }
 .mm-is-menu li:after
 {
-	border-bottom: 1px solid rgba(208, 28, 48, 1);
+	border-bottom: 1px solid white;
 }
 
 .mm-is-menu li,
