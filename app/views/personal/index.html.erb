@@ -30,17 +30,27 @@
 </SCRIPT>
 
 <!-- Page Header -->
-<%= render 'main_page/header' %>
+<%= render 'personal/header' %>
+
+<%= content_tag(:div, id: "page") do %>
+  <%= content_tag(:div, id: "header_back", style: "top: 20%;") do %>
+    <%= link_to "", main_path %>
+  <% end %>
+<% end %>
 
 <H1>
   User: <%= params[:id] %>
 </H1>
 
 <% user = User.find(params[:id])%>
+
 <% if(params[:id] != user.email) %>
   <% array = Upload.where(user_id: params[:id]) %>
-  <% array.each do |a| %>
-      <IMG data-lazy="<%= a.picture %>">
-    <BR />
-  <% end %>
+
+  <DIV class="lazy">
+    <% array.each do |a| %>
+        <IMG style="display: block; margin-left: auto; margin-right: auto; padding-right: 1%; padding-left: 1%;" src="<%= image_url(a.picture_url) %>">
+      <BR />
+    <% end %>
+  </DIV>
 <% end %>
