@@ -1,32 +1,31 @@
-
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-  <script type="text/javascript">
-    (function(document,navigator,standalone) {
-      // prevents links from apps from oppening in mobile safari
-      // this javascript must be the first script in your <head>
-      if ((standalone in navigator) && navigator[standalone]) {
-        var curnode, location=document.location, stop=/^(a|html)$/i;
-        document.addEventListener('click', function(e) {
-          curnode=e.target;
-          while (!(stop).test(curnode.nodeName)) {
-            curnode=curnode.parentNode;
-          }
-          // Condidions to do this only on links to your own app
-          // if you want all links, use if('href' in curnode) instead.
-          if(
-            'href' in curnode && // is a link
-            (chref=curnode.href).replace(location.href,'').indexOf('#') && // is not an anchor
-            ( !(/^[a-z\+\.\-]+:/i).test(chref) ||                       // either does not have a proper scheme (relative links)
-              chref.indexOf(location.protocol+'//'+location.host)===0 ) // or is in the same protocol and domain
-          ) {
-            e.preventDefault();
-            location.href = curnode.href;
-          }
-        },false);
-      }
-    })(document,window.navigator,'standalone');
-  </script>
+<META name="apple-mobile-web-app-capable" content="yes">
+<META name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<SCRIPT type="text/javascript">
+  (function(document,navigator,standalone) {
+    // prevents links from apps from oppening in mobile safari
+    // this javascript must be the first script in your <head>
+    if((standalone in navigator) && navigator[standalone]) {
+      var curnode, location=document.location, stop=/^(a|html)$/i;
+      document.addEventListener('click',
+				function(e) {
+                                  curnode=e.target;
+                                  while(!(stop).test(curnode.nodeName)) {
+                                    curnode=curnode.parentNode;
+                                  }
+                                  // Condidions to do this only on links to your own app
+                                  // if you want all links, use if('href' in curnode) instead.
+                                  if('href' in curnode && // is a link
+				     (chref = curnode.href).replace(location.href, '').indexOf('#') && // is not an anchor
+				     (!(/^[a-z\+\.\-]+:/i).test(chref) ||                              // either does not have a proper scheme (relative links)
+				      chref.indexOf(location.protocol + '//' + location.host)===0)) {  // or is in the same protocol and domain
+				    e.preventDefault();
+				    location.href = curnode.href;
+				  }
+                                },
+				false);
+    }
+  })(document,window.navigator,'standalone');
+</SCRIPT>
 
 <SCRIPT src="https://maps.googleapis.com/maps/api/js"></SCRIPT>
 <SCRIPT>
@@ -133,7 +132,7 @@
 	   </LI>
 
            <LI>
-	     <A href=<%="/personal/"+session[:user_id].to_s %>>
+	     <A href="<%= '/personal/'+session[:user_id].to_s %>">
 	       Personal Page
 	     </A>
 	   </LI>
@@ -177,7 +176,7 @@
 
         <DIV class="contact_btn">
           <LABEL class="btn1 btn-2 btn-2g">
-	    <INPUT name="submit" type="submit" id="submit" value="Search" >
+	    <INPUT name="submit" type="submit" id="submit" value="Search">
 	  </LABEL>
         </DIV>
       </FORM>              
@@ -210,16 +209,16 @@
 	      <%= upload[0].description %>
 	    </H4>
 
-            <IMG style="display: block; margin-left: auto; margin-right: auto;" data-lazy =<%= image_url upload[0].picture_url %>><BR>
+            <IMG style="display: block; margin-left: auto; margin-right: auto;" data-lazy="<%= image_url upload[0].picture_url %>"><BR>
 
             <DIV class="row">
               <!-- dont like the food  -->
               <% if(dislike_id = Like.find_by(user_id: session[:user_id], upload_id: @upload_id)) %>
-		<FORM action="dislike" method="post" >
+		<FORM action="dislike" method="post">
 		  <BUTTON type="submit" class="btn btn-default btn-lg" style="background-color: red">
                     <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
 
-                    <INPUT type="hidden" name="id" value= <%= dislike_id.id %> >
+                    <INPUT type="hidden" name="id" value="<%= dislike_id.id %>">
 
                     <SPAN class="glyphicon glyphicon-remove-sign" aria-hidden="true">
                     </SPAN>
@@ -227,13 +226,12 @@
 		</FORM>
 	      <% else %>
 		<!-- like the food -->
-		<FORM action="like" method="post" >
+		<FORM action="like" method="post">
 		  <BUTTON type="submit" class="btn btn-default btn-lg" style="background-color: #87D37C">
                     <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
 
-                    <INPUT type="hidden" name="upload_id" value= <%=@upload_id%> >
-                    <INPUT type="hidden" name="user_id" value= <%=session[:user_id]%> >
-                
+                    <INPUT type="hidden" name="upload_id" value="<%=@upload_id%>">
+                    <INPUT type="hidden" name="user_id" value="<%=session[:user_id]%>">
 
                     <SPAN class="glyphicon glyphicon-heart" aria-hidden="true">
                     </SPAN>
@@ -254,7 +252,7 @@
                 <!-- show comments -->
 		<% upload[4].each do |comment| %>
 		  <BR />
-		    <DIV class="inner_wrap1" >
+		    <DIV class="inner_wrap1">
 		      <UL class="item_module">
 			<LI class="module_left">
 			  <%= image_tag('m1.jpg', class: "img-responsive") %>
@@ -279,65 +277,64 @@
 	    </DIV>
 
 	    <!-- add comments-->
+	    <FORM action="comment" method="post">
+                <INPUT type="text" name="description" placeholder="add comments" class="form-control">
 
-      <form action="comment" method="post" >
-        <input type="text" name="description" placeholder="add comments" class="form-control">
+		<%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+	      </BR>
+                <BUTTON name="submit" type="submit" id="submit" value="submit" class="btn btn-primary btn-sm">
+		  Submit
+		</BUTTON>
 
-          <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
-        </br>
-             <button name="submit" type="submit" id="submit" value="submit" class="btn btn-primary btn-sm">Submit</button>
-   
-
-        <input type="hidden" name="upload_id" value= <%=@upload_id%> >
-        <input type="hidden" name="user_id" value= <%=session[:user_id]%> >
-      </form>              
+		<INPUT type="hidden" name="upload_id" value="<%=@upload_id%>">
+		<INPUT type="hidden" name="user_id" value="<%=session[:user_id]%>">
+	    </FORM>              
 
 	    <!-- restaurant info -->
-
 	    <DIV class="col-lg-3" style="text-align: left;">
 	      <BR />
                 <STRONG>
 		  About the Place
 		</STRONG>
-     <BR />
+	      <BR />
                 <P>
-      Restaurants:
-    </P>
+		  Restaurants:
+		</P>
 
                 <H4 class="green">
-      <%= upload[2] %><IMG src=<%= upload[6] %> />
-    </H4>
-	      <BR />
+		  <%= upload[2] %>
 
+		  <IMG src="<%= upload[6] %>" />
+		</H4>
+	      <BR />
 
                 <P>
-      <a href=<%= upload[7] %> >Link to Yelp</a>
+		  <A href="<%= upload[7] %>">
+		    Link to Yelp
+		  </A>
 		</P>
 	      <BR />
-                <button onclick="showRestaurantLocation()">
+                <BUTTON onclick="showRestaurantLocation()">
 		  Show Location on the map:
-		</button>
+		</BUTTON>
 
                 <H4 class="green">
 		  <%= upload[3] %>
 		</H4>
 	    </DIV>
-      <input type="hidden" name="latlng" id="latlng" value=<%= upload[8]%> />
+
+	    <INPUT type="hidden" name="latlng" id="latlng" value="<%= upload[8]%>" />
 
 	    <DIV style="height:50px;">
 	    </DIV>
 	</DIV>
+      <% end %>
+    </DIV>
 
-
-        <% end %>
-      </div>
-
-      <div class="container">
-        <div id="showRestaurant" style="height:400px; display:none" >
-        </div>
-      </div>
-   
-
+    <DIV class="container">
+      <DIV id="showRestaurant" style="height:400px; display:none">
+      </DIV>
+    </DIV>
   </DIV>
 </DIV>
 
@@ -349,11 +346,11 @@
       </P>
 
       <DIV class="pull-right" style="margin-right: 20px;">
-  <DIV class="upload">
-    <A href="/uploads/new" type="button" >
+	<DIV class="upload">
+	  <A href="/uploads/new" type="button">
             <%= image_tag('upload.png') %>
-    </A>
-  </DIV>
+	  </A>
+	</DIV>
       </DIV>  
     </DIV>
   </DIV>
