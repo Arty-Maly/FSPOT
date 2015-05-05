@@ -91,7 +91,7 @@ class UploadsController < ApplicationController
     end
 
     def name_exists?(file_name)
-      Upload.where(picture: file_name).empty?
+      !Upload.where(picture: file_name).empty?
     end
 
     def generate_filename(file_name)
