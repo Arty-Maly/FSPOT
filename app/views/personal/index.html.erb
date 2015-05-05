@@ -37,7 +37,7 @@
 <% if(params[:id] != <h1><%=user.email%><h1>)
   <% array = Upload.where(user_id: params[:id]) %>
   <% array.each do |a| %>
-      <IMG src=<%=a.picture%>>
-      </IMG>
+      <IMG src=<%= a.picture %>>
     <BR />
   <% end %>
+<% end %>
