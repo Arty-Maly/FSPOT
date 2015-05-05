@@ -127,13 +127,11 @@
   google.maps.event.addDomListener(window, 'load', showMap);
 </SCRIPT>
 
-<DIV id="page">
-  <DIV id="header_nav">
-    <A>
-      <%=link_to "", main_path %>
-    </A>
-  </DIV>
-</DIV>
+<%= content_tag(:div, id: "page") do %>
+  <%= content_tag(:div, id: "header_back") do %>
+    <%= link_to "", main_path %>
+  <% end %>
+<% end %>
 
 <DIV class="banner">
   <DIV class="container_wrap">

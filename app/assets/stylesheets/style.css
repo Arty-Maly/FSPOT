@@ -97,28 +97,28 @@ body{
 	cursor: pointer;
 }
 .right a {
-	cursor: pointer;
-	font-size: .8em;
-	color: #777;
-	position: absolute;
-	bottom: 0;
-	top: 13px;
-	right:32px;
-	border: none;
-	outline: none;
-	background: url('search12-d7afea591f3256d84358e2ea27f633dc.png') no-repeat right 4px;
-	width: 30px;
-	height: 33px;
+  cursor: pointer;
+  font-size: .8em;
+  color: #777;
+  position: absolute;
+  bottom: 0;
+  top: 13px;
+  right:32px;
+  border: none;
+  outline: none;
+  background: url('search12-d7afea591f3256d84358e2ea27f633dc.png') no-repeat right 4px;
+  width: 30px;
+  height: 33px;
 }
 #header_nav a,
 .header_nav a{
-	display: block;
-	width:25px;
-	height:18px;
-	position: absolute;
-	top: 19px;
-	left: 10px;
-	background: url('nav2-f8d03a7789be0bdf381600b419644df1.png');
+  display: block;
+  width:25px;
+  height:18px;
+  position: absolute;
+  top: 19px;
+  left: 10px;
+  background: url('nav2-f8d03a7789be0bdf381600b419644df1.png');
 }
 
 .banner{

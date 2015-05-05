@@ -29,8 +29,11 @@
   })(document,window.navigator,'standalone');
 </SCRIPT>
 
+<!-- Page Header -->
+<%= render 'main_page/header' %>
+
 <H1>
-  <%= params[:id] %>
+  User: <%= params[:id] %>
 </H1>
 
 <% user = User.find(params[:id])%>
