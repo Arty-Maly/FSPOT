@@ -210,20 +210,24 @@
 
           <% @upload_id =  upload[0].id %>
 
-          <H4 class="green">
-            <%= upload[1] %> miles <%= upload[0].rating %> stars
-	  </H4>
           
-	  <H4 id="<%= "like#{@upload_id}" %>">
-	    <%= upload[5] %>  likes
-	  </H4>
+          
+	  
 
           <H4 class="green">
             <%= upload[0].description %>
 	  </H4>
 
-          <IMG style="display: block; margin-left: auto; margin-right: auto;" data-lazy="<%= image_url upload[0].picture_url %>"><BR>
-
+          <IMG style="display: block; margin-left: auto; margin-right: auto;" data-lazy="<%= image_url upload[0].picture_url %>">
+            <H4>
+              <H4 class="green">
+            <%= upload[1] %> miles away <BR> <%= upload[0].rating %> stars
+    </H4>
+    <H4 id="<%= "like#{@upload_id}" %>">
+      <%= upload[5] %>  likes
+    </H4>
+            Uploaded By: <%= link_to "@#{User.find(upload[0].user_id).email}", "/personal/#{upload[0].user_id}" %>
+    </H4>
           <DIV class="row">
             <BUTTON class="btn btn-default btn-lg" id="like" onclick="like(<%= session[:user_id] %>, <%= @upload_id %>, <%= upload[5] %>, <%= @upload_id %>)">
               <SPAN class="glyphicon glyphicon-heart" aria-hidden="true">
@@ -233,9 +237,7 @@
             <INPUT type="hidden" name="upload_id" id="upload_id" value="<%=@upload_id%>">
           </DIV>
 
-	  <H4>
-            Uploaded By: <%= link_to "@#{User.find(upload[0].user_id).email}", "/personal/#{upload[0].user_id}" %>
-	  </H4>
+	  
 
           <DIV style="text-align:left;">
               <STRONG>
