@@ -1040,6 +1040,9 @@ ul.vision li.desc a{
 	-moz-border-bottom-right-radius: 3px;
 	-o-border-bottom-right-radius: 3px;
 }
+div.inner_wrap.slick-slide.slick-active {
+	font-size: 200%
+}
 ul.item_module{
 	padding:0;
 	list-style:none;

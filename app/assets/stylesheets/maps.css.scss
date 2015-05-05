@@ -9,14 +9,15 @@
 #header_back a,
 .header_back a {
   display          : block;
-  width            : 45px;
-  height           : 45px;
+  width            : 70px;
+  height           : 70px;
   position         : absolute;
-  top              : 2.8%;
+  top              : 55px;
   left             : 10px;
-  background       : url('back4-1b6a3d347af86a2d714dde33e802eb07.png');
-  background-size  : 30px 30px;
+  background       : url('back_png.png');
+  background-size  : 45px 45px;
   background-repeat: no-repeat;
+
 }
 
 .starRating:not(old) {
