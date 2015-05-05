@@ -33,6 +33,8 @@ class UploadsController < ApplicationController
       @restaurant.save
     end
 
+    upload_params[:picture].original_filename =
+      generate_filename(upload_params[:picture].original_filename)
     @upload = Upload.new(upload_params)
     @upload.rating = params[:rating]
     @upload.restaurant_id = Restaurant.where(restaurant_name: params[:restaurant_name]).first.id
@@ -90,5 +92,14 @@ class UploadsController < ApplicationController
 
     def name_exists?(file_name)
       Upload.where(picture: file_name).empty?
+    end
+
+    def generate_filename(file_name)
+      if(name_exists?(file_name))
+        generate_filename(Digest::SHA1.hexdigest(Time.now.to_s) +
+                          File.extname(file_name))
+      else
+        return file_name
+      end
     end
 end
