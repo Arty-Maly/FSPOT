@@ -35,6 +35,19 @@
     document.getElementById("showRestaurant").style.display = 'block'; 
   }
 
+  function like(user_id, img_id, like_count) {
+    $.get("<%= like_count_path %>",
+          { user_id: user_id,
+            upload_id: img_id },
+          addLike)                  
+  }
+
+  function addLike(data) {
+    var img_id = data.img_id;
+
+    $("#like" + img_id).text((data.like).toString().concat(" Likes"));
+  }
+
   function showMap(position) { 
     var mapCanvas = document.getElementById('showRestaurant');
 // var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -50,8 +63,7 @@
 
     var marker = new google.maps.Marker({ position: latlng,
 					  title: "You are here",
-					  icon: image
-					});
+					  icon: image });
 
     resLatlng = $("#latlng").val().split(',');
     var resMapLatLng = new google.maps.LatLng(resLatlng[0],resLatlng[1]);
@@ -61,15 +73,14 @@
 
     var marker1 = new google.maps.Marker({ position: resMapLatLng,
 					   title: "restaurant",
-					   map: window.map
-					 })
+					   map: window.map })
 
     marker.setMap(window.map);
   }
 
   google.maps.event.addDomListener(window, 'load', showMap);
 
-  function geocodedAddress(position){
+  function geocodedAddress(position) {
     var geo = document.getElementById("geo");
     var lat = position.coords.latitude;
     var lng = position.coords.longitude;
@@ -77,23 +88,24 @@
     var geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(lat, lng);
 
-    geocoder.geocode({'latLng': latlng}, function(results, status) {
-      if(status == google.maps.GeocoderStatus.OK) {
-        if(results[1]) {
-          addr = results[1].formatted_address;
-          current_lcoation = results[1].formatted_address.split(",");
-          geo.innerHTML = current_lcoation[0] + current_lcoation[1];
-          $.ajax({ url: "<%= address_path %>", 
-                   data: { addr: addr } }).done(function(data) {
-                                                  // alert(data.response);
-                                                });
-        } else {
-          alert('No results found');
-        }
-      } else {
-        alert('Geocoder failed due to: ' + status);
-      }
-    });
+    geocoder.geocode({ 'latLng': latlng },
+		     function(results, status) {
+                       if(status == google.maps.GeocoderStatus.OK) {
+                         if(results[1]) {
+                           addr = results[1].formatted_address;
+                           current_lcoation = results[1].formatted_address.split(",");
+                           geo.innerHTML = current_lcoation[0] + current_lcoation[1];
+                           $.ajax({ url: "<%= address_path %>", 
+				    data: { addr: addr } }).done(function(data) {
+                                                                   // alert(data.response);
+                                                                 });
+                         } else {
+                           alert('No results found');
+                         }
+                       } else {
+                         alert('Geocoder failed due to: ' + status);
+                       }
+                     });
   }
 </SCRIPT>
 <SCRIPT>
@@ -201,9 +213,7 @@
 	      <%= upload[1] %> miles <%= upload[0].rating %> stars
 	    </H4>
           
-            <H4>
-	      <%= upload[5] %>   likes
-	    </H4>
+      <H4 id="<%= "like#{@upload_id}" %>"><%= upload[5] %>  likes</H4>
 
             <H4 class="green">
 	      <%= upload[0].description %>
@@ -212,32 +222,12 @@
             <IMG style="display: block; margin-left: auto; margin-right: auto;" data-lazy="<%= image_url upload[0].picture_url %>"><BR>
 
             <DIV class="row">
-              <!-- dont like the food  -->
-              <% if(dislike_id = Like.find_by(user_id: session[:user_id], upload_id: @upload_id)) %>
-		<FORM action="dislike" method="post">
-		  <BUTTON type="submit" class="btn btn-default btn-lg" style="background-color: red">
-                    <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+              <BUTTON class="btn btn-default btn-lg" id="like" onclick="like(<%= session[:user_id] %>, <%= @upload_id %>, <%= upload[5] %>, <%= @upload_id %>)">
+                <SPAN class="glyphicon glyphicon-heart" aria-hidden="true">
+		</SPAN>
+              </BUTTON>
 
-                    <INPUT type="hidden" name="id" value="<%= dislike_id.id %>">
-
-                    <SPAN class="glyphicon glyphicon-remove-sign" aria-hidden="true">
-                    </SPAN>
-		  </BUTTON>
-		</FORM>
-	      <% else %>
-		<!-- like the food -->
-		<FORM action="like" method="post">
-		  <BUTTON type="submit" class="btn btn-default btn-lg" style="background-color: #87D37C">
-                    <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
-
-                    <INPUT type="hidden" name="upload_id" value="<%=@upload_id%>">
-                    <INPUT type="hidden" name="user_id" value="<%=session[:user_id]%>">
-
-                    <SPAN class="glyphicon glyphicon-heart" aria-hidden="true">
-                    </SPAN>
-		  </BUTTON>
-		</FORM>
-	      <% end %>
+              <INPUT type="hidden" name="upload_id" id="upload_id" value="<%=@upload_id%>">
 	    </DIV>
 
 	    <H4>
