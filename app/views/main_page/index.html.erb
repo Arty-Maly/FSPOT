@@ -4,50 +4,41 @@
 
   function showRestaurantLocation(){
     document.getElementById("showRestaurant").style.display = 'block'; 
-
   }
-
 
   function showMap(position) { 
-  var mapCanvas = document.getElementById('showRestaurant');
+    var mapCanvas = document.getElementById('showRestaurant');
 // var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    var image = 'assets/marker-3ccb249568eec97cc32c37c01d0a8cae.png';
+    var latlng = new google.maps.LatLng(42.3654347, -71.258595);
+    var mapOptions = {
+      center: latlng,
+      zoom: 13,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
 
-  var image = 'assets/marker-3ccb249568eec97cc32c37c01d0a8cae.png';
+    window.map = new google.maps.Map(mapCanvas, mapOptions)
 
-  var latlng = new google.maps.LatLng(42.3654347, -71.258595);
+    var marker = new google.maps.Marker({ position: latlng,
+					  title: "You are here",
+					  icon: image
+					});
 
-  var mapOptions = {
-    center: latlng,
-    zoom: 13,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
+    resLatlng = $("#latlng").val().split(',');
+    var resMapLatLng = new google.maps.LatLng(resLatlng[0],resLatlng[1]);
+
+    var bounds = new google.maps.LatLngBounds();
+    bounds.extend(resMapLatLng);
+
+    var marker1 = new google.maps.Marker({ position: resMapLatLng,
+					   title: "restaurant",
+					   map: window.map
+					 })
+
+    marker.setMap(window.map);
   }
 
-  window.map = new google.maps.Map(mapCanvas, mapOptions)
-
-  var marker = new google.maps.Marker({
-    position: latlng,
-    title: "You are here",
-    icon: image
-  });
-
-  resLatlng = $("#latlng").val().split(',');
-  var resMapLatLng = new google.maps.LatLng(resLatlng[0],resLatlng[1]);
-
-  var bounds = new google.maps.LatLngBounds();
-  bounds.extend(resMapLatLng);
-
-  var marker1 = new google.maps.Marker({
-    position: resMapLatLng,
-    title: "restaurant",
-    map: window.map
-  })
-
-  marker.setMap(window.map);
-
-}
-
-google.maps.event.addDomListener(window, 'load', showMap);
-
+  google.maps.event.addDomListener(window, 'load', showMap);
 
   function geocodedAddress(position){
     var geo = document.getElementById("geo");
@@ -75,8 +66,6 @@ google.maps.event.addDomListener(window, 'load', showMap);
       }
     });
   }
-
-
 </SCRIPT>
 <SCRIPT>
   $(function() {
@@ -93,25 +82,43 @@ google.maps.event.addDomListener(window, 'load', showMap);
   <DIV class="right">
     <!-- <a href="/maps"></a>  -->
     <%= link_to "", geo_path %>
+  </DIV>
 
-  </div>
-  <div id="page">
-     <div id="header_nav">
-        <a href="#menu"></a>
-     </div>
-      <nav id="menu">
-        <ul>
-           <li class="Selected"><a href="#"></a></li>
-           <li><a href="/friends">Searching Friends</a></li>
-           <li><a href=<%="/personal/"+session[:user_id].to_s %>>Personal Page</a></li>
-           <li><a href="/notifications">Notification</a></li>
-        </ul>
-     </nav>
-  </div>
+  <DIV id="page">
+     <DIV id="header_nav">
+        <A href="#menu">
+	</A>
+     </DIV>
+      <NAV id="menu">
+        <UL>
+           <LI class="Selected">
+	     <A href="#">
+	     </A>
+	   </LI>
 
+           <LI>
+	     <A href="/friends">
+	       Searching Friends
+	     </A>
+	   </LI>
 
-  <!-- search-->
-  <DIV class="banner" style="height: 100px;">
+           <LI>
+	     <A href=<%="/personal/"+session[:user_id].to_s %>>
+	       Personal Page
+	     </A>
+	   </LI>
+
+           <LI>
+	     <A href="/notifications">
+	       Notification
+	     </A>
+	   </LI>
+        </UL>
+      </NAV>
+  </DIV>
+
+  <!-- SEARCH-->
+  <%= content_tag :div, class: "banner", style: "height: 100px;" do -%>
     <DIV class="row">
       <FORM action="/main" method="get">
         <DIV class="dropdown-buttons">   
@@ -145,7 +152,7 @@ google.maps.event.addDomListener(window, 'load', showMap);
         </DIV>
       </FORM>              
     </DIV>
-  </DIV>
+  <% end -%>
 </DIV>
 
 <!-- need to see if @user_id = upload.user_id is a good idea -->
