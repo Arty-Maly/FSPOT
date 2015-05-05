@@ -40,7 +40,7 @@
 <% if(params[:id] != user.email) %>
   <% array = Upload.where(user_id: params[:id]) %>
   <% array.each do |a| %>
-      <IMG src=<%= a.picture %>>
+      <IMG data-lazy="<%= a.picture %>">
     <BR />
   <% end %>
 <% end %>

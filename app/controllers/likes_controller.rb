@@ -25,19 +25,20 @@ class LikesController < ApplicationController
   # POST /likes.json
   def create
     
-
-    @like = Like.new(like_params)
-    @upload = Upload.find(params[:upload_id])
-    @upload.increment!(:rating)
-    respond_to do |format|
-      if @like.save
-        format.html { redirect_to "/main", notice: 'Like was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @like }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @like.errors, status: :unprocessable_entity }
-      end
+    if Like.where(upload_id: params[:upload_id], user_id: params[:user_id]).count == 0
+          @like = Like.new(like_params)
+          @like.save
+          @upload = Upload.find(params[:upload_id])
     end
+
+    likeCount = Upload.find(params[:upload_id]).likes.count()
+    ret = {like: likeCount, img_id: params[:upload_id]}
+
+    
+    respond_to do |format|
+        format.json { render json: ret}
+    end
+
 
   end
 

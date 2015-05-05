@@ -32,43 +32,64 @@
 <SCRIPT>
   navigator.geolocation.getCurrentPosition(geocodedAddress);
 
-  function showRestaurantLocation(){
-    document.getElementById("showRestaurant").style.display = 'block'; 
-  }
+  function showRestaurantLocation(img_id){
 
-  function showMap(position) { 
-    var mapCanvas = document.getElementById('showRestaurant');
-// var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    var img_id = img_id;
+
+    var mapCanvas = document.getElementById('showRestaurant' + img_id);
+
     var image = 'assets/marker-3ccb249568eec97cc32c37c01d0a8cae.png';
     var latlng = new google.maps.LatLng(42.3654347, -71.258595);
     var mapOptions = {
       center: latlng,
-      zoom: 13,
+      zoom: 14,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
 
     window.map = new google.maps.Map(mapCanvas, mapOptions)
 
     var marker = new google.maps.Marker({ position: latlng,
-					  title: "You are here",
-					  icon: image
-					});
+            title: "You are here",
+            icon: image
+          });
 
-    resLatlng = $("#latlng").val().split(',');
+    resLatlng = $("#latlng" + img_id).val().split(',');
     var resMapLatLng = new google.maps.LatLng(resLatlng[0],resLatlng[1]);
 
     var bounds = new google.maps.LatLngBounds();
     bounds.extend(resMapLatLng);
 
     var marker1 = new google.maps.Marker({ position: resMapLatLng,
-					   title: "restaurant",
-					   map: window.map
-					 })
+             title: "restaurant",
+             map: window.map
+           })
 
     marker.setMap(window.map);
+
+    $("#showRestaurant" + img_id).css('display', 'block');
+    // document.getElementById("showRestaurant"+ img_id).style.display = 'block'; 
   }
 
-  google.maps.event.addDomListener(window, 'load', showMap);
+  function like(user_id, img_id, like_count){
+
+    $.get(
+        "<%= like_count_path %>",
+        {
+          user_id: user_id,
+          upload_id: img_id
+        },
+        addLike
+      )                  
+  }
+
+  function addLike(data){
+
+    var img_id = data.img_id;
+
+    $("#like" + img_id).text((data.like).toString().concat(" Likes"));
+
+  }
+
 
   function geocodedAddress(position){
     var geo = document.getElementById("geo");
@@ -117,32 +138,32 @@
   <DIV id="page">
      <DIV id="header_nav">
         <A href="#menu">
-	</A>
+  </A>
      </DIV>
       <NAV id="menu">
         <UL>
            <LI class="Selected">
-	     <A href="#">
-	     </A>
-	   </LI>
+       <A href="#">
+       </A>
+     </LI>
 
            <LI>
-	     <A href="/friends">
-	       Searching Friends
-	     </A>
-	   </LI>
+       <A href="/friends">
+         Searching Friends
+       </A>
+     </LI>
 
            <LI>
-	     <A href=<%="/personal/"+session[:user_id].to_s %>>
-	       Personal Page
-	     </A>
-	   </LI>
+       <A href=<%="/personal/"+session[:user_id].to_s %>>
+         Personal Page
+       </A>
+     </LI>
 
            <LI>
-	     <A href="/notifications">
-	       Notification
-	     </A>
-	   </LI>
+       <A href="/notifications">
+         Notification
+       </A>
+     </LI>
         </UL>
       </NAV>
   </DIV>
@@ -155,20 +176,20 @@
           <DIV class="dropdown-button">                   
             <SELECT id ="category" name="category" class="dropdown" tabindex="9" data-settings='{"wrapperClass":"flat"}'>
               <OPTION>
-		By Catogory(nearest..)
-	      </OPTION>
+    By Catogory(nearest..)
+        </OPTION>
 
               <OPTION value="find the nearst dishes">
-		find the nearst dishes
-	      </OPTION>
+    find the nearst dishes
+        </OPTION>
 
               <OPTION value="find the best dishes">
-		find the best dishes
-	      </OPTION>
+    find the best dishes
+        </OPTION>
 
               <OPTION value="find the latest dishes">
-		find the latest dishes
-	      </OPTION>
+    find the latest dishes
+        </OPTION>
             </SELECT>
           </DIV>
         </DIV>
@@ -177,8 +198,8 @@
 
         <DIV class="contact_btn">
           <LABEL class="btn1 btn-2 btn-2g">
-	    <INPUT name="submit" type="submit" id="submit" value="Search" >
-	  </LABEL>
+      <INPUT name="submit" type="submit" id="submit" value="Search" >
+    </LABEL>
         </DIV>
       </FORM>              
     </DIV>
@@ -194,91 +215,67 @@
       <% @upload_search.each do |upload| %>
         <DIV class="inner_wrap">
           <H4>
-	    <%= upload[0].name %>
-	  </H4>
+      <%= upload[0].name %>
+    </H4>
 
           <% @upload_id =  upload[0].id %>
             <H4 class="green">
-	      <%= upload[1] %> miles <%= upload[0].rating %> stars
-	    </H4>
+        <%= upload[1] %> miles <%= upload[0].rating %> stars
+      </H4>
           
-            <H4>
-	      <%= upload[5] %>   likes
-	    </H4>
+      <H4 id="<%= "like#{@upload_id}" %>"><%= upload[5] %>  likes</H4>
 
             <H4 class="green">
-	      <%= upload[0].description %>
-	    </H4>
+        <%= upload[0].description %>
+      </H4>
 
             <IMG style="display: block; margin-left: auto; margin-right: auto;" data-lazy =<%= image_url upload[0].picture_url %>><BR>
 
             <DIV class="row">
-              <!-- dont like the food  -->
-              <% if(dislike_id = Like.find_by(user_id: session[:user_id], upload_id: @upload_id)) %>
-		<FORM action="dislike" method="post" >
-		  <BUTTON type="submit" class="btn btn-default btn-lg" style="background-color: red">
-                    <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+              <button class="btn btn-default btn-lg" id="like" onclick="like(<%=session[:user_id]%>, <%=@upload_id%>, <%= upload[5] %>, <%=@upload_id%>)">
+                 <SPAN class="glyphicon glyphicon-heart" aria-hidden="true"></SPAN>
+             </button>
+             <INPUT type="hidden" name="upload_id" id="upload_id" value= <%=@upload_id%> >
+              
+            </DIV>
 
-                    <INPUT type="hidden" name="id" value= <%= dislike_id.id %> >
-
-                    <SPAN class="glyphicon glyphicon-remove-sign" aria-hidden="true">
-                    </SPAN>
-		  </BUTTON>
-		</FORM>
-	      <% else %>
-		<!-- like the food -->
-		<FORM action="like" method="post" >
-		  <BUTTON type="submit" class="btn btn-default btn-lg" style="background-color: #87D37C">
-                    <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
-
-                    <INPUT type="hidden" name="upload_id" value= <%=@upload_id%> >
-                    <INPUT type="hidden" name="user_id" value= <%=session[:user_id]%> >
-                
-
-                    <SPAN class="glyphicon glyphicon-heart" aria-hidden="true">
-                    </SPAN>
-		  </BUTTON>
-		</FORM>
-	      <% end %>
-	    </DIV>
-
-	    <H4>
-	      Uploaded By: <%= link_to "@#{User.find(upload[0].user_id).email}", "/personal/#{upload[0].user_id}" %>
-	    </H4>
+      <H4>
+        Uploaded By: <%= link_to "@#{User.find(upload[0].user_id).email}", "/personal/#{upload[0].user_id}" %>
+      </H4>
 
             <DIV style="text-align:left;">
                 <STRONG>
-		  Comments
-		</STRONG>
-	      <BR />
+      Comments
+    </STRONG>
+        <BR />
                 <!-- show comments -->
-		<% upload[4].each do |comment| %>
-		  <BR />
-		    <DIV class="inner_wrap1" >
-		      <UL class="item_module">
-			<LI class="module_left">
-			  <%= image_tag('m1.jpg', class: "img-responsive") %>
-			</LI>
+    <% upload[4].each do |comment| %>
+      <BR />
+        <DIV class="inner_wrap1" >
+          <UL class="item_module">
+      <LI class="module_left">
+        <%= image_tag('m1.jpg', class: "img-responsive") %>
+      </LI>
 
-			<LI class="module_right">
-			  <!--               <img src="/assets/m_star.png" class="img-responsive" alt=""/> -->
-			  <H5>
-			    <%= comment[0] %>
-			  </H5>
+      <LI class="module_right">
+        <!--               <img src="/assets/m_star.png" class="img-responsive" alt=""/> -->
+        <H5>
+          <%= comment[0] %>
+        </H5>
 
-			  <P>
-			    <%= comment[1] %>
-			  </P>
-			</LI>
+        <P>
+          <%= comment[1] %>
+        </P>
+      </LI>
 
-			<DIV class="clear">
-			</DIV>
-		      </UL>
-		    </DIV>
-		<% end %>
-	    </DIV>
+      <DIV class="clear">
+      </DIV>
+          </UL>
+        </DIV>
+    <% end %>
+      </DIV>
 
-	    <!-- add comments-->
+      <!-- add comments-->
 
       <form action="comment" method="post" >
         <input type="text" name="description" placeholder="add comments" class="form-control">
@@ -292,53 +289,35 @@
         <input type="hidden" name="user_id" value= <%=session[:user_id]%> >
       </form>              
 
-	    <!-- restaurant info -->
+      <!-- restaurant info -->
+      <DIV class="col-lg-3" style="text-align: left;">
+        <BR /><STRONG>About the Place</STRONG><BR />
+        <P>Restaurants:</P>
+        <H4 class="green"><%= upload[2] %><IMG src=<%= upload[6] %> /></H4><BR />
+        <P><a href=<%= upload[7] %> >Link to Yelp</a></P><BR />
+        <button onclick="showRestaurantLocation(<%=@upload_id%>)">Show Location on the map:</button>
+        <H4 class="green"><%= upload[3] %></H4>
 
-	    <DIV class="col-lg-3" style="text-align: left;">
-	      <BR />
-                <STRONG>
-		  About the Place
-		</STRONG>
-     <BR />
-                <P>
-      Restaurants:
-    </P>
+        <!-- Show restaurant in the map -->
+        <div id="<%= "showRestaurant#{@upload_id}" %>" style="height:400px; display:none" >
+        </div>
+      </DIV>
 
-                <H4 class="green">
-      <%= upload[2] %><IMG src=<%= upload[6] %> />
-    </H4>
-	      <BR />
+      <input type="hidden" name="latlng" id=<%= "latlng#{@upload_id}" %> value=<%= upload[8]%> />
+
+      <DIV style="height:50px;">
+      </DIV>
+  </DIV>
 
 
-                <P>
-      <a href=<%= upload[7] %> >Link to Yelp</a>
-		</P>
-	      <BR />
-                <button onclick="showRestaurantLocation()">
-		  Show Location on the map:
-		</button>
-
-                <H4 class="green">
-		  <%= upload[3] %>
-		</H4>
-	    </DIV>
-      <input type="hidden" name="latlng" id="latlng" value=<%= upload[8]%> />
-
-	    <DIV style="height:50px;">
-	    </DIV>
-	</DIV>
 
 
         <% end %>
       </div>
 
-      <div class="container">
-        <div id="showRestaurant" style="height:400px; display:none" >
-        </div>
-      </div>
-   
 
   </DIV>
+</DIV>
 </DIV>
 
 <!--upload-->
