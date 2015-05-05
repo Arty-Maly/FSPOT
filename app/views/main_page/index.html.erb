@@ -118,7 +118,7 @@
   </DIV>
 
   <!-- SEARCH-->
-  <%= content_tag :div, class: "banner", style: "height: 100px;" do -%>
+  <%= content_tag(:div, class: "banner", style: "height: 100px;") do %>
     <DIV class="row">
       <FORM action="/main" method="get">
         <DIV class="dropdown-buttons">   
@@ -152,7 +152,7 @@
         </DIV>
       </FORM>              
     </DIV>
-  <% end -%>
+  <% end %>
 </DIV>
 
 <!-- need to see if @user_id = upload.user_id is a good idea -->
