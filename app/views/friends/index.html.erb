@@ -25,77 +25,110 @@
         },false);
       }
     })(document,window.navigator,'standalone');
-  </script>
+
+    function findFriends(){   
+
+     $.get(
+        "<%= find_friend_path %>",
+        {
+          search: $("#searchItem").val()
+        }     
+    )  
+    }
+
+    function followFriends(user_id){
+
+      $.get(
+        "<%= follow_friend_path %>",
+        {
+          user_id: user_id
+        } 
+        )
+      $("#friends").css("display", "none");
+    }
+ 
+</script>
+<script>
+      $('.lazy').slick({
+            lazyLoad: 'ondemand',
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false
+      });
+</script>
+
 <DIV class="right">
-  <!-- <a href="/main"></a> -->
   <%= link_to "", main_path %> 
 </DIV>
+
 <!-- search-->
 <DIV class="banner">
   <DIV class="container_wrap">
-    <H1>
-      FOLLOWING FRIENDS
-    </H1>
-
-    <FORM action="/friends" method="get">
-      <INPUT type="text" name="search" placeholder="find your friends">
-
+    <H1>FOLLOWING FRIENDS</H1>
+    <FORM>
+      <INPUT type="text" name="search" id="searchItem" placeholder="find your friends">
       <DIV class="contact_btn">
-        <LABEL class="btn1 btn-2 btn-2g">
-	  <INPUT name="submit" type="submit" id="submit" value="Search" >
-	</LABEL>
+        <LABEL class="btn1 btn-2 btn-2g"><INPUT name="submit" type="submit" id="submit" value="Search" onclick="findFriends()"></LABEL>
       </DIV>
     </FORM>    
   </DIV>
 </DIV>
 
-
-
+<DIV id="friends">
+<% unless @users.nil? %>
 <% @users.each do |user| %>
-  <% session[:user_id] %> 
+      <DIV class="container">
+    	  <DIV class="col-lg-3">
+    	    <DIV class="content_middle_box">
+    	      <DIV class="inner_wrap1">
+          		<UL class="item_module">
+          		  <LI class="module_left"></LI>
+          		  <LI class="module_right"><!--  <img src="/assets/m_star.png" class="img-responsive" alt=""/> -->
+          		    <H5><%= user.email %></H5>
+          		    <button type="submit" onclick="followFriends(<%=user.id%>)", class="btn btn-info">follow</button>
+                  <% uploads = Upload.where(user_id: user.id) %>
+                  <% uploads.each do |img| %>
+                    <IMG style="margin-left:20px; height:100px; width:100px;" src=<%= image_url img.picture_url %> >
+                    <P><%= Restaurant.find(img.restaurant.id).restaurant_name %></P>
+                  <% end %>
+          		  </LI>
 
-  <% unless(session[:user_id] == user.id || !Relationship.where(follower_id: session[:user_id]).empty?) %>
-
-    <%= form_tag '/friends', :method => 'POST' do %>
-        <%= hidden_field_tag :user, user.id %>
-      <BR />
-        <DIV class="container">
-	  <DIV class="col-lg-3">
-	    <DIV class="content_middle_box">
-	      <DIV class="inner_wrap1">
-		<UL class="item_module">
-		  <LI class="module_left">
-		    <%= image_tag('m1.jpg', class: "img-responsive") %>
-		  </LI>
-
-		  <LI class="module_right">
-		    <!--  <img src="/assets/m_star.png" class="img-responsive" alt=""/> -->
-		    <H5>
-		      <%= user.email %>
-		    </H5>
-
-		    <%= submit_tag "follow", class: "btn btn-danger" %>
-		  </LI>
-
-		  <DIV class="clear">
-		  </DIV>
-		</UL>
-	      </DIV>
-	    </DIV>
-	  </DIV>
-	</DIV>
+          		  <DIV class="clear">
+          		  </DIV>
+          		</UL>
+    	      </DIV>
+    	    </DIV>
+    	  </DIV>
+    	</DIV>
     <% end %>
-  <% end %>
 <% end %>
+</DIV>
 
 <% relation = Relationship.where(follower_id: session[:user_id]) %>
 <% relation.each do |r| %>
-
-  <% upl = Upload.where(user_id: r.followed_id) %>
-  <% upl .each do |u| %>
-    <h1> <%= User.find(u.user_id).email %> </h1>
-    <img src=<%=u.picture%>></img>
-    <br>
-  <%end%>
+  <% upload = Upload.where(user_id: r.followed_id) %>
+   <DIV class="container">
+        <DIV class="col-lg-3">
+          <DIV class="content_middle_box">
+            <DIV class="inner_wrap1">
+              <UL class="item_module">
+                <LI class="module_left"></LI>
+                <LI class="module_right"><!--  <img src="/assets/m_star.png" class="img-responsive" alt=""/> -->
+                  <H5><%= User.find(r.followed_id).email %></H5>
+                  <% upload.each do |u| %>
+                    <IMG style="postition:absolute;margin-left:80px;height:80px; width:80px; top:20px;", src=<%= image_url u.picture_url %> >
+                    <P style="position:absolute;margin-left:-90px; top:20px;"><%= Restaurant.find(u.restaurant.id).restaurant_name %></P>
+                  <% end %>
+                </LI>
+                <DIV class="clear">
+                </DIV>
+              </UL>
+            </DIV>
+          </DIV>
+        </DIV>
+      </DIV>
 <%end%>
+
+
+
 
