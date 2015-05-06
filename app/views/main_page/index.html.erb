@@ -108,28 +108,18 @@
                      });
   }
 
-  function addComments(user_id, upload_id){
-
-        $.get(
-          "<%= new_comment_path %>",  
-          { 
-            user_id: user_id,
+  function addComments(user_id, upload_id) {
+    $.get("<%= new_comment_path %>",  
+          { user_id: user_id,
             upload_id: upload_id,
-            description: $("#description" + upload_id).val()
-          },
-          showComment
-          )                  
+            description: $("#description" + upload_id).val() },
+          showComment)                  
   }
 
-  function showComment(data){
-
+  function showComment(data) {
     var img_id = data.upload_id;
     $("#comment" + img_id).append('<h6>' + data.user_name + '</h6>' +' <p>' + data.description + '</p>')
-
-                  
   }
-
-  
 </SCRIPT>
 <SCRIPT>
   $(function() {
