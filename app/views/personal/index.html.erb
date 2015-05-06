@@ -27,6 +27,14 @@
 				false);
     }
   })(document,window.navigator,'standalone');
+
+  function followFriends(user_id) {
+    $.get("<%= follow_friend_path %>",
+          { follower_id: <%= session[:user_id] %>,
+            followed_id: user_id })
+
+    $("#friends").css("display", "none");
+  }
 </SCRIPT>
 
 <!-- Page Header -->
@@ -37,6 +45,14 @@
     <%= link_to "", main_path %>
   <% end %>
 <% end %>
+
+  <% if(session[:user_id].to_i != params[:id].to_i && Relationship.where(follower_id: session[:user_id], followed_id: params[:id]).empty?) %>
+    <%= content_tag(:div, id: "header_follow", style: "top: 20%; color: #fff;") do %>
+      <A type="submit" onclick="followFriends(<%= params[:id].to_i %>)" style="color: #fff" href="<%= params[:id] %>">
+	FOLLOW
+      </A>
+    <% end %>
+  <% end %>
 
 <% user = User.find(params[:id])%>
 <% if(params[:id] != user.email) %>
