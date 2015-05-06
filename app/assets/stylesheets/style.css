@@ -1608,5 +1608,7 @@ h5{
 	display:inline-block;
 }
 .star_icon img{
-
+	display:inline-block;
+	width:20px;
+	height:20px;
 }

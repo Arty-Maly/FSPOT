@@ -78,6 +78,7 @@
     var img_id = data.img_id;
 
     $("#like" + img_id).text((data.like).toString().concat(" Likes"));
+    $("#likeButton" + img_id).css('display', 'none');
   }
 
   function geocodedAddress(position) {
@@ -232,7 +233,11 @@
             <H4 class="green">
 	        <%= upload[1] %> miles away
 	      <BR />
-	        <%= upload[0].rating %> stars
+	        <DIV class="star_icon">
+          <% (1..upload[0].rating).each do |i| %>
+            <%= image_tag "starRating.png" %>
+          <% end %>
+          </DIV>
 	    </H4>
 
 	    <H4 id="<%= "like#{@upload_id}" %>">
@@ -244,7 +249,7 @@
 
           <DIV class="row">
             <% if Like.find_by(user_id: session[:user_id], upload_id: @upload_id) == nil %>
-               <BUTTON class="btn btn-default btn-lg" id="like" onclick="like(<%= session[:user_id] %>, <%= @upload_id %>, <%= upload[5] %>, <%= @upload_id %>)">
+               <BUTTON class="btn btn-default btn-lg" id="<%= "likeButton#{@upload_id}" %>" onclick="like(<%= session[:user_id] %>, <%= @upload_id %>, <%= upload[5] %>, <%= @upload_id %>)">
 	           <SPAN class="glyphicon glyphicon-heart" aria-hidden="true">
 	            </SPAN>
                </BUTTON>
@@ -253,11 +258,7 @@
             <INPUT type="hidden" name="upload_id" id="upload_id" value="<%=@upload_id%>">
               <% end %>  
           </DIV>
-          <DIV class="star_icon">
-          <% (1..upload[0].rating).each do |i| %>
-            <%= image_tag "starRating.png" %>
-          <% end %>
-          </DIV>
+
 
 
 
