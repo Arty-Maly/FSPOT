@@ -161,23 +161,20 @@
 	  </A>
 	</LI>
 
-        <LI>
-	  <A href="/friends">
-            Searching Friends
-	  </A>
-	</LI>
+      
 
         <LI>
 	  <A href="<%= '/personal/'+session[:user_id].to_s %>">
             Personal Page
 	  </A>
 	</LI>
+    <LI>
+    <A href="/friends">
+            Friends
+    </A>
+  </LI>
 
-        <LI>
-	  <A href="/notifications">
-            Notification
-	  </A>
-	</LI>
+      
       </UL>
     </NAV>
   </DIV>
@@ -255,12 +252,15 @@
 	  </H4>
 
           <DIV class="row">
-            <BUTTON class="btn btn-default btn-lg" id="like" onclick="like(<%= session[:user_id] %>, <%= @upload_id %>, <%= upload[5] %>, <%= @upload_id %>)">
-	      <SPAN class="glyphicon glyphicon-heart" aria-hidden="true">
-	      </SPAN>
-            </BUTTON>
+            <% if Like.find_by(user_id: session[:user_id], upload_id: @upload_id) == nil %>
+               <BUTTON class="btn btn-default btn-lg" id="like" onclick="like(<%= session[:user_id] %>, <%= @upload_id %>, <%= upload[5] %>, <%= @upload_id %>)">
+	           <SPAN class="glyphicon glyphicon-heart" aria-hidden="true">
+	            </SPAN>
+               </BUTTON>
+
 
             <INPUT type="hidden" name="upload_id" id="upload_id" value="<%=@upload_id%>">
+              <% end %>  
           </DIV>
 
 
