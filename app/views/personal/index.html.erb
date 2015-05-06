@@ -49,21 +49,51 @@
 	  <%= image.name %>
 	</H4>
 
-        <% @upload_id = image.id %>
-
-        <H4 class="green">
-          <%= image.rating %> stars
-	</H4>
-          
-	<H4 id="<%= "like#{@upload_id}" %>">
-	  <%= Like.where(upload_id: @upload_id).count %> likes
-	</H4>
-
         <H4 class="green">
           <%= image.description %>
 	</H4>
 
 	<IMG style="display: block; margin-left: auto; margin-right: auto;" data-lazy="<%= image_url(image.picture_url) %>">
+
+	<H4 class="green">
+          <%= image.rating %> stars
+	</H4>
+
+        <% @upload_id = image.id %>  
+	<H4 id="<%= "like#{@upload_id}" %>">
+	  <%= Like.where(upload_id: @upload_id).count %> likes
+	</H4>
+
+	<DIV style="text-align:left;">
+            <STRONG>
+	      Comments
+	    </STRONG>
+          <BR />
+            <!-- show comments -->
+	    <% Comment.where(upload_id: @upload_id).each do |comment| %>
+	        <DIV class="inner_wrap1">
+		  <UL class="item_module">
+		    <LI class="module_left">
+		    </LI>
+
+		    <LI class="module_right">
+		      <!--               <img src="/assets/m_star.png" class="img-responsive" alt=""/> -->
+		      <H5>
+			<%= User.find(comment.user_id).email %>
+		      </H5>
+
+		      <P>
+			<%= comment.description %>
+		      </P>
+		    </LI>
+
+		    <DIV class="clear">
+		    </DIV>
+		  </UL>
+		</DIV>
+	      <BR />
+	    <% end %>
+	</DIV>
       </DIV>
     <% end %>
   </DIV>
