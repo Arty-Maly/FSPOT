@@ -94,6 +94,33 @@
 	      <BR />
 	    <% end %>
 	</DIV>
+
+	<!-- restaurant info -->
+	<% restaurant = Restaurant.find_by(id: image.restaurant_id) %>
+	<DIV class="col-lg-3" style="text-align: left;">
+          <BR />
+	    <STRONG> 
+	      <P id = "restr-info" >
+		Restaraunt Info:
+	      </P>
+	    </STRONG>
+
+            <H4 class="green">
+	      <%= restaurant.restaurant_name %>
+
+	      <IMG src="<%= restaurant.rating_img %>" />
+	    </H4>
+	   
+            <P>
+	      <H4 class="green">
+		<%= restaurant.location %>
+	      </H4>
+
+	      <A id ="linkyelp" href="<%= restaurant.yelp_url %>">
+		Yelp! Page
+	      </A>
+	    </P>
+	</DIV>
       </DIV>
     <% end %>
   </DIV>
