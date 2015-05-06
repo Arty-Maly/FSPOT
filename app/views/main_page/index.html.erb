@@ -236,7 +236,7 @@
 	        <DIV class="star_icon">
             
           <%  if (upload[0].rating.is_a? Integer) %> 
-           <% (0..upload[0].rating).each do |i| %>
+           <% (1..upload[0].rating).each do |i| %>
             <%= image_tag "starRating.png" %>
           <% end %>
           <% end %>
