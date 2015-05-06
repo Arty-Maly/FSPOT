@@ -126,6 +126,10 @@ class MainPageController < ApplicationController
 
       likes = Like.where(upload_id: upload.id).count
 
+      puts "==================="
+
+      puts comments
+
 
 
       if(comments == nil)

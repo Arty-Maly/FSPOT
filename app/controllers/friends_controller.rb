@@ -1,13 +1,30 @@
 class FriendsController < ApplicationController
-  def index		
+  def index	
     if params[:search]
       @users = User.where("email LIKE?", "%#{params[:search]}")
     else
       @users = nil
     end
-      @uploads = Relationship.find(follower_id: session[:user_id])
-      puts "==========="
-      puts @upload
+
+      @uploads = []
+
+      relationship = Relationship.where(follower_id: session[:user_id])
+
+      unless relationship.nil?
+
+        relationship.each do |r|
+
+          upload = Upload.where(user_id: r.followed_id)
+          unless upload.nil?
+
+            upload.each do |img|
+              @uploads << img
+            end
+
+          end
+     
+        end
+      end
   end
 
   def follow
@@ -22,6 +39,25 @@ class FriendsController < ApplicationController
   def find_friend_handler
 
     @users = User.where("email LIKE?", "%#{params[:search]}")
+    @uploads = []
+
+    unless @users.nil?
+
+      @user.each do |user|
+
+        upload = Upload.where(user_id: user.id)
+
+        unless upload.nil?
+
+          upload.each do |img|
+            @uploads << img
+          end
+
+        end
+
+      end
+
+    end
 
     respond_to do |format|
       format.json {
@@ -33,11 +69,7 @@ class FriendsController < ApplicationController
 
   def follow_friend_handler
 
-    friends_id = params[:user_id]
-    user_id = session[:user_id]
-
-    relationship = Relationship.new(:follower_id => user_id,
-                     :followed_id => friends_id)
+    relationship = Relationship.new(relationship_params)
 
     respond_to do |format|
 
@@ -50,8 +82,14 @@ class FriendsController < ApplicationController
           render json: {"follow" => "unsuccessfully"}
         }
       end
+
     end
+
   end
 
+  private
+    def relationship_params
+      params.permit(:follower_id, :followed_id)
+    end
 
 end

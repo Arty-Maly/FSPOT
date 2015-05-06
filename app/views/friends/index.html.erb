@@ -41,7 +41,9 @@
       $.get(
         "<%= follow_friend_path %>",
         {
-          user_id: user_id
+          follower_id: <%=session[:user_id] %>,
+          followed_id: user_id
+
         } 
         )
       $("#friends").css("display", "none");
@@ -57,14 +59,16 @@
       });
 </script>
 
-<DIV class="right">
-  <%= link_to "", main_path %> 
-</DIV>
+<%= content_tag(:div, id: "page") do %>
+  <%= content_tag(:div, id: "header_back") do %>
+    <%= link_to "", main_path %>
+  <% end %>
+<% end %>
 
 <!-- search-->
-<DIV class="banner">
+<DIV class="banner" style="height:80%">
   <DIV class="container_wrap">
-    <H1>FOLLOWING FRIENDS</H1>
+    <H1>YOUR FRIENDS</H1>
     <FORM>
       <INPUT type="text" name="search" id="searchItem" placeholder="find your friends">
       <DIV class="contact_btn">
@@ -74,51 +78,33 @@
   </DIV>
 </DIV>
 
+
+<DIV class="lazy">
+    <% @uploads.each do |image| %>
+      <DIV class="inner_wrap" style="height: 500px;">
+        <H4><%= image.name %></H4>
+        <% @upload_id = image.id %>
+        <H4 class="green"><%= image.rating %> stars</H4>
+        <H4 id="<%= "like#{@upload_id}" %>"><%= Like.where(upload_id: @upload_id).count %> likes</H4>
+        <H4 class="green"><%= image.description %></H4>
+        <H4>Upload by <%= User.find(image.user_id).email %></H4>
+        <IMG style="display: block; margin-left: auto; margin-right: auto;" data-lazy="<%= image_url(image.picture_url) %>">
+      </DIV>  
+    <% end %>
+</DIV> 
+
 <DIV id="friends">
 <% unless @users.nil? %>
 <% @users.each do |user| %>
       <DIV class="container">
-    	  <DIV class="col-lg-3">
-    	    <DIV class="content_middle_box">
-    	      <DIV class="inner_wrap1">
-          		<UL class="item_module">
-          		  <LI class="module_left"></LI>
-          		  <LI class="module_right"><!--  <img src="/assets/m_star.png" class="img-responsive" alt=""/> -->
-          		    <H5><%= user.email %></H5>
-          		    <button type="submit" onclick="followFriends(<%=user.id%>)", class="btn btn-info">follow</button>
-                  <% uploads = Upload.where(user_id: user.id) %>
-                  <% uploads.each do |img| %>
-                    <IMG style="margin-left:20px; height:100px; width:100px;" src=<%= image_url img.picture_url %> >
-                    <P><%= Restaurant.find(img.restaurant.id).restaurant_name %></P>
-                  <% end %>
-          		  </LI>
-
-          		  <DIV class="clear">
-          		  </DIV>
-          		</UL>
-    	      </DIV>
-    	    </DIV>
-    	  </DIV>
-    	</DIV>
-    <% end %>
-<% end %>
-</DIV>
-
-<% relation = Relationship.where(follower_id: session[:user_id]) %>
-<% relation.each do |r| %>
-  <% upload = Upload.where(user_id: r.followed_id) %>
-   <DIV class="container">
         <DIV class="col-lg-3">
           <DIV class="content_middle_box">
             <DIV class="inner_wrap1">
               <UL class="item_module">
                 <LI class="module_left"></LI>
                 <LI class="module_right"><!--  <img src="/assets/m_star.png" class="img-responsive" alt=""/> -->
-                  <H5><%= User.find(r.followed_id).email %></H5>
-                  <% upload.each do |u| %>
-                    <IMG style="postition:absolute;margin-left:80px;height:80px; width:80px; top:20px;", src=<%= image_url u.picture_url %> >
-                    <P style="position:absolute;margin-left:-90px; top:20px;"><%= Restaurant.find(u.restaurant.id).restaurant_name %></P>
-                  <% end %>
+                  <H5><%= user.email %></H5>
+                  <button type="submit" onclick="followFriends(<%=user.id%>)", class="btn btn-info">follow</button>
                 </LI>
                 <DIV class="clear">
                 </DIV>
@@ -127,7 +113,13 @@
           </DIV>
         </DIV>
       </DIV>
-<%end%>
+    <% end %>
+<% end %>
+</DIV> 
+
+
+ 
+
 
 
 

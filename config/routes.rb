@@ -37,7 +37,9 @@ Mvp::Application.routes.draw do
 
   get "/map_search" => "maps#maps_search_handler", as: :map_search
 
-  post "/comment" => "comment#create"
+  # post "/comment" => "comment#create"
+
+  get "/comment/new" => "comment#create", as: :new_comment
 
   get "/personal" => "personal#index", as: :personal
 

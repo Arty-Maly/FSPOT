@@ -73,6 +73,7 @@
           addLike)                  
   }
 
+
   function addLike(data) {
     var img_id = data.img_id;
 
@@ -106,6 +107,29 @@
                        }
                      });
   }
+
+  function addComments(user_id, upload_id){
+
+        $.get(
+          "<%= new_comment_path %>",  
+          { 
+            user_id: user_id,
+            upload_id: upload_id,
+            description: $("#description" + upload_id).val()
+          },
+          showComment
+          )                  
+  }
+
+  function showComment(data){
+
+    var img_id = data.upload_id;
+    $("#comment" + img_id).append('<h6>' + data.user_name + '</h6>' +' <p>' + data.description + '</p>')
+
+                  
+  }
+
+  
 </SCRIPT>
 <SCRIPT>
   $(function() {
@@ -239,49 +263,47 @@
             <INPUT type="hidden" name="upload_id" id="upload_id" value="<%=@upload_id%>">
           </DIV>
 
-          <DIV style="text-align: left;">
+
+	  
+
+          <DIV style="text-align:left;"><STRONG>Comments</STRONG>
             <BR />
-	      <STRONG>
-		Comments
-	      </STRONG>
-            
+            <DIV id="<%="comment#{@upload_id}"%>">
               <!-- show comments -->
-	      <% upload[4].each do |comment| %>
-		<BR />
-		  <DIV class="inner_wrap1">
-		    <UL class="item_module">
-		      <LI class="module_left">
-		      </LI>
+      	      <% upload[4].each do |comment| %><BR />
+                      <H5><%= comment[0] %></H5>
+                      <P><%= comment[1] %></P>
+      	      <% end %>
+            </DIV>
+          </DIV>
 
-		      <LI class="module_right">
-			<!--               <img src="/assets/m_star.png" class="img-responsive" alt=""/> -->
-			<H5>
-			  <%= comment[0] %>
-			</H5>
+    <!-- show new comments -->
+    <DIV id="<%="showComments#{@upload_id}"%>">
+        <DIV class="inner_wrap1">
+          <UL class="item_module">
+            <LI class="module_left"></LI>
+            <LI class="module_right">
+              <H5 id="<%="commentName#{@upload_id}"%>"></H5>
+              <P id="<%="commentDescription#{@upload_id}"%>"></P>
+            </LI>
+            <DIV class="clear"></DIV>
+          </UL>
+        </DIV>
+    </DIV> 
 
-			<P>
-			  <%= comment[1] %>
-			</P>
-		      </LI>
+    <!-- add comments-->
+    <FORM onsubmit="addComments(<%=session[:user_id]%>, <%=@upload_id%>); return false;">
+      <INPUT type="text" id="<%="description#{@upload_id}"%>" name="description" placeholder="add comments" class="form-control">
 
-		      <DIV class="clear">
-		      </DIV>
-		    </UL>
-		  </DIV>
-	      <% end %>
-	  </DIV>
-
-	  <!-- add comments-->
-	  <FORM action="comment" method="post">
-              <INPUT type="text" name="description" placeholder="add comments" class="form-control">
 
               <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
-	    <BR />
-	      <BUTTON name="submit" type="submit" id="submit" value="submit" class="btn btn-primary btn-sm">Submit</BUTTON>
-   
-	      <INPUT type="hidden" name="upload_id" value="<%=@upload_id%>">
-	      <INPUT type="hidden" name="user_id" value="<%=session[:user_id]%>">
-	  </FORM>              
+      <BR />
+      <BUTTON name="submit" type="submit" id="submit" value="submit" class="btn btn-primary btn-sm" >Submit</BUTTON>
+      <INPUT type="hidden" name="upload_id" value="<%=@upload_id%>">
+      <INPUT type="hidden" name="user_id" value="<%=session[:user_id]%>">
+    </FORM>  
+
+
 
 	  <!-- restaurant info -->
 	  <DIV class="col-lg-3" style="text-align: left;">
