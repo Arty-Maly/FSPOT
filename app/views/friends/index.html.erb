@@ -25,77 +25,102 @@
         },false);
       }
     })(document,window.navigator,'standalone');
-  </script>
-<DIV class="right">
-  <!-- <a href="/main"></a> -->
-  <%= link_to "", main_path %> 
-</DIV>
+
+    function findFriends(){   
+
+     $.get(
+        "<%= find_friend_path %>",
+        {
+          search: $("#searchItem").val()
+        }     
+    )  
+    }
+
+    function followFriends(user_id){
+
+      $.get(
+        "<%= follow_friend_path %>",
+        {
+          follower_id: <%=session[:user_id] %>,
+          followed_id: user_id
+
+        } 
+        )
+      $("#friends").css("display", "none");
+    }
+ 
+</script>
+<script>
+      $('.lazy').slick({
+            lazyLoad: 'ondemand',
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false
+      });
+</script>
+
+<%= content_tag(:div, id: "page") do %>
+  <%= content_tag(:div, id: "header_back") do %>
+    <%= link_to "", main_path %>
+  <% end %>
+<% end %>
+
 <!-- search-->
-<DIV class="banner">
+<DIV class="banner" style="height:80%">
   <DIV class="container_wrap">
-    <H1>
-      FOLLOWING FRIENDS
-    </H1>
-
-    <FORM action="/friends" method="get">
-      <INPUT type="text" name="search" placeholder="find your friends">
-
+    <H1>YOUR FRIENDS</H1>
+    <FORM>
+      <INPUT type="text" name="search" id="searchItem" placeholder="find your friends">
       <DIV class="contact_btn">
-        <LABEL class="btn1 btn-2 btn-2g">
-	  <INPUT name="submit" type="submit" id="submit" value="Search" >
-	</LABEL>
+        <LABEL class="btn1 btn-2 btn-2g"><INPUT name="submit" type="submit" id="submit" value="Search" onclick="findFriends()"></LABEL>
       </DIV>
     </FORM>    
   </DIV>
 </DIV>
 
 
-
-<% @users.each do |user| %>
-  <% session[:user_id] %> 
-
-  <% unless(session[:user_id] == user.id || !Relationship.where(follower_id: session[:user_id]).empty?) %>
-
-    <%= form_tag '/friends', :method => 'POST' do %>
-        <%= hidden_field_tag :user, user.id %>
-      <BR />
-        <DIV class="container">
-	  <DIV class="col-lg-3">
-	    <DIV class="content_middle_box">
-	      <DIV class="inner_wrap1">
-		<UL class="item_module">
-		  <LI class="module_left">
-		    <%= image_tag('m1.jpg', class: "img-responsive") %>
-		  </LI>
-
-		  <LI class="module_right">
-		    <!--  <img src="/assets/m_star.png" class="img-responsive" alt=""/> -->
-		    <H5>
-		      <%= user.email %>
-		    </H5>
-
-		    <%= submit_tag "follow", class: "btn btn-danger" %>
-		  </LI>
-
-		  <DIV class="clear">
-		  </DIV>
-		</UL>
-	      </DIV>
-	    </DIV>
-	  </DIV>
-	</DIV>
+<DIV class="lazy">
+    <% @uploads.each do |image| %>
+      <DIV class="inner_wrap" style="height: 500px;">
+        <H4><%= image.name %></H4>
+        <% @upload_id = image.id %>
+        <H4 class="green"><%= image.rating %> stars</H4>
+        <H4 id="<%= "like#{@upload_id}" %>"><%= Like.where(upload_id: @upload_id).count %> likes</H4>
+        <H4 class="green"><%= image.description %></H4>
+        <H4>Upload by <%= User.find(image.user_id).email %></H4>
+        <IMG style="display: block; margin-left: auto; margin-right: auto;" data-lazy="<%= image_url(image.picture_url) %>">
+      </DIV>  
     <% end %>
-  <% end %>
+</DIV> 
+
+<DIV id="friends">
+<% unless @users.nil? %>
+<% @users.each do |user| %>
+      <DIV class="container">
+        <DIV class="col-lg-3">
+          <DIV class="content_middle_box">
+            <DIV class="inner_wrap1">
+              <UL class="item_module">
+                <LI class="module_left"></LI>
+                <LI class="module_right"><!--  <img src="/assets/m_star.png" class="img-responsive" alt=""/> -->
+                  <H5><%= user.email %></H5>
+                  <button type="submit" onclick="followFriends(<%=user.id%>)", class="btn btn-info">follow</button>
+                </LI>
+                <DIV class="clear">
+                </DIV>
+              </UL>
+            </DIV>
+          </DIV>
+        </DIV>
+      </DIV>
+    <% end %>
 <% end %>
+</DIV> 
 
-<% relation = Relationship.where(follower_id: session[:user_id]) %>
-<% relation.each do |r| %>
 
-  <% upl = Upload.where(user_id: r.followed_id) %>
-  <% upl .each do |u| %>
-    <h1> <%= User.find(u.user_id).email %> </h1>
-    <img src=<%=u.picture%>></img>
-    <br>
-  <%end%>
-<%end%>
+ 
+
+
+
+
 

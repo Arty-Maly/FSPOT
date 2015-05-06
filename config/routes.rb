@@ -20,6 +20,9 @@ Mvp::Application.routes.draw do
 
   # get "/main/map_search" => "main_page#search_handler", as: :query_search
 
+  get "/find-friends" => "friends#find_friend_handler", as: :find_friend
+  get "/follow-friends" => "friends#follow_friend_handler", as: :follow_friend
+
   get "/friends" => "friends#index"
 
   post "/friends" => "friends#follow"
@@ -34,7 +37,9 @@ Mvp::Application.routes.draw do
 
   get "/map_search" => "maps#maps_search_handler", as: :map_search
 
-  post "/comment" => "comment#create"
+  # post "/comment" => "comment#create"
+
+  get "/comment/new" => "comment#create", as: :new_comment
 
   get "/personal" => "personal#index", as: :personal
 

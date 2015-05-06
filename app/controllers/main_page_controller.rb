@@ -91,6 +91,7 @@ class MainPageController < ApplicationController
     loc1 = [lat1.to_f, lng1.to_f]
 
     @upload_search = []
+    @same_uploads = []
 
     @uploads.each do |upload|
       geo_location = upload.geo_location.split(',')
@@ -104,9 +105,30 @@ class MainPageController < ApplicationController
 
       restaurant_rating_url = restaurant.rating_img
 
+      same_upload = Upload.where(restaurant_id: restaurant).first(5)
+
+      same_upload.each do |img|
+
+        img_info = {
+          img_user_name: User.find(img.user_id).email,
+          img_url: img.picture_url,
+          img_rating: img.rating,
+          img_likes: Upload.find(upload.id).likes.count()
+
+        }
+
+        @same_uploads << img_info
+
+      end
+
+
       comments = Comment.where(upload_id: upload.id).first(5)
 
       likes = Like.where(upload_id: upload.id).count
+
+      puts "==================="
+
+      puts comments
 
 
 
