@@ -21,13 +21,10 @@ class MapsController < ApplicationController
 
 		searchItem = propFood.grep(/#{params[:addr]}/)
 
-		puts "==========="
-		puts searchItem
-
 		if searchItem.length > 0
 			#find the data through yelp api		
 			parameters = {term: searchItem, limit: limit }
-			searchResult = Yelp.client.search('Boston', parameters)
+			searchResult = Yelp.client.search('Waltham', parameters)
 
 		else
 
