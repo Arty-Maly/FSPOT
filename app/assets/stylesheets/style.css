@@ -1590,3 +1590,17 @@ address.address {
 div.col-lg-3 {
 	background-color: #cae4f6;
 }
+p{
+	color: #495564 !important;
+	font-size:20px;
+	line-height: 0.8em;
+	display: inline;
+	font-weight: normal;
+}
+h5{
+	color: #788291;
+	font-size: 0.5em;
+	text-transform: uppercase;
+	margin: 0.8em 0 0.2em;
+	font-weight: 600;
+}

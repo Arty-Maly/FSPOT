@@ -118,7 +118,8 @@
 
   function showComment(data) {
     var img_id = data.upload_id;
-    $("#comment" + img_id).append('<h6>' + data.user_name + '</h6>' +' <p>' + data.description + '</p>')
+    $("#comment" + img_id).append('<h5>' + data.user_name + '</h5>' +' <p>' + data.description + 
+      '</p>')
   }
 </SCRIPT>
 <SCRIPT>
@@ -257,29 +258,15 @@
 	  
 
           <DIV style="text-align:left;"><STRONG>Comments</STRONG>
-            <BR />
             <DIV id="<%="comment#{@upload_id}"%>">
               <!-- show comments -->
-      	      <% upload[4].each do |comment| %><BR />
+      	      <% upload[4].each do |comment| %>
                       <H5><%= comment[0] %></H5>
                       <P><%= comment[1] %></P>
       	      <% end %>
             </DIV>
           </DIV>
 
-    <!-- show new comments -->
-    <DIV id="<%="showComments#{@upload_id}"%>">
-        <DIV class="inner_wrap1">
-          <UL class="item_module">
-            <LI class="module_left"></LI>
-            <LI class="module_right">
-              <H5 id="<%="commentName#{@upload_id}"%>"></H5>
-              <P id="<%="commentDescription#{@upload_id}"%>"></P>
-            </LI>
-            <DIV class="clear"></DIV>
-          </UL>
-        </DIV>
-    </DIV> 
 
     <!-- add comments-->
     <FORM onsubmit="addComments(<%=session[:user_id]%>, <%=@upload_id%>); return false;">
@@ -319,6 +306,11 @@
 		  Yelp! Page
 		</A>
 	      </P>
+    </BR>    
+    <A id ="linkyelp" onclick="showRestaurantLocation(<%=@upload_id%>)">
+      Show on Map
+    </A>
+
 
               <!-- SHOW restaurant in the map -->
               <DIV id="<%= "showRestaurant#{@upload_id}" %>" style="height:400px; display:none">
