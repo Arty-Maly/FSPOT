@@ -1,26 +1,19 @@
-<script>
-    navigator.geolocation.getCurrentPosition(geocodedAddress);
+<SCRIPT>
+  navigator.geolocation.getCurrentPosition(geocodedAddress);
 
-    function geocodedAddress(position){
+  function geocodedAddress(position) {
+    var lat = position.coords.latitude;
+    var lng = position.coords.longitude;
 
-      var lat = position.coords.latitude;
-      var lng = position.coords.longitude;
-
-      $.ajax({
-          url: "<%= location_path %>", 
-          data: {
-            lat: lat,
-            lng: lng
-          }
-      }).done(function(data) {
-        // alert(data.response);
-      });
-
-     }
-
-
-</script>
-<!-- Navigation --><% if(flash.present?) %>
+    $.ajax({ url: "<%= location_path %>", 
+             data: { lat: lat,
+		     lng: lng } }).done(function(data) {
+                                          // alert(data.response);
+                                        });
+  }
+</SCRIPT>
+<!-- Navigation -->
+<% if(flash.present?) %>
   <NAV class="navbar navbar-default navbar-custom navbar-fixed-top">
     <DIV class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -43,31 +36,29 @@
 
 <!-- Main Content -->
 <% if(logged_in?) %>
+  <%= link_to "Back", main_path, class: "btn btn-default btn-lg" %>
   <%= link_to "Log Out", log_out_path, class: "btn btn-default btn-lg" %>
 <% else %>
   <DIV class="container">
+    <%= form_tag log_in_path do %>
+        <% label_tag :name %>
+        <%= text_field_tag :email, nil, class: "form-control", placeholder: "username" %>
+      <BR />
+        <% label_tag :password %>
+        <%= password_field_tag :password, nil, class: "form-control", placeholder: "password" %>
 
-      <%= form_tag log_in_path do %>
-	  <% label_tag :name %>
-	  <%= text_field_tag :email, nil, class: "form-control", placeholder: "username" %>
-	<BR />
-	  <% label_tag :password %>
-	  <%= password_field_tag :password, nil, class: "form-control", placeholder: "password" %>
+        <DIV class="checkbox">
+          <LABEL>
+            <INPUT type="checkbox" value="remember-me"> Remember me
+          </LABEL>
+	</DIV>
 
-	  <DIV class="checkbox">
-            <LABEL>
-              <INPUT type="checkbox" value="remember-me"> Remember me
-            </LABEL>
-    </DIV>
-
-	  <%= submit_tag "Log in", class: "btn btn-lg btn-primary btn-block" %>
-	  <A href="/users/new" type="button" class="btn btn-lg btn-primary btn-block">
-	    Sign Up
-	  </A>
-      <% end %>
-
+	<%= submit_tag "Log in", class: "btn btn-lg btn-primary btn-block" %>
+	<A href="/users/new" type="button" class="btn btn-lg btn-primary btn-block">
+	  Sign Up
+	</A>
+    <% end %>
   </DIV>
 <% end %>
 
 <HR>
-
