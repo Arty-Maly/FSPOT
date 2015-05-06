@@ -166,11 +166,11 @@
           <DIV class="dropdown-button">                   
             <SELECT id ="category" name="category" class="dropdown" tabindex="9" data-settings='{"wrapperClass":"flat"}'>
               <OPTION>
-		By Catogory(nearest..)
+		By Catogory (nearest..)
               </OPTION>
 
               <OPTION value="find the nearst dishes">
-		find the nearst dishes
+		find the nearest dishes
               </OPTION>
 
               <OPTION value="find the best dishes">
@@ -218,7 +218,9 @@
 
           <H4>
             <H4 class="green">
-	      <%= upload[1] %> miles away <BR> <%= upload[0].rating %> stars
+	        <%= upload[1] %> miles away
+	      <BR />
+	        <%= upload[0].rating %> stars
 	    </H4>
 
 	    <H4 id="<%= "like#{@upload_id}" %>">
@@ -237,8 +239,9 @@
             <INPUT type="hidden" name="upload_id" id="upload_id" value="<%=@upload_id%>">
           </DIV>
 
-          <DIV style="text-align:left;">
-             <BR> <STRONG>
+          <DIV style="text-align: left;">
+            <BR />
+	      <STRONG>
 		Comments
 	      </STRONG>
             
@@ -285,10 +288,10 @@
 	  <DIV class="col-lg-3" style="text-align: left;">
             <BR />
 	      <STRONG> 
-		<p id = "restr-info" > Restaraunt Info: </p>
+		<P id = "restr-info" >
+		  Restaraunt Info:
+		</P>
 	      </STRONG>
-	    
-      
 
               <H4 class="green">
 		<%= upload[2] %>
@@ -297,17 +300,14 @@
 	      </H4>
 	   
               <P>
-		
-		         <H4 class="green">
-    <%= upload[3] %>
-        </H4>
-        <A id ="linkyelp" href="<%= upload[7] %>">
-      Yelp! Page
+		<H4 class="green">
+		  <%= upload[3] %>
+		</H4>
+
+		<A id ="linkyelp" href="<%= upload[7] %>">
+		  Yelp! Page
 		</A>
 	      </P>
-	    
-
-       
 
               <!-- SHOW restaurant in the map -->
               <DIV id="<%= "showRestaurant#{@upload_id}" %>" style="height:400px; display:none">
