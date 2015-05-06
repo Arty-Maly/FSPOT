@@ -1604,3 +1604,9 @@ h5{
 	margin: 0.8em 0 0.2em;
 	font-weight: 600;
 }
+.star_icon{
+	display:inline-block;
+}
+.star_icon img{
+
+}

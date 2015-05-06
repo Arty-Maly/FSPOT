@@ -253,6 +253,12 @@
             <INPUT type="hidden" name="upload_id" id="upload_id" value="<%=@upload_id%>">
               <% end %>  
           </DIV>
+          <DIV class="star_icon">
+          <% (1..upload[0].rating).each do |i| %>
+            <%= image_tag "starRating.png" %>
+          <% end %>
+          </DIV>
+
 
 
 	  

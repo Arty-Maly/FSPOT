@@ -5,26 +5,8 @@ class FriendsController < ApplicationController
     else
       @users = nil
     end
+    search_friends
 
-      @uploads = []
-
-      relationship = Relationship.where(follower_id: session[:user_id])
-
-      unless relationship.nil?
-
-        relationship.each do |r|
-
-          upload = Upload.where(user_id: r.followed_id)
-          unless upload.nil?
-
-            upload.each do |img|
-              @uploads << img
-            end
-
-          end
-     
-        end
-      end
   end
 
   def follow
@@ -84,6 +66,30 @@ class FriendsController < ApplicationController
       end
 
     end
+    search_friends
+
+  end
+
+  def search_friends
+      @uploads = []
+
+      relationship = Relationship.where(follower_id: session[:user_id])
+
+      unless relationship.nil?
+
+        relationship.each do |r|
+
+          upload = Upload.where(user_id: r.followed_id)
+          unless upload.nil?
+
+            upload.each do |img|
+              @uploads << img
+            end
+
+          end
+     
+        end
+      end
 
   end
 
