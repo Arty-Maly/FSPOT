@@ -261,7 +261,7 @@
             <DIV id="<%="comment#{@upload_id}"%>">
               <!-- show comments -->
       	      <% upload[4].each do |comment| %>
-                      <H5><%= comment[0] %></H5>
+                      <H5><%= link_to "@"+comment[0].to_s, "/personal/#{upload[0].user_id}" %></H5>
                       <P><%= comment[1] %></P>
       	      <% end %>
             </DIV>

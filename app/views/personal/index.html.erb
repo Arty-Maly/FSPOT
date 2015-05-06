@@ -79,7 +79,7 @@
 		    <LI class="module_right">
 		      <!--               <img src="/assets/m_star.png" class="img-responsive" alt=""/> -->
 		      <H5>
-			<%= User.find(comment.user_id).email %>
+			<%= link_to "@"+User.find(comment.user_id).email.to_s, "/personal/#{comment.user_id}" %>
 		      </H5>
 
 		      <P>
