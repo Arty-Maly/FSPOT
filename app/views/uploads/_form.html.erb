@@ -55,17 +55,14 @@
   <%= form_for(@upload) do |f| %>
     <% if @upload.errors.any? %>
       <DIV id="error_explanation">
-	<H2>
-	  <%= pluralize(@upload.errors.count, "error") %> prohibited this upload from being saved:
-	</H2>
-
-	<UL>
-	  <% @upload.errors.full_messages.each do |msg| %>
-            <LI>
-	      <%= msg %>
-	    </LI>
-	  <% end %>
-	</UL>
+      	<H2>
+      	  <%= pluralize(@upload.errors.count, "error") %> prohibited this upload from being saved:
+      	</H2>
+      	<UL>
+      	  <% @upload.errors.full_messages.each do |msg| %>
+            <LI><%= msg %></LI>
+      	  <% end %>
+      	</UL>
       </DIV>
     <% end %>
 
@@ -73,17 +70,15 @@
       <DIV class="col-lg-3">
         <DIV class="inner_wrap1">
           <DIV class="field" >
-              <H3><%= f.label :name %></H3>
+            <H3><%= f.label :name %></H3>
             <BR />
-              <%= f.text_field :name,  class: "form-control" %>
+            <%= f.text_field :name,  class: "form-control" %>
           </DIV>
 
           <DIV class="field">
-              <H3>
-		<%= f.label :description %>
-	      </H3>
+            <H3><%= f.label :description %></H3>
             <BR />
-              <%= f.text_field :description, class: "form-control" %>
+            <%= f.text_field :description, class: "form-control" %>
           </DIV>
 
           <DIV class="field">
@@ -95,10 +90,7 @@
           </DIV>
 
           <DIV class="field">
-              <H3>
-		<%= f.label :rating %>
-	      </H3>
-            <BR />
+            <H3><%= f.label :rating %></H3><BR />
               <SPAN class="starRating">
                 <INPUT id="rating5" type="radio" name="rating" value="5">
                 <LABEL for="rating5">5</LABEL>
@@ -118,10 +110,7 @@
           <INPUT type="hidden" name="yelp_url", id="yelp_url">
 
           <DIV class="ui-widget">
-            <H3 for="tags">
-	      Restaurants:
-	    </H3>
-
+            <H3 for="tags">Restaurants:</H3>
             <INPUT id="restaurant" name="restaurant_name" class="form-control">
           </DIV>
 
@@ -129,13 +118,10 @@
           </DIV>
 
           <DIV class="upload">
-              <%= f.label :picture %>
-            <BR />
+              <%= f.label :picture %><BR />
               <%= f.file_field :picture, accept: 'image/jpeg', :onchange => "readURL(this);" %>
-
               <DIV id="img_prev" src="#" style="background-size: cover; background-position: center center; height: 300px; width: 300px;">
               </DIV>
-
               <%= f.hidden_field :user_id, :value => session[:user_id] %>
             <BR />                
           </DIV>
@@ -143,7 +129,8 @@
           <DIV class="actions">
             <%= f.submit :class => "btn btn-info"  %>
           </DIV>
-	</DIV>
+          
+	       </DIV>
       </DIV>
   <% end %>
 </DIV>

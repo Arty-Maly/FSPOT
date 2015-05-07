@@ -1,6 +1,5 @@
 class PersonalController < ApplicationController
-	def index
-		
+	def index		
 	end
 
 	

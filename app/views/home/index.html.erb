@@ -48,28 +48,20 @@
   <DIV class="container">
     <DIV class="login">
       <FORM class="form-signin">
-          <LABEL for="inputEmail" class="sr-only">
-	    Email address
-	  </LABEL>
+        <LABEL for="inputEmail" class="sr-only">Email address</LABEL>
+        <INPUT class="form-control"><BR />
+        <LABEL for="inputPassword" class="sr-only">Password</LABEL>
+        <INPUT class="form-control">
+        <DIV class="checkbox">
+          <LABEL>
+            <INPUT type="checkbox" value="remember-me"> Remember me
+          </LABEL>
+        </DIV>
 
-          <INPUT class="form-control">
-	<BR />
-          <LABEL for="inputPassword" class="sr-only">
-	    Password
-	  </LABEL>
-
-          <INPUT class="form-control">
-
-          <DIV class="checkbox">
-            <LABEL>
-              <INPUT type="checkbox" value="remember-me"> Remember me
-            </LABEL>
-          </DIV>
-
-	  <%= link_to "Log In", main_path, class: "btn btn-lg btn-primary btn-block" %>
-	  <!-- <A href="/main" type="button" class="btn btn-lg btn-primary btn-block">Log In</A> -->
-	  <%= link_to "Sign Up", sign_up_path, class: "btn btn-lg btn-primary btn-block" %>
-	  <!-- <A href="/users/new" type="button" class="btn btn-lg btn-primary btn-block">Sign Up</A> -->
+    	  <%= link_to "Log In", main_path, class: "btn btn-lg btn-primary btn-block" %>
+    	  <!-- <A href="/main" type="button" class="btn btn-lg btn-primary btn-block">Log In</A> -->
+    	  <%= link_to "Sign Up", sign_up_path, class: "btn btn-lg btn-primary btn-block" %>
+    	  <!-- <A href="/users/new" type="button" class="btn btn-lg btn-primary btn-block">Sign Up</A> -->
       </FORM>
     </DIV>
   </DIV>

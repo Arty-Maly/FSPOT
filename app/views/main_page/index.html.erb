@@ -142,31 +142,14 @@
 
   <DIV id="page">
     <DIV id="header_nav">
-      <A href="#menu">
-      </A>
+      <A href="#menu"></A>
     </DIV>
 
     <NAV id="menu">
       <UL>
-        <LI class="Selected">
-	  <A href="#">
-	  </A>
-	</LI>
-
-      
-
-        <LI>
-	  <A href="<%= '/personal/'+session[:user_id].to_s %>">
-            Personal Page
-	  </A>
-	</LI>
-    <LI>
-    <A href="/friends">
-            Friends
-    </A>
-  </LI>
-
-      
+        <LI class="Selected"><A href="#"></A></LI>
+        <LI><A href="<%= '/personal/'+session[:user_id].to_s %>">Personal Page</A></LI>
+        <LI><A href="/friends">Friends</A></LI>      
       </UL>
     </NAV>
   </DIV>
@@ -178,36 +161,22 @@
         <DIV class="dropdown-buttons">   
           <DIV class="dropdown-button">                   
             <SELECT id ="category" name="category" class="dropdown" tabindex="9" data-settings='{"wrapperClass":"flat"}'>
-              <OPTION>
-		By Catogory (nearest..)
-              </OPTION>
-
-              <OPTION value="find the nearst dishes">
-		find the nearest dishes
-              </OPTION>
-
-              <OPTION value="find the best dishes">
-		find the best dishes
-              </OPTION>
-
-              <OPTION value="find the latest dishes">
-		find the latest dishes
-              </OPTION>
+              <OPTION>By Catogory (nearest..)</OPTION>
+              <OPTION value="find the nearst dishes">find the nearest dishes</OPTION>
+              <OPTION value="find the best dishes">find the best dishes</OPTION>
+              <OPTION value="find the latest dishes">find the latest dishes</OPTION>
             </SELECT>
           </DIV>
         </DIV>
-
         <INPUT type="text" name="search" placeholder="Find dishes">
-
         <DIV class="contact_btn">
-          <LABEL class="btn1 btn-2 btn-2g">
-	    <INPUT name="submit" type="submit" id="submit" value="Search">
-	  </LABEL>
+          <LABEL class="btn1 btn-2 btn-2g"><INPUT name="submit" type="submit" id="submit" value="Search"></LABEL>
         </DIV>
       </FORM>              
     </DIV>
   <% end %>
-</DIV>
+  </DIV>
+
 
 <!-- need to see if @user_id = upload.user_id is a good idea -->
 
@@ -217,55 +186,30 @@
     <DIV class="lazy">
       <% @upload_search.each do |upload| %>
         <DIV class="inner_wrap">
-          <H4>
-	    <%= upload[0].name %>
-	  </H4>
-
+          <H4><%= upload[0].name %></H4>
           <% @upload_id =  upload[0].id %>
-
-          <H4 class="green">
-            <%= upload[0].description %>
-	  </H4>
-
+          <H4 class="green"><%= upload[0].description %></H4>
           <IMG style="display: block; margin-left: auto; margin-right: auto;" data-lazy="<%= image_url upload[0].picture_url %>">
-
-          <H4>
-            <H4 class="green">
-	        <%= upload[1] %> miles away
-	      <BR />
-	        <DIV class="star_icon">
-            
+          <H4 class="green"><%= upload[1] %> miles away<BR />
+	        <DIV class="star_icon">            
           <%  if (upload[0].rating.is_a? Integer) %> 
-           <% (1..upload[0].rating).each do |i| %>
-            <%= image_tag "starRating.png" %>
-          <% end %>
+            <% (1..upload[0].rating).each do |i| %>
+              <%= image_tag "starRating.png" %>
+            <% end %>
           <% end %>
           </DIV>
-	    </H4>
-
-	    <H4 id="<%= "like#{@upload_id}" %>">
-	      <%= upload[5] %>  likes
-	    </H4>
-
-            Uploaded By: <%= link_to "@#{User.find(upload[0].user_id).email}", "/personal/#{upload[0].user_id}" %>
-	  </H4>
-
+	        </H4>
+	        <H4 id="<%= "like#{@upload_id}" %>"><%= upload[5] %>  likes</H4>
+          <H4>Uploaded By: <%= link_to "@#{User.find(upload[0].user_id).email}", "/personal/#{upload[0].user_id}" %></H4>
           <DIV class="row">
             <% if Like.find_by(user_id: session[:user_id], upload_id: @upload_id) == nil %>
                <BUTTON class="btn btn-default btn-lg" id="<%= "likeButton#{@upload_id}" %>" onclick="like(<%= session[:user_id] %>, <%= @upload_id %>, <%= upload[5] %>, <%= @upload_id %>)">
-	           <SPAN class="glyphicon glyphicon-heart" aria-hidden="true">
-	            </SPAN>
+                <SPAN class="glyphicon glyphicon-heart" aria-hidden="true"></SPAN>
                </BUTTON>
-
-
-            <INPUT type="hidden" name="upload_id" id="upload_id" value="<%=@upload_id%>">
-              <% end %>  
+               <INPUT type="hidden" name="upload_id" id="upload_id" value="<%=@upload_id%>">
+            <% end %>  
           </DIV>
 
-
-
-
-	  
 
           <DIV style="text-align:left;"><STRONG>Comments</STRONG>
             <DIV id="<%="comment#{@upload_id}"%>">
@@ -278,60 +222,40 @@
           </DIV>
 
 
-    <!-- add comments-->
-    <FORM onsubmit="addComments(<%=session[:user_id]%>, <%=@upload_id%>); return false;">
-      <INPUT type="text" id="<%="description#{@upload_id}"%>" name="description" placeholder="add comments" class="form-control">
+        <!-- add comments-->
+        <FORM onsubmit="addComments(<%=session[:user_id]%>, <%=@upload_id%>); return false;">
+          <INPUT type="text" id="<%="description#{@upload_id}"%>" name="description" placeholder="add comments" class="form-control">
 
 
-              <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
-      <BR />
-      <BUTTON name="submit" type="submit" id="submit" value="submit" class="btn btn-primary btn-sm" >Submit</BUTTON>
-      <INPUT type="hidden" name="upload_id" value="<%=@upload_id%>">
-      <INPUT type="hidden" name="user_id" value="<%=session[:user_id]%>">
-    </FORM>  
+                  <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+          <BR />
+          <BUTTON name="submit" type="submit" id="submit" value="submit" class="btn btn-primary btn-sm" >Submit</BUTTON>
+          <INPUT type="hidden" name="upload_id" value="<%=@upload_id%>">
+          <INPUT type="hidden" name="user_id" value="<%=session[:user_id]%>">
+        </FORM>  
 
 
 
-	  <!-- restaurant info -->
-	  <DIV class="col-lg-3" style="text-align: left;">
-            <BR />
-	      <STRONG> 
-		<P id = "restr-info" >
-		  Restaraunt Info:
-		</P>
-	      </STRONG>
+  	  <!-- restaurant info -->
+  	  <DIV class="col-lg-3" style="text-align: left;"><BR />
+  	     <STRONG><P id = "restr-info" >Restaraunt Info:</P></STRONG>
+         <H4 class="green"><%= upload[2] %>
+         <IMG src="<%= upload[6] %>" />
+  	     </H4>
+         <P><H4 class="green"><%= upload[3] %></H4>
+         <A id ="linkyelp" href="<%= upload[7] %>">Yelp! Page</A>
+  	     </P></BR>
+         <A id ="linkyelp" onclick="showRestaurantLocation(<%=@upload_id%>)">Show on Map</A>
+        <!-- SHOW restaurant in the map -->
+        <DIV id="<%= "showRestaurant#{@upload_id}" %>" style="height:400px; display:none">
+        </DIV>
+  	  </DIV>
 
-              <H4 class="green">
-		<%= upload[2] %>
-
-		<IMG src="<%= upload[6] %>" />
-	      </H4>
-	   
-              <P>
-		<H4 class="green">
-		  <%= upload[3] %>
-		</H4>
-
-		<A id ="linkyelp" href="<%= upload[7] %>">
-		  Yelp! Page
-		</A>
-	      </P>
-    </BR>    
-    <A id ="linkyelp" onclick="showRestaurantLocation(<%=@upload_id%>)">
-      Show on Map
-    </A>
+  	  <INPUT type="hidden" name="latlng" id='<%= "latlng#{@upload_id}" %>' value="<%= upload[8] %>" />
+  	  <DIV style="height:50px;"></DIV>
+	   </DIV>
 
 
-              <!-- SHOW restaurant in the map -->
-              <DIV id="<%= "showRestaurant#{@upload_id}" %>" style="height:400px; display:none">
-              </DIV>
-	  </DIV>
-
-	  <INPUT type="hidden" name="latlng" id='<%= "latlng#{@upload_id}" %>' value="<%= upload[8] %>" />
-
-	  <DIV style="height:50px;">
-	  </DIV>
-	</DIV>
       <% end %>
     </DIV>
   </DIV>
@@ -343,13 +267,12 @@
     <DIV class="row">
       <P id="geo" style="position:absolute; bottom: 15px;">
       </P>
-
       <DIV class="pull-right" style="margin-right: 20px;">
-	<DIV class="camera">
-	  <A href="/uploads/new" type="button" >
+      	<DIV class="camera">
+      	  <A href="/uploads/new" type="button" >
             <%= image_tag('camera_png.png') %>
-	  </A>
-	</DIV>
+      	  </A>
+      	</DIV>
       </DIV>  
     </DIV>
   </DIV>

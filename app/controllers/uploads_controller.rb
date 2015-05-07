@@ -42,8 +42,6 @@ class UploadsController < ApplicationController
 
     respond_to do |format|
       if @upload.save
-        # format.html { redirect_to @upload, notice: 'Upload was successfully created.' }
-        # format.json { render action: 'show', status: :created, location: @upload }
         format.html {redirect_to '/main' }
         format.json {head :no_content }
       else

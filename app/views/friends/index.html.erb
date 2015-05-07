@@ -69,17 +69,13 @@
 <!-- search-->
 <DIV class="banner" style="height:80%">
   <DIV class="container_wrap">
-    <H1>
-      YOUR FRIENDS
-    </H1>
-
+    <H1>YOUR FRIENDS</H1>
     <FORM>
       <INPUT type="text" name="search" id="searchItem" placeholder="find your friends">
-
       <DIV class="contact_btn">
-        <LABEL class="btn1 btn-2 btn-2g">
-	  <INPUT name="submit" type="submit" id="submit" value="Search" onclick="findFriends()">
-	</LABEL>
+      <LABEL class="btn1 btn-2 btn-2g">
+      <INPUT name="submit" type="submit" id="submit" value="Search" onclick="findFriends()">
+      </LABEL>
       </DIV>
     </FORM>    
   </DIV>
@@ -89,28 +85,12 @@
 <DIV class="lazy">
   <% @uploads.each do |image| %>
     <DIV class="inner_wrap" style="height: 500px;">
-      <H4>
-	<%= image.name %>
-      </H4>
-
+      <H4><%= image.name %></H4>
       <% @upload_id = image.id %>
-
-      <H4 class="green">
-	<%= image.rating %> stars
-      </H4>
-
-      <H4 id="<%= "like#{@upload_id}" %>">
-	<%= Like.where(upload_id: @upload_id).count %> likes
-      </H4>
-
-      <H4 class="green">
-	<%= image.description %>
-      </H4>
-
-      <H4>
-	Upload by <%= User.find(image.user_id).email %>
-      </H4>
-
+      <H4 class="green"><%= image.rating %> stars</H4>
+      <H4 id="<%= "like#{@upload_id}" %>"><%= Like.where(upload_id: @upload_id).count %> likes</H4>
+      <H4 class="green"><%= image.description %></H4>
+      <H4>Upload by <%= User.find(image.user_id).email %></H4>
       <IMG style="display: block; margin-left: auto; margin-right: auto;" data-lazy="<%= image_url(image.picture_url) %>">
     </DIV>  
   <% end %>
@@ -124,17 +104,10 @@
           <DIV class="content_middle_box">
             <DIV class="inner_wrap1">
               <UL class="item_module">
-                <LI class="module_left">
-		</LI>
-
-                <LI class="module_right"><!--  <img src="/assets/m_star.png" class="img-responsive" alt=""/> -->
-                  <H5>
-		    <%= user.email %>
-		  </H5>
-
-                  <BUTTON type="submit" onclick="followFriends(<%= user.id %>)", class="btn btn-info">
-		    follow
-		  </BUTTON>
+                <LI class="module_left"></LI>
+                <LI class="module_right">
+                  <H5><%= user.email %></H5>
+                  <BUTTON type="submit" onclick="followFriends(<%= user.id %>)", class="btn btn-info">follow</BUTTON>
                 </LI>
                 <DIV class="clear">
                 </DIV>

@@ -8,7 +8,6 @@ Mvp::Application.routes.draw do
   
   get "upload/index" => 'uploads#index'
   
-  # get '/' => 'home#index'
   get "/" => "sessions#new", as: :root
   post "/" => "sessions#create", as: :log_in
   get "/log-out" => "sessions#destroy", as: :log_out
@@ -17,8 +16,6 @@ Mvp::Application.routes.draw do
   post "/sign-up" => "users#create", as: :sign_up
 
   get "/main" => "main_page#index", as: :main
-
-  # get "/main/map_search" => "main_page#search_handler", as: :query_search
 
   get "/find-friends" => "friends#find_friend_handler", as: :find_friend
   get "/follow-friends" => "friends#follow_friend_handler", as: :follow_friend
@@ -37,19 +34,11 @@ Mvp::Application.routes.draw do
 
   get "/map_search" => "maps#maps_search_handler", as: :map_search
 
-  # post "/comment" => "comment#create"
-
   get "/comment/new" => "comment#create", as: :new_comment
 
   get "/personal" => "personal#index", as: :personal
 
   get "/notifications" => "notifications#index", as: :notifications
-
-
-
-
-   # post "dislike" => "likes#destroy"
-  # post "/like" => "likes#create"
 
   get "/like" => "likes#create", as: :like_count
 

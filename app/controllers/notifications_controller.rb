@@ -1,7 +1,7 @@
 class NotificationsController < ApplicationController
 
   def index
-
+    
   	id = session[:user_id]
   	notifications = Notification.where(user_id: id)
   	@user_name = User.find(id).email
@@ -16,9 +16,9 @@ class NotificationsController < ApplicationController
 
   		#someone likes your upload
   		unless notification.likes_id.nil?
-  			upload = Upload.find(notification.uploads_id).name
+        upload = Upload.find(notification.uploads_id).name
         img = Upload.find(notification.uploads_id).picture_url
- 			  @user_like[user] = [upload, img]
+        @user_like[user] = [upload, img]
   		end
 
   		#someone comments on your upload

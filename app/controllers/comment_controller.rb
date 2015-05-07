@@ -13,8 +13,6 @@ class CommentController < ApplicationController
 		comment_params[:description] = params[:description]
 		comment_params[:user_id] = params[:user_id]	
 
-
-
 		#comment params need to change to whatever we pass in the text box
 		comment = upload.comments.create(comment_params)
 
