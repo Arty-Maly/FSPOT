@@ -1,3 +1,7 @@
-FSPOT is a web app for mobile phones that allows you to upload pictures of food and view pictures from others. 
+FSPOT is a web app for mobile phones that allows you to upload pictures of food and view pictures from others.
+
 This is a cross between tinder and instagramm.
+
+http://peaceful-brook-2400.herokuapp.com/
+
 {<img src="https://codeclimate.com/github/Arty-Maly/FSPOT/badges/gpa.svg" />}[https://codeclimate.com/github/Arty-Maly/FSPOT]
